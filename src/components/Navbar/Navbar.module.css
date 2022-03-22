@@ -1,0 +1,41 @@
+.arrow_down {
+  vertical-align: middle;
+}
+.header {
+  background: var(--bg-primary);
+  grid-area: header;
+  height: fit-content;
+}
+
+.logo {
+  height: 7rem;
+}
+
+.navlink {
+  text-decoration: none;
+  border-radius: 100px;
+  padding: 0.5rem 2rem;
+  border: 2px solid var(--secondary);
+  background: transparent;
+  transition: 0.25s ease-in-out;
+}
+
+.navlink:hover {
+  background: var(--secondary);
+}
+
+.searchbar {
+  width: clamp(10rem, 100%, 50vw);
+  position: relative;
+}
+.searchbar_btn_icon {
+  position: absolute;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+}
+.searchbar_input {
+  height: 4rem;
+  outline: 1px solid var(--bg-tertiary);
+}
