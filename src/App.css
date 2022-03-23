@@ -16,5 +16,8 @@
 .main {
   grid-area: main;
   background: var(--bg-tertiary);
-  padding: 1rem;
+}
+
+.ubuntu {
+  font-family: "Ubuntu", sans-serif;
 }
