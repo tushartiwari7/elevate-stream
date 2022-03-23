@@ -21,5 +21,6 @@ code {
   --bg-primary: #010100;
   --bg-secondary: #131313;
   --bg-tertiary: #181919;
-  --text-color: #ffffff;
+  --text-color: #b2b2b2;
+  --text-light: #ffffff;
 }
