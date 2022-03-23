@@ -29,7 +29,7 @@ export const Sidebar = () => {
             to="/"
           >
             <span className="mx-xs">
-              <Icon className="h3" />
+              <Icon />
             </span>
             {name}
           </Link>
