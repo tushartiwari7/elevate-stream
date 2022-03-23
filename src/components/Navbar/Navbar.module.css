@@ -13,11 +13,12 @@
 
 .navlink {
   text-decoration: none;
-  border-radius: 100px;
-  padding: 0.5rem 2rem;
+  border-radius: 10rem;
+  padding: 5px 2rem;
   border: 2px solid var(--secondary);
   background: transparent;
   transition: 0.25s ease-in-out;
+  color: var(--text-light);
 }
 
 .navlink:hover {
@@ -37,5 +38,5 @@
 }
 .searchbar_input {
   height: 4rem;
-  outline: 1px solid var(--bg-tertiary);
+  outline: 3px solid var(--bg-tertiary);
 }
