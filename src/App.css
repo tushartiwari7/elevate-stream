@@ -24,3 +24,26 @@
 .ubuntu {
   font-family: "Ubuntu", sans-serif;
 }
+
+.sidebar.active {
+  left: 0;
+}
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 50%;
+  }
+  .App {
+    grid-template-areas: "header" "main";
+    grid-template-columns: auto;
+  }
+  .sidebar {
+    position: absolute;
+    top: 11rem;
+    left: -20rem;
+    z-index: 2;
+    border-bottom-right-radius: 2rem;
+    border-bottom: 2px solid var(--secondary);
+    transition: 0.3s ease-in-out;
+  }
+}

@@ -1,4 +1,10 @@
-import { createContext, useReducer, useContext, useEffect } from "react";
+import {
+  createContext,
+  useReducer,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { getAllVideos, getCategories } from "../../services";
 const Data = createContext();
 getCategories;
@@ -22,6 +28,7 @@ const reducer = (state, action) => {
 
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     (async () => {
       const [categories, videos] = await Promise.all([
@@ -34,7 +41,12 @@ export const DataProvider = ({ children }) => {
 
   return (
     <Data.Provider
-      value={{ videos: state.videos, categories: state.categories }}
+      value={{
+        videos: state.videos,
+        categories: state.categories,
+        open,
+        setOpen: setOpen,
+      }}
     >
       {children}
     </Data.Provider>

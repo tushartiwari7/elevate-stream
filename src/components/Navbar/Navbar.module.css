@@ -7,6 +7,10 @@
   height: fit-content;
 }
 
+.hamburger {
+  margin-right: 1rem;
+}
+
 .logo {
   height: 7rem;
 }
@@ -39,4 +43,28 @@
 .searchbar_input {
   height: 4rem;
   outline: 3px solid var(--bg-tertiary);
+}
+
+@media only screen and (max-width: 640px) {
+  .header {
+    min-height: 11rem;
+  }
+
+  .searchbar {
+    width: 90%;
+  }
+
+  .logo {
+    height: 5rem;
+  }
+  .searchbar_input {
+    height: 3rem;
+  }
+  .searchbar {
+    position: absolute;
+    bottom: 1rem;
+  }
+  .navlink {
+    align-self: flex-start;
+  }
 }
