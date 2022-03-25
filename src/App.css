@@ -1,3 +1,5 @@
+@import url(../node_modules/mockman-js/dist/style.css);
+
 .App {
   text-align: center;
   background: var(--bg-primary);
@@ -16,6 +18,7 @@
 .main {
   grid-area: main;
   background: var(--bg-tertiary);
+  overflow-y: auto;
 }
 
 .ubuntu {
