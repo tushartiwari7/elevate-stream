@@ -5,9 +5,11 @@
   background: var(--bg-primary);
   grid-area: header;
   height: fit-content;
+  z-index: 3;
 }
 
 .hamburger {
+  display: none;
   margin-right: 1rem;
 }
 
@@ -48,6 +50,30 @@
 @media only screen and (max-width: 640px) {
   .header {
     min-height: 11rem;
+  }
+
+  .searchbar {
+    width: 90%;
+  }
+
+  .logo {
+    height: 5rem;
+  }
+  .searchbar_input {
+    height: 3rem;
+  }
+  .searchbar {
+    position: absolute;
+    bottom: 1rem;
+  }
+  .navlink {
+    align-self: flex-start;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .hamburger {
+    display: block;
   }
 
   .searchbar {

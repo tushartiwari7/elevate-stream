@@ -1,10 +1,44 @@
+.sort_button {
+  composes: navlink from "../../components/Navbar/Navbar.module.css";
+  height: fit-content;
+  align-self: center;
+  min-width: fit-content;
+}
+
+.sort_button > svg {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+.sort_button > ul {
+  display: none;
+  top: 110%;
+  left: 0;
+  z-index: 2;
+  background: var(--bg-primary);
+  height: fit-content;
+  width: max-content;
+}
+
+.sort_button > ul > li {
+  cursor: pointer;
+}
+
+.sort_button > ul > li:hover {
+  background: var(--bg-secondary);
+}
+
+.sort_button:hover > ul {
+  display: block;
+}
+
 .video_list {
   grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-  grid-gap: 1rem;
+  grid-gap: 2rem;
 }
 .video_filter_category {
   gap: 1rem;
   overflow-x: auto;
+  flex-grow: 1;
 }
 
 .video_filter_category::-webkit-scrollbar {
