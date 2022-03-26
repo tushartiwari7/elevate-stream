@@ -9,31 +9,25 @@ export const categories = [
   {
     _id: uuid(),
     categoryName: "Romance",
-    description:
-      "Computer programming is the process of designing and building an executable computer program to accomplish a specific computing",
   },
   {
     _id: uuid(),
-    categoryName: "Thriller",
-    description:
-      "Front-end web development, also known as client-side development is the practice of producing HTML, CSS and JavaScript for a website or Web Application",
+    categoryName: "Drama",
   },
   {
     _id: uuid(),
     categoryName: "Comedy",
-    description:
-      "Backend Development is also known as server-side development. It is everything that the users don't see and contains behind-the-scenes activities that occur when performing any action on a website.",
   },
   {
     _id: uuid(),
     categoryName: "Action",
-    description:
-      "Backend Development is also known as server-side development. It is everything that the users don't see and contains behind-the-scenes activities that occur when performing any action on a website.",
   },
   {
     _id: uuid(),
-    categoryName: "Horror",
-    description:
-      "Backend Development is also known as server-side development. It is everything that the users don't see and contains behind-the-scenes activities that occur when performing any action on a website.",
+    categoryName: "Adventure",
+  },
+  {
+    _id: uuid(),
+    categoryName: "History",
   },
 ];

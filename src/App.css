@@ -27,6 +27,13 @@
 
 .sidebar.active {
   left: 0;
+  top: 11rem;
+}
+
+.loader {
+  inset: 0;
+  backdrop-filter: brightness(0.3);
+  z-index: 1;
 }
 
 @media only screen and (max-width: 480px) {
@@ -39,7 +46,7 @@
   }
   .sidebar {
     position: absolute;
-    top: 11rem;
+    top: -25rem;
     left: -20rem;
     z-index: 2;
     border-bottom-right-radius: 2rem;

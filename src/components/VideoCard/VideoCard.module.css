@@ -1,5 +1,8 @@
 .card {
   color: var(--text-color);
+  height: 100%;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .card_badge {
@@ -9,11 +12,15 @@
 
 .card_details {
   margin-top: 20px;
+  text-align: left;
+}
+
+.card_title {
+  padding-right: 2.5rem;
 }
 
 .card:hover {
   box-shadow: 0px 0px 10px 0px var(--bg-primary);
-  transform: scale(0.95);
   color: var(--text-light);
   transition: 0.25s ease-in-out;
 }
@@ -46,4 +53,27 @@
   bottom: 10px;
   font-size: 14px;
   padding: 6px 10px;
+}
+
+.contextMenu {
+  right: 10%;
+  top: 30%;
+  background: var(--bg-primary);
+}
+
+.contextMenu > li {
+  cursor: pointer;
+}
+.contextMenu > li:hover {
+  background: var(--bg-tertiary);
+}
+
+.contextMenuBtn {
+  right: 0;
+  top: 0;
+  background: transparent;
+}
+.contextMenuItemIcon {
+  margin-right: 10px;
+  align-self: center;
 }

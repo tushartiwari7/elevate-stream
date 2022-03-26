@@ -7,7 +7,6 @@ import {
 } from "react";
 import { getAllVideos, getCategories } from "../../services";
 const Data = createContext();
-getCategories;
 const initialState = {
   videos: [],
   categories: [],
@@ -29,14 +28,21 @@ const reducer = (state, action) => {
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [open, setOpen] = useState(false);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
+    setLoader(true);
     (async () => {
-      const [categories, videos] = await Promise.all([
-        getCategories(),
-        getAllVideos(),
-      ]);
-      dispatch({ type: "SET_DATA", payload: { categories, videos } });
+      try {
+        const [categories, videos] = await Promise.all([
+          getCategories(),
+          getAllVideos(),
+        ]);
+        dispatch({ type: "SET_DATA", payload: { categories, videos } });
+      } catch (err) {
+        console.error(error);
+      }
     })();
+    setLoader(false);
   }, []);
 
   return (
@@ -45,7 +51,9 @@ export const DataProvider = ({ children }) => {
         videos: state.videos,
         categories: state.categories,
         open,
-        setOpen: setOpen,
+        setOpen,
+        loader,
+        setLoader,
       }}
     >
       {children}
