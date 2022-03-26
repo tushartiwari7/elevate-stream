@@ -32,11 +32,15 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     setLoader(true);
     (async () => {
-      const [categories, videos] = await Promise.all([
-        getCategories(),
-        getAllVideos(),
-      ]);
-      dispatch({ type: "SET_DATA", payload: { categories, videos } });
+      try {
+        const [categories, videos] = await Promise.all([
+          getCategories(),
+          getAllVideos(),
+        ]);
+        dispatch({ type: "SET_DATA", payload: { categories, videos } });
+      } catch (err) {
+        console.error(error);
+      }
     })();
     setLoader(false);
   }, []);
