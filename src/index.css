@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--text-color);
 }
 
 code {
@@ -23,4 +24,5 @@ code {
   --bg-tertiary: #181919;
   --text-color: #b2b2b2;
   --text-light: #ffffff;
+  --text-dark: #8c8c8c;
 }

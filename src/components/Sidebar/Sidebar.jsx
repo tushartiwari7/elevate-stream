@@ -9,6 +9,7 @@ import {
   BsClockHistory,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useData } from "../../context";
 
 export const Sidebar = () => {
   const sidebarList = [
@@ -19,14 +20,17 @@ export const Sidebar = () => {
     { id: v4(), name: "History", Icon: BsClockHistory },
   ];
 
+  const { open, setOpen } = useData();
+
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${open ? "active" : ""}`}>
       <ul className="list full-width">
         {sidebarList.map(({ name, id, Icon }) => (
           <Link
             key={id}
             className={`list-item h3 mx-md my-xs p-xs transition ${styles.sidebar_list_item}`}
-            to="/"
+            to={`/${name === "Home" ? "" : name.toLowerCase()}`}
+            onClick={() => setOpen((open) => !open)}
           >
             <span className="mx-xs">
               <Icon />

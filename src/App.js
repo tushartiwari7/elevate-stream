@@ -1,7 +1,8 @@
+import Mockman from "mockman-js";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navbar, Sidebar } from "./components";
-import { Home } from "./pages";
+import { Explore, Home } from "./pages";
 function App() {
   return (
     <div className="App grid">
@@ -10,6 +11,8 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/mockman" element={<Mockman />} />
         </Routes>
       </main>
     </div>

@@ -1,0 +1,49 @@
+.card {
+  color: var(--text-color);
+}
+
+.card_badge {
+  color: var(--bg-primary);
+  right: unset;
+}
+
+.card_details {
+  margin-top: 20px;
+}
+
+.card:hover {
+  box-shadow: 0px 0px 10px 0px var(--bg-primary);
+  transform: scale(0.95);
+  color: var(--text-light);
+  transition: 0.25s ease-in-out;
+}
+.card:hover .card_hover {
+  opacity: 1;
+}
+
+.card_hover {
+  opacity: 0;
+  inset: 0;
+  transition: 0.3s ease-in-out;
+  backdrop-filter: brightness(0.3);
+  z-index: 1;
+  cursor: pointer;
+}
+
+.card_img {
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+.card_meta {
+  margin-top: 5px;
+  color: var(--text-dark);
+}
+
+.card_time_duration {
+  background: var(--bg-tertiary);
+  right: 10px;
+  bottom: 10px;
+  font-size: 14px;
+  padding: 6px 10px;
+}

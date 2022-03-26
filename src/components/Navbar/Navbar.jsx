@@ -1,19 +1,32 @@
-import React from "react";
-import { BsFillCaretDownFill, BsSearch } from "react-icons/bs";
+import { BsFillCaretDownFill, BsSearch, BsList } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.svg";
+import { useData } from "../../context";
+
 export const Navbar = () => {
+  const { setOpen } = useData();
   const searchInputHandler = (e) => {
     e.preventDefault();
-    // submit logic here...
+    // search logic here...
   };
 
+  const toggleSidebar = () => setOpen((open) => !open);
+
   return (
-    <header className={`full-width p-sm flex header fs-l ${styles.header}`}>
-      <Link className={`list white flex flex-center ${styles.logo}`} to="/">
-        <img src={logo} width={"100%"} height={"100%"} />
-      </Link>
+    <header
+      className={`full-width p-sm flex header fs-l pos-rel ${styles.header}`}
+    >
+      <div className="flex">
+        <BsList
+          size="30"
+          className={styles.hamburger}
+          onClick={toggleSidebar}
+        />
+        <Link className={`list white flex flex-center ${styles.logo}`} to="/">
+          <img src={logo} width={"100%"} height={"100%"} />
+        </Link>
+      </div>
       <form
         onSubmit={searchInputHandler}
         className={`searchbar flex flex-center ${styles.searchbar}`}

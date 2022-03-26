@@ -1,0 +1,32 @@
+.video_list {
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  grid-gap: 1rem;
+}
+.video_filter_category {
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.video_filter_category::-webkit-scrollbar {
+  height: 5px;
+}
+
+.category_chip {
+  border-radius: 5rem;
+  cursor: pointer;
+}
+.selected {
+  color: var(--bg-primary);
+  background-color: var(--text-color);
+  transition: 0.3s ease-in-out;
+}
+
+.selected:hover {
+  background-color: var(--text-dark);
+}
+
+@media only screen and (max-width: 480px) {
+  .video_list {
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  }
+}
