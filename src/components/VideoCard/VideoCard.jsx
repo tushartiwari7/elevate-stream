@@ -7,19 +7,49 @@ import {
   BsSave2,
   BsHandThumbsUp,
 } from "react-icons/bs";
-import { getViews } from "../../utils/getViews";
+import { getViews } from "../../utils";
+import { useData } from "../../context";
 
-export const VideoCard = ({
-  thumbnail,
-  name,
-  actors,
-  category,
-  language,
-  releaseYear,
-  duration,
-  views,
-}) => {
+export const VideoCard = (video) => {
+  const {
+    _id,
+    thumbnail,
+    name,
+    actors,
+    category,
+    language,
+    releaseYear,
+    duration,
+    views,
+  } = video;
   const [menu, toggleMenu] = useState(false);
+  const { watchLater, likedVideos, dispatch } = useData();
+
+  const isInWatchLater = watchLater.some((vid) => vid._id === _id);
+  const isInLikedVideos = likedVideos.some((vid) => vid._id === _id);
+
+  const contextMenuHandler = (e) => {
+    switch (e.target.innerText) {
+      case "Add To Liked Videos":
+        dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
+        break;
+      case "Save To Watch Later":
+        dispatch({ type: "SET_WATCH_LATER", payload: video });
+        break;
+
+      case "Remove From Liked Videos":
+        dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: video._id });
+        break;
+
+      case "Remove From Watch Later":
+        dispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: video._id });
+        break;
+
+      default:
+        break;
+    }
+    toggleMenu(!menu);
+  };
 
   return (
     <li
@@ -61,6 +91,7 @@ export const VideoCard = ({
         {menu && (
           <ul
             className={`flex flex-col pos-abs list card ${styles.contextMenu}`}
+            onClick={contextMenuHandler}
           >
             <li className="flex px-sm py-xs">
               <BsShare className={styles.contextMenuItemIcon} size="1.5rem" />
@@ -68,14 +99,22 @@ export const VideoCard = ({
             </li>
             <li className="flex px-sm py-xs">
               <BsSave2 className={styles.contextMenuItemIcon} size="1.5rem" />
-              <span className="fs-m">Save to watch later</span>
+              <span className="fs-m">
+                {isInWatchLater
+                  ? "Remove From Watch Later"
+                  : "Save To Watch Later"}
+              </span>
             </li>
             <li className="flex px-sm py-xs">
               <BsHandThumbsUp
                 className={styles.contextMenuItemIcon}
                 size="1.5rem"
               />
-              <span className="fs-m">Add To Liked Videos</span>
+              <span className="fs-m">
+                {isInLikedVideos
+                  ? "Remove From Liked Videos"
+                  : "Add To Liked Videos"}
+              </span>
             </li>
           </ul>
         )}

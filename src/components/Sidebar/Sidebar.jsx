@@ -7,6 +7,7 @@ import {
   BsSearch,
   BsFillHandThumbsUpFill,
   BsClockHistory,
+  BsSave,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useData } from "../../context";
@@ -17,6 +18,7 @@ export const Sidebar = () => {
     { id: v4(), name: "Explore", Icon: BsHash },
     { id: v4(), name: "Search", Icon: BsSearch },
     { id: v4(), name: "Like", Icon: BsFillHandThumbsUpFill },
+    { id: v4(), name: "Saved", Icon: BsSave },
     { id: v4(), name: "History", Icon: BsClockHistory },
   ];
 
