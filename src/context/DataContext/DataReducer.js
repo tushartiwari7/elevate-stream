@@ -1,6 +1,7 @@
 export const initialState = {
   videos: [],
   categories: [],
+  languages: [],
   watchLater: [],
   likedVideos: [],
 };
@@ -19,6 +20,13 @@ export const filterReducer = (state, { type, payload }) => {
         category: payload.isDel ? "" : payload.categoryName,
       };
 
+    case "LANGUAGES":
+      console.log(payload);
+      return {
+        ...state,
+        language: payload.isDel ? "" : payload.lang,
+      };
+
     default:
       return state;
   }
@@ -31,6 +39,7 @@ export const reducer = (state, { type, payload }) => {
         ...state,
         videos: payload.videos,
         categories: payload.categories,
+        languages: payload.languages,
       };
 
     case "SET_WATCH_LATER":

@@ -5,8 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getAllVideos, getCategories } from "../../services";
-import { getFilteredCategory, getSortedVideos } from "../../utils";
+import { getAllLanguages, getAllVideos, getCategories } from "../../services";
+import {
+  getFilteredCategory,
+  getFilteredLanguage,
+  getSortedVideos,
+} from "../../utils";
 import { filterReducer, initialState, reducer } from "./DataReducer";
 const Data = createContext();
 
@@ -15,6 +19,7 @@ export const DataProvider = ({ children }) => {
   const [filters, filterDispatch] = useReducer(filterReducer, {
     sort: "",
     category: "",
+    language: "",
   });
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -23,11 +28,15 @@ export const DataProvider = ({ children }) => {
     setLoader(true);
     (async () => {
       try {
-        const [categories, videos] = await Promise.all([
+        const [categories, videos, languages] = await Promise.all([
           getCategories(),
           getAllVideos(),
+          getAllLanguages(),
         ]);
-        dispatch({ type: "SET_DATA", payload: { categories, videos } });
+        dispatch({
+          type: "SET_DATA",
+          payload: { categories, videos, languages },
+        });
       } catch (err) {
         console.error(error);
       }
@@ -46,7 +55,8 @@ export const DataProvider = ({ children }) => {
   const filteredProducts = compose(
     state.videos,
     getSortedVideos,
-    getFilteredCategory
+    getFilteredCategory,
+    getFilteredLanguage
   )(filters);
 
   return (
@@ -54,6 +64,7 @@ export const DataProvider = ({ children }) => {
       value={{
         videos: filteredProducts,
         categories: state.categories,
+        languages: state.languages,
         watchLater: state.watchLater,
         likedVideos: state.likedVideos,
         open,

@@ -1,9 +1,9 @@
 export const getSortedVideos = (videos, filters) => {
   switch (filters.sort) {
-    case "Most Recent":
+    case "MOST_RECENT":
       return [...videos].sort((a, b) => b.releaseYear - a.releaseYear);
 
-    case "Most Viewed":
+    case "MOST_VIEWED":
       return [...videos].sort((a, b) => b.views - a.views);
 
     default:

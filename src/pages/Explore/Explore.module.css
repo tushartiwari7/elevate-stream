@@ -16,7 +16,6 @@
   z-index: 2;
   background: var(--bg-primary);
   height: fit-content;
-  width: max-content;
 }
 
 .sort_button > ul > li {
