@@ -6,29 +6,19 @@ import {
   useState,
 } from "react";
 import { getAllVideos, getCategories } from "../../services";
+import { getFilteredCategory, getSortedVideos } from "../../utils";
+import { filterReducer, initialState, reducer } from "./DataReducer";
 const Data = createContext();
-const initialState = {
-  videos: [],
-  categories: [],
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "SET_DATA":
-      return {
-        ...state,
-        videos: action.payload.videos,
-        categories: action.payload.categories,
-      };
-    default:
-      return state;
-  }
-};
 
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [filters, filterDispatch] = useReducer(filterReducer, {
+    sort: "",
+    category: "",
+  });
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
+
   useEffect(() => {
     setLoader(true);
     (async () => {
@@ -45,15 +35,34 @@ export const DataProvider = ({ children }) => {
     setLoader(false);
   }, []);
 
+  const compose = (state, ...functions) => {
+    return (filters) => {
+      return functions.reduce((acc, fn) => {
+        return fn(acc, filters);
+      }, state);
+    };
+  };
+
+  const filteredProducts = compose(
+    state.videos,
+    getSortedVideos,
+    getFilteredCategory
+  )(filters);
+
   return (
     <Data.Provider
       value={{
-        videos: state.videos,
+        videos: filteredProducts,
         categories: state.categories,
+        watchLater: state.watchLater,
+        likedVideos: state.likedVideos,
         open,
         setOpen,
         loader,
         setLoader,
+        filters,
+        filterDispatch,
+        dispatch,
       }}
     >
       {children}
