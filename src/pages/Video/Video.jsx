@@ -7,7 +7,7 @@ import {
   BsFillChatDotsFill,
   BsShare,
 } from "react-icons/bs";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useData } from "../../context";
 import styles from "./Video.module.css";
 export const Video = () => {
@@ -21,13 +21,13 @@ export const Video = () => {
 
   const dispatchHandler = (type) => {
     switch (type) {
-      case "like-video":
+      case "LIKE-VIDEO":
         isInLikedVideos
           ? dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: youtubeId })
           : dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
         break;
 
-      case "watch-later":
+      case "WATCH-LATER":
         isInWatchLater
           ? dispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: youtubeId })
           : dispatch({ type: "SET_WATCH_LATER", payload: video });
@@ -61,7 +61,7 @@ export const Video = () => {
           <ul className={`flex list py-md full-width ${styles.video_actions}`}>
             <li
               className="px-sm pointer"
-              onClick={() => dispatchHandler("like-video")}
+              onClick={() => dispatchHandler("LIKE-VIDEO")}
             >
               {isInLikedVideos ? (
                 <BsHandThumbsUpFill size="3rem" color="var(--primary)" />
@@ -71,7 +71,7 @@ export const Video = () => {
             </li>
             <li
               className="px-sm pointer"
-              onClick={() => dispatchHandler("watch-later")}
+              onClick={() => dispatchHandler("WATCH-LATER")}
             >
               {isInWatchLater ? (
                 <BsBookmarkCheckFill size="3rem" color="var(--primary)" />
