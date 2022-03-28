@@ -9,18 +9,19 @@ import {
 } from "react-icons/bs";
 import { getViews } from "../../utils";
 import { useData } from "../../context";
+import { Link } from "react-router-dom";
 
 export const VideoCard = (video) => {
   const {
     _id,
     thumbnail,
     name,
-    actors,
     category,
     language,
     releaseYear,
     duration,
     views,
+    actors,
   } = video;
   const [menu, toggleMenu] = useState(false);
   const { watchLater, likedVideos, dispatch } = useData();
@@ -53,7 +54,7 @@ export const VideoCard = (video) => {
       className={`card p-md ${styles.card}`}
       onClick={() => menu && toggleMenu(!menu)}
     >
-      <div className="flex pos-rel">
+      <Link className="flex pos-rel" to={`/video?id=${_id}`}>
         <img
           className={styles.card_img}
           src={thumbnail}
@@ -72,7 +73,7 @@ export const VideoCard = (video) => {
         <div className={`pos-abs flex flex-center  ${styles.card_hover}`}>
           <BsFillPlayFill size={"10rem"} color={"white"} />
         </div>
-      </div>
+      </Link>
       <div className={`flex flex-col pos-rel ${styles.card_details}`}>
         <h3 className={`h3 ${styles.card_title}`}>{name}</h3>
         <label className="fs-m">{actors.join(", ")}</label>

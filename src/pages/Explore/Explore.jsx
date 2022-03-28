@@ -24,9 +24,9 @@ export const Explore = () => {
     });
   return (
     <>
-      <div className="flex px-md">
+      <div className={`flex px-md ${styles.filter_wrapper}`}>
         <ul
-          className={`list flex m-md px-md ${styles.video_filter_category}`}
+          className={`list flex m-md py-xs ${styles.video_filter_category}`}
           onClick={(e) =>
             categoryDispatchHandler(e.target.id === "All" ? "" : e.target.id)
           }
@@ -104,6 +104,9 @@ export const Explore = () => {
           <VideoCard key={video._id} {...video} />
         ))}
       </ul>
+      <h2 className={`h2 ubuntu pos-rel ${styles.top40}`}>
+        {videos.length === 0 ? "No videos found" : ""}
+      </h2>
     </>
   );
 };

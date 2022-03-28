@@ -16,6 +16,7 @@
   z-index: 2;
   background: var(--bg-primary);
   height: fit-content;
+  transition: 3s;
 }
 
 .sort_button > ul > li {
@@ -28,6 +29,10 @@
 
 .sort_button:hover > ul {
   display: block;
+}
+
+.top40 {
+  top: 40%;
 }
 
 .video_list {
@@ -57,7 +62,12 @@
 .selected:hover {
   background-color: var(--text-dark);
 }
-
+@media only screen and (max-width: 880px) {
+  .filter_wrapper {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
 @media only screen and (max-width: 480px) {
   .video_list {
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));

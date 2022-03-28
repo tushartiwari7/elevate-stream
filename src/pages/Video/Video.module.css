@@ -1,0 +1,7 @@
+.main_video {
+  grid-template-columns: 2fr 1fr;
+}
+.video_actions {
+  justify-content: flex-end;
+  border-bottom: 2px solid var(--bg-secondary);
+}
