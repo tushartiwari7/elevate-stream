@@ -1,63 +1,69 @@
 export const initialState = {
   videos: [],
   categories: [],
+  languages: [],
   watchLater: [],
   likedVideos: [],
 };
 
-export const filterReducer = (state, action) => {
-  switch (action.type) {
+export const filterReducer = (state, { type, payload }) => {
+  switch (type) {
     case "SORT":
       return {
         ...state,
-        sort: action.payload,
+        sort: payload,
       };
 
     case "CATEGORIES":
       return {
         ...state,
-        category: action.payload.isDel ? "" : action.payload.categoryName,
+        category: payload.isDel ? "" : payload.categoryName,
       };
+
+    case "LANGUAGES":
+      console.log(payload);
+      return {
+        ...state,
+        language: payload.isDel ? "" : payload.lang,
+      };
+
     default:
       return state;
   }
 };
 
-export const reducer = (state, action) => {
-  switch (action.type) {
+export const reducer = (state, { type, payload }) => {
+  switch (type) {
     case "SET_DATA":
       return {
         ...state,
-        videos: action.payload.videos,
-        categories: action.payload.categories,
+        videos: payload.videos,
+        categories: payload.categories,
+        languages: payload.languages,
       };
 
     case "SET_WATCH_LATER":
       return {
         ...state,
-        watchLater: [...state.watchLater, action.payload],
+        watchLater: [...state.watchLater, payload],
       };
 
     case "SET_LIKED_VIDEOS":
       return {
         ...state,
-        likedVideos: [...state.likedVideos, action.payload],
+        likedVideos: [...state.likedVideos, payload],
       };
 
     case "REMOVE_FROM_LIKED_VIDEOS":
       return {
         ...state,
-        likedVideos: state.likedVideos.filter(
-          (video) => video._id !== action.payload
-        ),
+        likedVideos: state.likedVideos.filter((video) => video._id !== payload),
       };
 
     case "REMOVE_FROM_WATCH_LATER":
       return {
         ...state,
-        watchLater: state.watchLater.filter(
-          (video) => video._id !== action.payload
-        ),
+        watchLater: state.watchLater.filter((video) => video._id !== payload),
       };
 
     default:

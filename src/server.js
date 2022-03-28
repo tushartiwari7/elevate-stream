@@ -15,10 +15,13 @@ import {
 } from "./backend/controllers/VideoController";
 import { videos } from "./backend/db/videos";
 import { categories } from "./backend/db/categories";
+import { languages } from "./backend/db/languages";
+import { users } from "./backend/db/users";
 import {
   getAllCategoriesHandler,
   getCategoryHandler,
 } from "./backend/controllers/CategoryController";
+import { getAllLanguagesHandler } from "./backend/controllers/LanguageController";
 import {
   getLikedVideosHandler,
   addItemToLikedVideos,
@@ -32,7 +35,6 @@ import {
   addVideoToPlaylistHandler,
   removeVideoFromPlaylistHandler,
 } from "./backend/controllers/PlaylistController";
-import { users } from "./backend/db/users";
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
     serializers: {
@@ -43,6 +45,7 @@ export function makeServer({ environment = "development" } = {}) {
     models: {
       video: Model,
       category: Model,
+      language: Model,
       user: Model,
       like: Model,
       history: Model,
@@ -56,6 +59,7 @@ export function makeServer({ environment = "development" } = {}) {
         server.create("video", { ...item });
       });
       categories.forEach((item) => server.create("category", { ...item }));
+      languages.forEach((item) => server.create("language", { ...item }));
       users.forEach((item) =>
         server.create("user", {
           ...item,
@@ -81,6 +85,9 @@ export function makeServer({ environment = "development" } = {}) {
       // categories routes (public)
       this.get("/categories", getAllCategoriesHandler.bind(this));
       this.get("/categories/:categoryId", getCategoryHandler.bind(this));
+
+      // language routes (public)
+      this.get("/languages", getAllLanguagesHandler.bind(this));
 
       // likes routes (private)
       this.get("/user/likes", getLikedVideosHandler.bind(this));

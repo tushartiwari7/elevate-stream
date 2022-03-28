@@ -21,10 +21,20 @@
   overflow-y: auto;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .ubuntu {
   font-family: "Ubuntu", sans-serif;
 }
 
+.video-layout {
+  grid-template-columns: 10rem auto;
+}
+.video-layout > .sidebar > .list > .list-item {
+  margin: 1rem 0;
+}
 .sidebar.active {
   left: 0;
   top: 11rem;

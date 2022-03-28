@@ -2,19 +2,27 @@ import Mockman from "mockman-js";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navbar, Sidebar } from "./components";
-import { Explore, Home } from "./pages";
+import { Explore, Home, Video } from "./pages";
 import loaderSvg from "./assets/loader.svg";
 import { useData } from "./context";
+import { useLocation } from "react-router-dom";
+
 function App() {
   const { loader } = useData();
+  const location = useLocation();
   return (
-    <div className="App grid">
+    <div
+      className={`App grid ${
+        location.pathname === "/video" ? "video-layout" : ""
+      }`}
+    >
       <Navbar />
       <Sidebar />
       <main className="main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/video" element={<Video />} />
           <Route path="/mockman" element={<Mockman />} />
         </Routes>
       </main>
