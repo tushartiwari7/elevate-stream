@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { getViews } from "../../utils";
 import { useData } from "../../context";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const VideoCard = (video) => {
   const {
@@ -49,9 +49,13 @@ export const VideoCard = (video) => {
     toggleMenu(!menu);
   };
 
+  const location = useLocation();
+  const path = location.pathname;
   return (
     <li
-      className={`card p-md ${styles.card}`}
+      className={`card p-md ${styles.card} ${
+        path === "/video" ? styles.on_video_page_card : ""
+      }`}
       onClick={() => menu && toggleMenu(!menu)}
     >
       <Link className="flex pos-rel" to={`/video?id=${_id}`}>

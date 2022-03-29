@@ -21,10 +21,16 @@ export const filterReducer = (state, { type, payload }) => {
       };
 
     case "LANGUAGES":
-      console.log(payload);
       return {
         ...state,
         language: payload.isDel ? "" : payload.lang,
+      };
+
+    case "CLEAR_FILTERS":
+      return {
+        sort: "",
+        category: "",
+        language: "",
       };
 
     default:

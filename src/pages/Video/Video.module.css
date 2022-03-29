@@ -1,7 +1,36 @@
-.main_video {
+.video_page {
   grid-template-columns: 2fr 1fr;
+  height: calc(100vh - 14rem);
 }
+
+.avatar {
+  color: var(--bg-secondary);
+}
+
+.comment_section {
+  background: var(--bg-primary);
+}
+
+.comment_btns {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.comment_btns button {
+  color: var(--bg-secondary);
+}
+
+.main_video {
+  padding-bottom: 5rem;
+}
+
 .video_actions {
   justify-content: flex-end;
   border-bottom: 2px solid var(--bg-secondary);
+}
+.other_videos_list {
+  overflow-y: auto;
+}
+.other_videos_list::-webkit-scrollbar {
+  width: 5px;
 }

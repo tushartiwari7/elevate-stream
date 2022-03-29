@@ -4,7 +4,15 @@
   width: 100%;
   justify-content: space-around;
 }
+.on_video_page_card {
+  height: fit-content;
+  max-width: 100%;
+  margin-bottom: 2rem;
+}
 
+.on_video_page_card .card_img {
+  aspect-ratio: 2/1;
+}
 .card_badge {
   color: var(--bg-primary);
   right: unset;
@@ -49,6 +57,7 @@
 
 .card_time_duration {
   background: var(--bg-tertiary);
+  color: var(--text-light);
   right: 10px;
   bottom: 10px;
   font-size: 14px;

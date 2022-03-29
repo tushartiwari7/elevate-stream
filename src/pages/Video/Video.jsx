@@ -8,6 +8,7 @@ import {
   BsShare,
 } from "react-icons/bs";
 import { useSearchParams } from "react-router-dom";
+import { VideoCard } from "../../components";
 import { useData } from "../../context";
 import styles from "./Video.module.css";
 export const Video = () => {
@@ -40,8 +41,8 @@ export const Video = () => {
   };
 
   return (
-    <div className={`grid m-md ${styles.main_video}`}>
-      <section>
+    <div className={`grid m-md ${styles.video_page}`}>
+      <section className={styles.main_video}>
         <div className="mx-md">
           {youtubeId ? (
             <iframe
@@ -87,8 +88,31 @@ export const Video = () => {
             </li>
           </ul>
         </div>
+        <div className="mx-md">
+          <div className={`flex p-sm rounded-m ${styles.comment_section}`}>
+            <div
+              class={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
+            >
+              MK
+            </div>
+            <div className="flex flex-col full-width">
+              <input
+                className="input m-xs p-xs rounded-m"
+                placeholder="Add a Comment... (non-functional)"
+              />
+              <div className={`flex ${styles.comment_btns}`}>
+                <button className="btn btn-primary m-xs p-xs">Cancel</button>
+                <button className="btn btn-primary m-xs p-xs">Post</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
-      <ul>Video List</ul>
+      <ul className={`mx-md flex flex-col ${styles.other_videos_list}`}>
+        {videos.map((video) => (
+          <VideoCard key={video._id} {...video} />
+        ))}
+      </ul>
     </div>
   );
 };
