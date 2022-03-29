@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import styles from "./Explore.module.css";
 import { VideoCard } from "../../components";
 import { useData } from "../../context";
 import { BsFillCaretDownFill } from "react-icons/bs";
+
 export const Explore = () => {
   const { categories, videos, languages, filters, filterDispatch } = useData();
 
@@ -22,6 +24,9 @@ export const Explore = () => {
         isDel: filters.language === lang,
       },
     });
+
+  useEffect(() => () => filterDispatch({ type: "CLEAR_FILTERS" }), []);
+
   return (
     <>
       <div className={`flex px-md ${styles.filter_wrapper}`}>
