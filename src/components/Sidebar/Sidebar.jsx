@@ -17,7 +17,7 @@ export const Sidebar = () => {
     { id: v4(), name: "Home", Icon: BsHouseFill },
     { id: v4(), name: "Explore", Icon: BsHash },
     { id: v4(), name: "Search", Icon: BsSearch },
-    { id: v4(), name: "Like", Icon: BsFillHandThumbsUpFill },
+    { id: v4(), name: "Liked", Icon: BsFillHandThumbsUpFill },
     { id: v4(), name: "Saved", Icon: BsSave },
     { id: v4(), name: "History", Icon: BsClockHistory },
   ];

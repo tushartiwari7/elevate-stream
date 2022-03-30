@@ -62,11 +62,8 @@ export const DataProvider = ({ children }) => {
   return (
     <Data.Provider
       value={{
+        ...state,
         videos: filteredProducts,
-        categories: state.categories,
-        languages: state.languages,
-        watchLater: state.watchLater,
-        likedVideos: state.likedVideos,
         open,
         setOpen,
         loader,

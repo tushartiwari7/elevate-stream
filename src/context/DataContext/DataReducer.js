@@ -4,6 +4,7 @@ export const initialState = {
   languages: [],
   watchLater: [],
   likedVideos: [],
+  history: [],
 };
 
 export const filterReducer = (state, { type, payload }) => {
@@ -52,6 +53,39 @@ export const reducer = (state, { type, payload }) => {
       return {
         ...state,
         watchLater: [...state.watchLater, payload],
+      };
+
+    case "ADD_TO_HISTORY":
+      console.log(payload);
+      return {
+        ...state,
+        history: state.history.some(
+          (day) => day.date === payload.timeStamp.date
+        )
+          ? state.history.map((day) =>
+              day.date === payload.timeStamp.date
+                ? {
+                    ...day,
+                    videos: [
+                      { ...payload.video, time: payload.timeStamp.time },
+                      ...day.videos,
+                    ],
+                  }
+                : day
+            )
+          : [
+              ...state.history,
+              {
+                date: payload.timeStamp.date,
+                videos: [{ ...payload.video, time: payload.timeStamp.time }],
+              },
+            ],
+      };
+
+    case "CLEAR_HISTORY":
+      return {
+        ...state,
+        history: [],
       };
 
     case "SET_LIKED_VIDEOS":

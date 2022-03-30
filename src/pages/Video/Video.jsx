@@ -1,4 +1,5 @@
-import React from "react";
+import dayjs from "dayjs";
+import React, { useEffect } from "react";
 import {
   BsHandThumbsUp,
   BsHandThumbsUpFill,
@@ -39,6 +40,23 @@ export const Video = () => {
     }
     toggleMenu(!menu);
   };
+  // history = [{date,[{video,time}]}]
+  useEffect(() => {
+    if (video) {
+      // temporarily subtracting somedays to check if its working for videos watched on previous days.
+      const today = dayjs().subtract(Math.floor(Math.random() * 5), "day");
+      dispatch({
+        type: "ADD_TO_HISTORY",
+        payload: {
+          timeStamp: {
+            date: today.format("DD/MM/YYYY"),
+            time: today.format("HH:mm"),
+          },
+          video,
+        },
+      });
+    }
+  }, [video]);
 
   return (
     <div className={`grid m-md ${styles.video_page}`}>
@@ -91,7 +109,7 @@ export const Video = () => {
         <div className="mx-md">
           <div className={`flex p-sm rounded-m ${styles.comment_section}`}>
             <div
-              class={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
+              className={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
             >
               MK
             </div>
