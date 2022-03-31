@@ -11,16 +11,18 @@ import {
   getFilteredLanguage,
   getSortedVideos,
 } from "../../utils";
-import { filterReducer, initialState, reducer } from "./DataReducer";
+import { compose } from "../../utils/compose";
+import {
+  filterReducer,
+  initialFilters,
+  initialState,
+  reducer,
+} from "./DataReducer";
 const Data = createContext();
 
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [filters, filterDispatch] = useReducer(filterReducer, {
-    sort: "",
-    category: "",
-    language: "",
-  });
+  const [filters, filterDispatch] = useReducer(filterReducer, initialFilters);
   const [open, setOpen] = useState(false);
   const [loader, setLoader] = useState(false);
 
@@ -43,14 +45,6 @@ export const DataProvider = ({ children }) => {
     })();
     setLoader(false);
   }, []);
-
-  const compose = (state, ...functions) => {
-    return (filters) => {
-      return functions.reduce((acc, fn) => {
-        return fn(acc, filters);
-      }, state);
-    };
-  };
 
   const filteredProducts = compose(
     state.videos,

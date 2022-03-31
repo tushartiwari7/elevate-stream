@@ -8,3 +8,7 @@
   color: var(--text-light);
   background: var(--bg-secondary);
 }
+
+.sidebar_list_item_text {
+  display: none;
+}

@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 export const initialState = {
   videos: [],
   categories: [],
@@ -5,6 +7,13 @@ export const initialState = {
   watchLater: [],
   likedVideos: [],
   history: [],
+  playlist: [],
+};
+
+export const initialFilters = {
+  sort: "",
+  category: "",
+  language: "",
 };
 
 export const filterReducer = (state, { type, payload }) => {
@@ -104,6 +113,48 @@ export const reducer = (state, { type, payload }) => {
       return {
         ...state,
         watchLater: state.watchLater.filter((video) => video._id !== payload),
+      };
+
+    case "CREATE_NEW_PLAYLIST":
+      const { playlistName, firstVideo } = payload;
+      return {
+        ...state,
+        playlist: [
+          ...state.playlist,
+          { _id: uuid(), playlistName, videos: [firstVideo] },
+        ],
+      };
+
+    case "DELETE_PLAYLIST":
+      return {
+        ...state,
+        playlist: state.playlist.filter((playlist) => playlist._id !== payload),
+      };
+
+    case "ADD_VIDEO_TO_PLAYLIST":
+      console.log(payload);
+      return {
+        ...state,
+        playlist: state.playlist.map((playlist) =>
+          playlist._id === payload.playlistId
+            ? { ...playlist, videos: playlist.videos.concat(payload.video) }
+            : playlist
+        ),
+      };
+
+    case "REMOVE_VIDEO_FROM_PLAYLIST":
+      return {
+        ...state,
+        playlist: state.playlist.map((playlist) =>
+          playlist._id === payload.playlistId
+            ? {
+                ...playlist,
+                videos: playlist.videos.filter(
+                  (video) => video._id !== payload.videoId
+                ),
+              }
+            : playlist
+        ),
       };
 
     default:

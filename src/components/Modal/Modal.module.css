@@ -1,0 +1,30 @@
+.check_icon {
+  margin-left: auto;
+}
+
+.form_submit_btn {
+  display: none;
+}
+
+.heading {
+  text-align: left;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.playlist_modal {
+  backdrop-filter: contrast(0.6);
+  z-index: 3;
+  inset: 0;
+}
+
+.playlist_modal > section {
+  background: var(--bg-secondary);
+}
+
+.playlist_list {
+  composes: contextMenu from "../../components/VideoCard/VideoCard.module.css";
+  margin-top: 1rem;
+  max-height: 50vh;
+  overflow-y: auto;
+}

@@ -33,7 +33,7 @@
   grid-template-columns: 10rem auto;
 }
 .video-layout > .sidebar > .list > .list-item {
-  margin: 1rem 0;
+  margin: 1rem;
 }
 .sidebar.active {
   left: 0;

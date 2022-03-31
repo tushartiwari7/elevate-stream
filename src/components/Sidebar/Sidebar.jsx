@@ -9,7 +9,7 @@ import {
   BsClockHistory,
   BsSave,
 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useData } from "../../context";
 
 export const Sidebar = () => {
@@ -24,6 +24,8 @@ export const Sidebar = () => {
 
   const { open, setOpen } = useData();
 
+  const location = useLocation();
+
   return (
     <aside className={`sidebar ${open ? "active" : ""}`}>
       <ul className="list full-width">
@@ -35,9 +37,20 @@ export const Sidebar = () => {
             onClick={() => setOpen((open) => !open)}
           >
             <span className="mx-xs">
-              <Icon />
+              <Icon
+                size={location.pathname === "/video" && "3rem"}
+                title={name}
+              />
             </span>
-            {name}
+            <span
+              className={
+                location.pathname === "/video"
+                  ? styles.sidebar_list_item_text
+                  : ""
+              }
+            >
+              {name}
+            </span>
           </Link>
         ))}
       </ul>
