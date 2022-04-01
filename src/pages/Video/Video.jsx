@@ -17,8 +17,8 @@ export const Video = () => {
   const [params] = useSearchParams();
   const youtubeId = params.get("id");
   const { videos, likedVideos, watchLater, dispatch } = useData();
-  const [open, setOpen] = useState(false);
 
+  const [openModal, setModal] = useState(false);
   const isInWatchLater = watchLater.some((vid) => vid._id === youtubeId);
   const isInLikedVideos = likedVideos.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
@@ -40,7 +40,6 @@ export const Video = () => {
       default:
         break;
     }
-    toggleMenu(!menu);
   };
   // history = [{date,[{video,time}]}]
   useEffect(() => {
@@ -57,6 +56,7 @@ export const Video = () => {
           video,
         },
       });
+      document.title = `${video.name} - Elevate Stream`;
     }
   }, [video]);
 
@@ -112,7 +112,7 @@ export const Video = () => {
                 title="Share this Video"
               />
             </li>
-            <li className="px-sm pointer" onClick={() => setOpen(true)}>
+            <li className="px-sm pointer" onClick={() => setModal(true)}>
               <BsFolderPlus
                 size="3rem"
                 color="var(--primary)"
@@ -167,7 +167,7 @@ export const Video = () => {
           <VideoCard key={video._id} {...video} />
         ))}
       </ul>
-      {open && <Modal {...{ setOpen, video }} />}
+      {openModal && <Modal {...{ setModal, video }} />}
     </div>
   );
 };

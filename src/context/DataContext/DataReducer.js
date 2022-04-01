@@ -65,7 +65,6 @@ export const reducer = (state, { type, payload }) => {
       };
 
     case "ADD_TO_HISTORY":
-      console.log(payload);
       return {
         ...state,
         history: state.history.some(
@@ -117,6 +116,15 @@ export const reducer = (state, { type, payload }) => {
 
     case "CREATE_NEW_PLAYLIST":
       const { playlistName, firstVideo } = payload;
+      if (
+        state.playlist.some(
+          (playlist) => playlist.playlistName === playlistName
+        )
+      ) {
+        console.error("Playlist with this name already exists");
+        alert("Playlist with this name already exists");
+        return state;
+      }
       return {
         ...state,
         playlist: [
@@ -132,7 +140,6 @@ export const reducer = (state, { type, payload }) => {
       };
 
     case "ADD_VIDEO_TO_PLAYLIST":
-      console.log(payload);
       return {
         ...state,
         playlist: state.playlist.map((playlist) =>

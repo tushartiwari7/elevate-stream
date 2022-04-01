@@ -1,6 +1,6 @@
-import React from "react";
+import { useEffect } from "react";
 import styles from "./Sidebar.module.css";
-import { v4 } from "uuid";
+import { v4 as uuid } from "uuid";
 import {
   BsHouseFill,
   BsHash,
@@ -9,22 +9,32 @@ import {
   BsClockHistory,
   BsSave,
 } from "react-icons/bs";
+import { CgPlayList } from "react-icons/cg";
 import { Link, useLocation } from "react-router-dom";
 import { useData } from "../../context";
 
 export const Sidebar = () => {
   const sidebarList = [
-    { id: v4(), name: "Home", Icon: BsHouseFill },
-    { id: v4(), name: "Explore", Icon: BsHash },
-    { id: v4(), name: "Search", Icon: BsSearch },
-    { id: v4(), name: "Liked", Icon: BsFillHandThumbsUpFill },
-    { id: v4(), name: "Saved", Icon: BsSave },
-    { id: v4(), name: "History", Icon: BsClockHistory },
+    { id: uuid(), name: "Home", Icon: BsHouseFill },
+    { id: uuid(), name: "Explore", Icon: BsHash },
+    { id: uuid(), name: "Search", Icon: BsSearch },
+    { id: uuid(), name: "Liked", Icon: BsFillHandThumbsUpFill },
+    { id: uuid(), name: "Saved", Icon: BsSave },
+    { id: uuid(), name: "History", Icon: BsClockHistory },
+    { id: uuid(), name: "Playlists", Icon: CgPlayList },
   ];
 
   const { open, setOpen } = useData();
 
   const location = useLocation();
+  const isOnVideoPage = location.pathname === "/video";
+
+  useEffect(() => {
+    if (!isOnVideoPage) {
+      document.title = `${location.pathname.slice(1).toUpperCase()}  
+      ${location.pathname.length > 1 ? "|" : ""} Elevate Stream`;
+    }
+  });
 
   return (
     <aside className={`sidebar ${open ? "active" : ""}`}>
@@ -37,17 +47,10 @@ export const Sidebar = () => {
             onClick={() => setOpen((open) => !open)}
           >
             <span className="mx-xs">
-              <Icon
-                size={location.pathname === "/video" && "3rem"}
-                title={name}
-              />
+              <Icon size={isOnVideoPage ? "3rem" : "2.5rem"} title={name} />
             </span>
             <span
-              className={
-                location.pathname === "/video"
-                  ? styles.sidebar_list_item_text
-                  : ""
-              }
+              className={isOnVideoPage ? styles.sidebar_list_item_text : ""}
             >
               {name}
             </span>

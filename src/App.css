@@ -40,6 +40,10 @@
   top: 11rem;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .loader {
   inset: 0;
   backdrop-filter: brightness(0.3);

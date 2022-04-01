@@ -23,7 +23,8 @@ const Data = createContext();
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [filters, filterDispatch] = useReducer(filterReducer, initialFilters);
-  const [open, setOpen] = useState(false);
+
+  const [open, setOpen] = useState(false); //  to open/close the sidebar
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {

@@ -9,7 +9,6 @@
 .heading {
   text-align: left;
   color: var(--text-light);
-  margin-bottom: 2rem;
 }
 
 .playlist_modal {

@@ -4,7 +4,6 @@ import { useData } from "../../context";
 import styles from "./History.module.css";
 export const History = () => {
   const { history } = useData();
-  console.log(history);
   return (
     <div>
       <h1 className={`h1 ubuntu p-md ${styles.heading}`}>History</h1>

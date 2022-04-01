@@ -1,4 +1,22 @@
 .section {
   text-align: start;
   color: var(--text-light);
+  border-top: 1px solid var(--bg-primary);
+  border-bottom: 1px solid var(--bg-primary);
+}
+
+.delete_playlist_btn {
+  composes: sort_button from "../../pages/Explore/Explore.module.css";
+  margin-left: auto;
+  gap: 1rem;
+  border: 2px solid var(--secondary400);
+  cursor: pointer;
+}
+
+.delete_playlist_btn:hover {
+  background: var(--secondary400);
+}
+
+.playlist_title {
+  align-items: baseline;
 }

@@ -11,6 +11,7 @@ import {
 import { getViews } from "../../utils";
 import { useData } from "../../context";
 import { Link, useLocation } from "react-router-dom";
+import { Modal } from "../";
 
 export const VideoCard = (video) => {
   const {
@@ -29,6 +30,8 @@ export const VideoCard = (video) => {
 
   const isInWatchLater = watchLater.some((vid) => vid._id === _id);
   const isInLikedVideos = likedVideos.some((vid) => vid._id === _id);
+
+  const [openModal, setModal] = useState(false);
 
   const contextMenuHandler = (e) => {
     switch (e.target.title) {
@@ -130,7 +133,11 @@ export const VideoCard = (video) => {
                   : "Add To Liked Videos"}
               </span>
             </li>
-            <li className="flex px-sm py-xs" title="Add to Playlist">
+            <li
+              className="flex px-sm py-xs"
+              title="Add to Playlist"
+              onClick={() => setModal(true)}
+            >
               <BsFolderPlus
                 className={styles.contextMenuItemIcon}
                 size="1.5rem"
@@ -143,6 +150,7 @@ export const VideoCard = (video) => {
           </ul>
         )}
       </div>
+      {openModal && <Modal {...{ setModal, video }} />}
     </li>
   );
 };
