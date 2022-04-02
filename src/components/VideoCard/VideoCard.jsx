@@ -6,10 +6,12 @@ import {
   BsShare,
   BsSave2,
   BsHandThumbsUp,
+  BsFolderPlus,
 } from "react-icons/bs";
 import { getViews } from "../../utils";
 import { useData } from "../../context";
 import { Link, useLocation } from "react-router-dom";
+import { Modal } from "../";
 
 export const VideoCard = (video) => {
   const {
@@ -28,6 +30,8 @@ export const VideoCard = (video) => {
 
   const isInWatchLater = watchLater.some((vid) => vid._id === _id);
   const isInLikedVideos = likedVideos.some((vid) => vid._id === _id);
+
+  const [openModal, setModal] = useState(false);
 
   const contextMenuHandler = (e) => {
     switch (e.target.title) {
@@ -53,7 +57,7 @@ export const VideoCard = (video) => {
   const path = location.pathname;
   return (
     <li
-      className={`card p-md ${styles.card} ${
+      className={`card rounded-m ${styles.card} ${
         path === "/video" ? styles.on_video_page_card : ""
       }`}
       onClick={() => menu && toggleMenu(!menu)}
@@ -78,7 +82,7 @@ export const VideoCard = (video) => {
           <BsFillPlayFill size={"10rem"} color={"white"} />
         </div>
       </Link>
-      <div className={`flex flex-col pos-rel ${styles.card_details}`}>
+      <div className={`flex flex-col p-md pos-rel ${styles.card_details}`}>
         <h3 className={`h3 ${styles.card_title}`}>{name}</h3>
         <label className="fs-m">{actors.join(", ")}</label>
         <label className={`fs-m ${styles.card_meta}`}>
@@ -129,9 +133,24 @@ export const VideoCard = (video) => {
                   : "Add To Liked Videos"}
               </span>
             </li>
+            <li
+              className="flex px-sm py-xs"
+              title="Add to Playlist"
+              onClick={() => setModal(true)}
+            >
+              <BsFolderPlus
+                className={styles.contextMenuItemIcon}
+                size="1.5rem"
+                title="like-video"
+              />
+              <span className="fs-m" title="Add to Playlist">
+                Add To Playlist
+              </span>
+            </li>
           </ul>
         )}
       </div>
+      {openModal && <Modal {...{ setModal, video }} />}
     </li>
   );
 };

@@ -115,15 +115,3 @@ export const Explore = () => {
     </>
   );
 };
-
-//Saving this for future reference: will be using this snippet in src\pages\Playlists\Playlists.jsx:
-
-// {categories.map((category) => (
-//   <Section title={category.categoryName}>
-//     <ul className={`list grid ${styles.video_list}`}>
-//       <VideoCard />
-//       <VideoCard />
-//       <VideoCard />
-//       <VideoCard />
-//     </ul>
-//   </Section>))}

@@ -1,4 +1,5 @@
-import React from "react";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
 import {
   BsHandThumbsUp,
   BsHandThumbsUpFill,
@@ -6,9 +7,10 @@ import {
   BsBookmarkCheckFill,
   BsFillChatDotsFill,
   BsShare,
+  BsFolderPlus,
 } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
-import { VideoCard } from "../../components";
+import { Link, useSearchParams } from "react-router-dom";
+import { Modal, VideoCard } from "../../components";
 import { useData } from "../../context";
 import styles from "./Video.module.css";
 export const Video = () => {
@@ -16,6 +18,7 @@ export const Video = () => {
   const youtubeId = params.get("id");
   const { videos, likedVideos, watchLater, dispatch } = useData();
 
+  const [openModal, setModal] = useState(false);
   const isInWatchLater = watchLater.some((vid) => vid._id === youtubeId);
   const isInLikedVideos = likedVideos.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
@@ -37,8 +40,25 @@ export const Video = () => {
       default:
         break;
     }
-    toggleMenu(!menu);
   };
+  // history = [{date,[{video,time}]}]
+  useEffect(() => {
+    if (video) {
+      // temporarily subtracting somedays to check if its working for videos watched on previous days.
+      const today = dayjs().subtract(Math.floor(Math.random() * 5), "day");
+      dispatch({
+        type: "ADD_TO_HISTORY",
+        payload: {
+          timeStamp: {
+            date: today.format("DD/MM/YYYY"),
+            time: today.format("HH:mm"),
+          },
+          video,
+        },
+      });
+      document.title = `${video.name} - Elevate Stream`;
+    }
+  }, [video]);
 
   return (
     <div className={`grid m-md ${styles.video_page}`}>
@@ -65,33 +85,67 @@ export const Video = () => {
               onClick={() => dispatchHandler("LIKE-VIDEO")}
             >
               {isInLikedVideos ? (
-                <BsHandThumbsUpFill size="3rem" color="var(--primary)" />
+                <BsHandThumbsUpFill
+                  size="3rem"
+                  color="var(--primary)"
+                  title="Unlike Video"
+                />
               ) : (
-                <BsHandThumbsUp size="3rem" color="var(--primary)" />
+                <BsHandThumbsUp
+                  size="3rem"
+                  color="var(--primary)"
+                  title="Like Video"
+                />
               )}
+            </li>
+            <Link className="px-sm pointer" to={`?id=${youtubeId}#comments`}>
+              <BsFillChatDotsFill
+                size="3rem"
+                color="var(--primary)"
+                title="Add a Comment"
+              />
+            </Link>
+            <li className="px-sm pointer">
+              <BsShare
+                size="3rem"
+                color="var(--primary)"
+                title="Share this Video"
+              />
+            </li>
+            <li className="px-sm pointer" onClick={() => setModal(true)}>
+              <BsFolderPlus
+                size="3rem"
+                color="var(--primary)"
+                title="Add To Playlist"
+              />
             </li>
             <li
               className="px-sm pointer"
               onClick={() => dispatchHandler("WATCH-LATER")}
             >
               {isInWatchLater ? (
-                <BsBookmarkCheckFill size="3rem" color="var(--primary)" />
+                <BsBookmarkCheckFill
+                  size="3rem"
+                  color="var(--primary)"
+                  title="Remove from Saved"
+                />
               ) : (
-                <BsBookmark size="3rem" color="var(--primary)" />
+                <BsBookmark
+                  size="3rem"
+                  color="var(--primary)"
+                  title="Add to Saved"
+                />
               )}
-            </li>
-            <li className="px-sm pointer">
-              <BsFillChatDotsFill size="3rem" color="var(--primary)" />
-            </li>
-            <li className="px-sm pointer">
-              <BsShare size="3rem" color="var(--primary)" />
             </li>
           </ul>
         </div>
         <div className="mx-md">
-          <div className={`flex p-sm rounded-m ${styles.comment_section}`}>
+          <div
+            className={`flex p-sm rounded-m ${styles.comment_section}`}
+            id="comments"
+          >
             <div
-              class={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
+              className={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
             >
               MK
             </div>
@@ -113,6 +167,7 @@ export const Video = () => {
           <VideoCard key={video._id} {...video} />
         ))}
       </ul>
+      {openModal && <Modal {...{ setModal, video }} />}
     </div>
   );
 };

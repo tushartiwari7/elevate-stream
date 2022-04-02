@@ -19,12 +19,16 @@
 }
 
 .card_details {
-  margin-top: 20px;
   text-align: left;
 }
 
 .card_title {
   padding-right: 2.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .card:hover {
@@ -68,6 +72,7 @@
   right: 10%;
   top: 30%;
   background: var(--bg-primary);
+  z-index: 2;
 }
 
 .contextMenu > li {
@@ -78,8 +83,8 @@
 }
 
 .contextMenuBtn {
-  right: 0;
-  top: 0;
+  right: 1rem;
+  top: 2rem;
   background: transparent;
 }
 .contextMenuItemIcon {

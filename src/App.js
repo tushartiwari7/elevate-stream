@@ -2,11 +2,10 @@ import Mockman from "mockman-js";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navbar, Sidebar } from "./components";
-import { Explore, Home, Video } from "./pages";
+import { Explore, History, Home, Playlist, Playlists, Video } from "./pages";
 import loaderSvg from "./assets/loader.svg";
 import { useData } from "./context";
 import { useLocation } from "react-router-dom";
-
 function App() {
   const { loader } = useData();
   const location = useLocation();
@@ -23,6 +22,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/video" element={<Video />} />
+          <Route
+            path="/liked"
+            element={<Playlist videoType="Liked Videos" />}
+          />
+          <Route path="/saved" element={<Playlist videoType="Watch Later" />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/playlists" element={<Playlists />} />
           <Route path="/mockman" element={<Mockman />} />
         </Routes>
       </main>
