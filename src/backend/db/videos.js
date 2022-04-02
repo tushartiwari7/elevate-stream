@@ -5,6 +5,19 @@
 
 export const videos = [
   {
+    _id: "0lzAQNRW0JA",
+    name: "Yeh jawaani hai deeewani",
+    actors: ["Ranbir Kapoor", "Deepika Padukone"],
+    releaseYear: 2013,
+    category: "Drama",
+    language: "Hindi",
+    duration: { hours: 2, minutes: 40 },
+    views: 53657899,
+    startAt: 70,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648831994/video%20library/video-thumbnails/LmpwZw_rc9uac.jpg",
+  },
+  {
     _id: "dW1oSXK61k4",
     name: "Parasite",
     actors: ["Bong Joon-ho", "Song Kang-ho"],
@@ -54,6 +67,19 @@ export const videos = [
     views: 82657899,
     thumbnail:
       "https://res.cloudinary.com/furnhouse/image/upload/v1648307999/video%20library/video-thumbnails/p19651051_k_h9_ac_btuz2d.jpg",
+  },
+  {
+    _id: "slYoTyn2GUs",
+    name: "Sufna",
+    actors: ["Ammy Virk", "Tania"],
+    releaseYear: 2020,
+    category: "Romance",
+    language: "Punjabi",
+    duration: { hours: 2, minutes: 24 },
+    views: 13657899,
+    startAt: 60,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648824110/video%20library/video-thumbnails/ab67616d00001e02bf362b4ff7b1ad0c1c083b6c_xbuqtb.jpg",
   },
   {
     _id: "ULEQb_l-N08",

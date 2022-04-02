@@ -3,6 +3,7 @@ import { BsTrash } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { useData } from "../../context";
 import styles from "./Section.module.css";
+import toast from "react-hot-toast";
 
 export const Section = ({ children, title, size, playlistId }) => {
   const isInPlaylistsPage = useLocation().pathname === "/playlists";
@@ -10,6 +11,7 @@ export const Section = ({ children, title, size, playlistId }) => {
   const { dispatch } = useData();
 
   const deletePlaylistHandler = () => {
+    toast(`Deleted ${title} Playlist!`, { icon: <BsTrash /> });
     dispatch({ type: "DELETE_PLAYLIST", payload: playlistId });
   };
 

@@ -12,7 +12,7 @@
 }
 
 .playlist_modal {
-  backdrop-filter: contrast(0.6);
+  backdrop-filter: brightness(0.3);
   z-index: 3;
   inset: 0;
 }

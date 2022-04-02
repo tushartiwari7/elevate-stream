@@ -34,3 +34,10 @@
 .other_videos_list::-webkit-scrollbar {
   width: 5px;
 }
+
+@media only screen and (max-width: 720px) {
+  .video_page {
+    grid-template-columns: auto;
+    height: unset;
+  }
+}

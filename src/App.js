@@ -6,6 +6,13 @@ import { Explore, History, Home, Playlist, Playlists, Video } from "./pages";
 import loaderSvg from "./assets/loader.svg";
 import { useData } from "./context";
 import { useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
+const toastOptions = {
+  // Define default options
+  className: "toast fs-l",
+};
+
 function App() {
   const { loader } = useData();
   const location = useLocation();
@@ -37,6 +44,7 @@ function App() {
           <img src={loaderSvg} alt="loading" />
         </h2>
       )}
+      <Toaster position="bottom-right" toastOptions={toastOptions} />
     </div>
   );
 }

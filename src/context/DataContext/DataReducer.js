@@ -85,6 +85,7 @@ export const reducer = (state, { type, payload }) => {
               ...state.history,
               {
                 date: payload.timeStamp.date,
+                _id: uuid(),
                 videos: [{ ...payload.video, time: payload.timeStamp.time }],
               },
             ],

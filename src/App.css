@@ -61,7 +61,7 @@
   .sidebar {
     position: absolute;
     top: -25rem;
-    left: -20rem;
+    left: -21rem;
     z-index: 2;
     border-bottom-right-radius: 2rem;
     border-bottom: 2px solid var(--secondary);

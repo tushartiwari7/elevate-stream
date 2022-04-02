@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.svg";
 import { useData } from "../../context";
-
+import toast from "react-hot-toast";
 export const Navbar = () => {
   const { setOpen } = useData();
   const searchInputHandler = (e) => {
@@ -45,6 +45,9 @@ export const Navbar = () => {
           <Link
             to="/login"
             className={`btn-secondary mx-xs fs-m text-center ${styles.navlink}`}
+            onClick={() =>
+              toast(`Login Route is not built yet.`, { icon: "❌" })
+            }
           >
             Login
           </Link>
