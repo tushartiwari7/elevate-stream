@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import toast from "react-hot-toast";
 
 export const initialState = {
   videos: [],
@@ -14,6 +15,7 @@ export const initialFilters = {
   sort: "",
   category: "",
   language: "",
+  search: "",
 };
 
 export const filterReducer = (state, { type, payload }) => {
@@ -41,6 +43,12 @@ export const filterReducer = (state, { type, payload }) => {
         sort: "",
         category: "",
         language: "",
+      };
+
+    case "VIDEOS_SEARCH":
+      return {
+        ...state,
+        search: payload,
       };
 
     default:
@@ -85,6 +93,7 @@ export const reducer = (state, { type, payload }) => {
               ...state.history,
               {
                 date: payload.timeStamp.date,
+                _id: uuid(),
                 videos: [{ ...payload.video, time: payload.timeStamp.time }],
               },
             ],
@@ -122,9 +131,12 @@ export const reducer = (state, { type, payload }) => {
         )
       ) {
         console.error("Playlist with this name already exists");
-        alert("Playlist with this name already exists");
+        toast.error("Playlist with this name already exists");
         return state;
       }
+      toast.success(
+        `Created ${playlistName} Playlist and added ${firstVideo.name} to it`
+      );
       return {
         ...state,
         playlist: [

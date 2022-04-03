@@ -1,14 +1,21 @@
 import { BsFillCaretDownFill, BsSearch, BsList } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.svg";
 import { useData } from "../../context";
-
+import toast from "react-hot-toast";
+import { useLocation } from "react-router-dom";
 export const Navbar = () => {
-  const { setOpen } = useData();
+  const { setOpen, filterDispatch } = useData();
+  const location = useLocation();
+  const navigator = useNavigate();
+
   const searchInputHandler = (e) => {
-    e.preventDefault();
-    // search logic here...
+    if (location.pathname !== "/explore") navigator("/explore");
+    filterDispatch({
+      type: "VIDEOS_SEARCH",
+      payload: e.target.value,
+    });
   };
 
   const toggleSidebar = () => setOpen((open) => !open);
@@ -27,24 +34,23 @@ export const Navbar = () => {
           <img src={logo} width={"100%"} height={"100%"} />
         </Link>
       </div>
-      <form
-        onSubmit={searchInputHandler}
-        className={`searchbar flex flex-center ${styles.searchbar}`}
-      >
+      <div className={`searchbar flex flex-center ${styles.searchbar}`}>
         <input
           type="text"
           className={`input px-sm py-xs rounded-s full-width ${styles.searchbar_input}`}
           placeholder="Search Videos here."
+          onChange={searchInputHandler}
         />
-        <button type="submit" className={styles.searchbar_btn_icon}>
-          <BsSearch />
-        </button>
-      </form>
+        <BsSearch className={styles.searchbar_btn_icon} />
+      </div>
       <div className="flex flex-center">
         {true ? (
           <Link
             to="/login"
             className={`btn-secondary mx-xs fs-m text-center ${styles.navlink}`}
+            onClick={() =>
+              toast(`Login Route is not built yet.`, { icon: "❌" })
+            }
           >
             Login
           </Link>

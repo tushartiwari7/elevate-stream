@@ -3,11 +3,15 @@ import styles from "./Explore.module.css";
 import { VideoCard } from "../../components";
 import { useData } from "../../context";
 import { BsFillCaretDownFill } from "react-icons/bs";
-
+import toast from "react-hot-toast";
 export const Explore = () => {
   const { categories, videos, languages, filters, filterDispatch } = useData();
 
-  const categoryDispatchHandler = (cate) =>
+  const categoryDispatchHandler = (cate) => {
+    toast(
+      `Showing Movies in ${cate || "All"} categor${cate ? "y only" : "ies"}.`,
+      { icon: "🎬" }
+    );
     filterDispatch({
       type: "CATEGORIES",
       payload: {
@@ -15,8 +19,13 @@ export const Explore = () => {
         isDel: filters.category === cate,
       },
     });
-
-  const languageDispatchHandler = (lang) =>
+  };
+  const languageDispatchHandler = (lang) => {
+    toast(
+      `Showing Movies in ${lang || "All"} language${lang ? " only" : "s"}.`,
+      { icon: "📚" }
+    );
+    console.log("vdf");
     filterDispatch({
       type: "LANGUAGES",
       payload: {
@@ -24,6 +33,7 @@ export const Explore = () => {
         isDel: filters.language === lang,
       },
     });
+  };
 
   useEffect(() => () => filterDispatch({ type: "CLEAR_FILTERS" }), []);
 
@@ -88,9 +98,10 @@ export const Explore = () => {
           <BsFillCaretDownFill />
           <ul
             className="list pos-abs full-width"
-            onClick={(e) =>
-              filterDispatch({ type: "SORT", payload: e.target.id })
-            }
+            onClick={(e) => {
+              toast(`Sorting by ${e.target.innerText}`, { icon: "🚀" });
+              filterDispatch({ type: "SORT", payload: e.target.id });
+            }}
           >
             <li className="fs-m px-sm py-xs" id="MOST_RECENT">
               Most Recent

@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { BsCheckSquareFill, BsSquare } from "react-icons/bs";
+import { BsCheckSquareFill, BsSquare, BsX } from "react-icons/bs";
 import { useData } from "../../context";
 import styles from "./Modal.module.css";
+import toast from "react-hot-toast";
 export const Modal = ({ setModal, video }) => {
   const [input, setInput] = useState("");
   const { playlist, dispatch } = useData();
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch({
@@ -15,12 +17,33 @@ export const Modal = ({ setModal, video }) => {
     setModal(false);
   };
 
+  const playlistHandler = (isInPlaylist, playlist) => {
+    isInPlaylist
+      ? dispatch({
+          type: "REMOVE_VIDEO_FROM_PLAYLIST",
+          payload: {
+            playlistId: playlist._id,
+            videoId: video._id,
+          },
+        })
+      : dispatch({
+          type: "ADD_VIDEO_TO_PLAYLIST",
+          payload: { playlistId: playlist._id, video },
+        });
+
+    isInPlaylist
+      ? toast.success(`Removed ${video.name} from ${playlist.playlistName}`)
+      : toast(`Added ${video.name} to ${playlist.playlistName}`, {
+          icon: "🎧",
+        });
+  };
+
   return (
     <div
       className={`pos-abs flex flex-center ${styles.playlist_modal}`}
       onClick={() => setModal(false)}
     >
-      <section className="p-md" onClick={(e) => e.stopPropagation()}>
+      <section className="p-md pos-rel" onClick={(e) => e.stopPropagation()}>
         <form onSubmit={submitHandler}>
           <input
             className="input px-sm py-xs fs-m rounded-m"
@@ -47,18 +70,7 @@ export const Modal = ({ setModal, video }) => {
                     className="flex px-sm py-xs fs-m"
                     key={playlist._id}
                     onClick={() =>
-                      isThisVideoInPlaylist
-                        ? dispatch({
-                            type: "REMOVE_VIDEO_FROM_PLAYLIST",
-                            payload: {
-                              playlistId: playlist._id,
-                              videoId: video._id,
-                            },
-                          })
-                        : dispatch({
-                            type: "ADD_VIDEO_TO_PLAYLIST",
-                            payload: { playlistId: playlist._id, video },
-                          })
+                      playlistHandler(isThisVideoInPlaylist, playlist)
                     }
                   >
                     {playlist.playlistName}
@@ -75,6 +87,9 @@ export const Modal = ({ setModal, video }) => {
             </ul>
           </>
         )}
+        <icon role="icon" className={`pos-abs ${styles.close_modal}`}>
+          <BsX size="3rem" onClick={() => setModal(false)} />
+        </icon>
       </section>
     </div>
   );

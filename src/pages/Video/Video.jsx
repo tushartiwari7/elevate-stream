@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import {
   BsHandThumbsUp,
@@ -13,6 +12,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Modal, VideoCard } from "../../components";
 import { useData } from "../../context";
 import styles from "./Video.module.css";
+import toast from "react-hot-toast";
+
 export const Video = () => {
   const [params] = useSearchParams();
   const youtubeId = params.get("id");
@@ -29,15 +30,22 @@ export const Video = () => {
         isInLikedVideos
           ? dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: youtubeId })
           : dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
+        isInLikedVideos
+          ? toast.success(`Removed ${video.name} from Liked Movies!`)
+          : toast(`Added ${video.name} to Liked Movies!`, { icon: "👍" });
         break;
 
       case "WATCH-LATER":
         isInWatchLater
           ? dispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: youtubeId })
           : dispatch({ type: "SET_WATCH_LATER", payload: video });
+        isInWatchLater
+          ? toast.success(`Removed ${video.name} from Watch Later!`)
+          : toast(`Added ${video.name} to Watch Later!`, { icon: "⌚" });
         break;
 
       default:
+        toast(`Unindentified request`, { icon: "❌" });
         break;
     }
   };
@@ -45,13 +53,16 @@ export const Video = () => {
   useEffect(() => {
     if (video) {
       // temporarily subtracting somedays to check if its working for videos watched on previous days.
-      const today = dayjs().subtract(Math.floor(Math.random() * 5), "day");
       dispatch({
         type: "ADD_TO_HISTORY",
         payload: {
           timeStamp: {
-            date: today.format("DD/MM/YYYY"),
-            time: today.format("HH:mm"),
+            date: new Intl.DateTimeFormat(`en-IN`, {
+              dateStyle: "long",
+            }).format(new Date()),
+            time: new Intl.DateTimeFormat("en-IN", {
+              dayPeriod: "narrow",
+            }).format(new Date()),
           },
           video,
         },
@@ -163,6 +174,7 @@ export const Video = () => {
         </div>
       </section>
       <ul className={`mx-md flex flex-col ${styles.other_videos_list}`}>
+        <h2 className="h1 ubuntu text-left my-sm">Related Videos:</h2>
         {videos.map((video) => (
           <VideoCard key={video._id} {...video} />
         ))}

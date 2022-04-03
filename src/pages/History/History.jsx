@@ -8,10 +8,15 @@ export const History = () => {
     <div>
       <h1 className={`h1 ubuntu p-md ${styles.heading}`}>History</h1>
       {history.map((day) => (
-        <Section title={day.date} size={day.videos.length}>
+        <Section title={day.date} size={day.videos.length} key={day._id}>
           <ul className={`list grid ${styles.video_list}`}>
             {day.videos.map((video) => (
-              <VideoCard {...video} />
+              <div className=" pos-rel" key={video._id}>
+                <VideoCard {...video} />
+                <label className="pos-abs text-center full-width fs-m">
+                  {video.time}
+                </label>
+              </div>
             ))}
           </ul>
         </Section>

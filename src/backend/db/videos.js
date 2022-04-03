@@ -5,6 +5,19 @@
 
 export const videos = [
   {
+    _id: "0lzAQNRW0JA",
+    name: "Yeh jawaani hai deeewani",
+    actors: ["Ranbir Kapoor", "Deepika Padukone"],
+    releaseYear: 2013,
+    category: "Drama",
+    language: "Hindi",
+    duration: { hours: 2, minutes: 40 },
+    views: 53657899,
+    startAt: 70,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648831994/video%20library/video-thumbnails/LmpwZw_rc9uac.jpg",
+  },
+  {
     _id: "dW1oSXK61k4",
     name: "Parasite",
     actors: ["Bong Joon-ho", "Song Kang-ho"],
@@ -54,6 +67,19 @@ export const videos = [
     views: 82657899,
     thumbnail:
       "https://res.cloudinary.com/furnhouse/image/upload/v1648307999/video%20library/video-thumbnails/p19651051_k_h9_ac_btuz2d.jpg",
+  },
+  {
+    _id: "slYoTyn2GUs",
+    name: "Sufna",
+    actors: ["Ammy Virk", "Tania"],
+    releaseYear: 2020,
+    category: "Romance",
+    language: "Punjabi",
+    duration: { hours: 2, minutes: 24 },
+    views: 13657899,
+    startAt: 60,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648824110/video%20library/video-thumbnails/ab67616d00001e02bf362b4ff7b1ad0c1c083b6c_xbuqtb.jpg",
   },
   {
     _id: "ULEQb_l-N08",
@@ -130,5 +156,93 @@ export const videos = [
     views: 718457801,
     thumbnail:
       "https://res.cloudinary.com/furnhouse/image/upload/v1648296502/video%20library/video-thumbnails/anBlZz9zc2w9MQ_ssksy3.jpg",
+  },
+  {
+    _id: "vB2m1uRF30c",
+    name: "Sooryavansham",
+    actors: ["Amitabh Bachan", "Soundarya"],
+    releaseYear: 1999,
+    category: "Drama",
+    language: "Hindi",
+    duration: { hours: 3, minutes: 24 },
+    views: 270457801,
+    startAt: 70,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648964432/video%20library/video-thumbnails/hqdefault_nefk8o.webp",
+  },
+  {
+    _id: "neB7WugMKT4",
+    name: "2 States",
+    actors: ["Arjun Kapoor", "Alia Bhatt"],
+    releaseYear: 2014,
+    category: "Romance",
+    language: "Hindi",
+    duration: { hours: 2, minutes: 29 },
+    views: 27457801,
+    startAt: 54,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648964935/video%20library/video-thumbnails/MV5BMDdhNjRmNjYtOTFjNC00MDM0LWJhNDItMGRmNDFmN2ZmZTEzXkEyXkFqcGdeQXVyNjkwOTg4MTA_._V1_FMjpg_UX1000__tsh8ey.jpg",
+  },
+  {
+    _id: "zBXa6Foq9ZM",
+    name: "Bang Bang",
+    actors: ["Hrithik Roshan", "Katrina Kaif"],
+    releaseYear: 2014,
+    category: "Action",
+    language: "Hindi",
+    duration: { hours: 2, minutes: 16 },
+    views: 13757801,
+    startAt: 87,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648966533/video%20library/video-thumbnails/MV5BM2IzNGRiNTAtZDIzMi00ZGMxLWExOWMtMzc5YThiMzVjMTZiXkEyXkFqcGdeQXVyNjE1OTQ0NjA_._V1_FMjpg_UX535__plqnlk.jpg",
+  },
+  {
+    _id: "odrWtmqVYsE",
+    name: "Bajirao Mastani",
+    actors: ["Ranveer Singh", "Deepika Padukone"],
+    releaseYear: 2015,
+    category: "History",
+    language: "Hindi",
+    duration: { hours: 2, minutes: 38 },
+    views: 7757801,
+    startAt: 185,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648967312/video%20library/video-thumbnails/MV5BYmU3MmE3NDItYWQxYS00NDEzLWI2NTktMjNkNjVlMDViZjE2XkEyXkFqcGdeQXVyOTc5MDI5NjE_._V1_FMjpg_UX1280__igeurq.jpg",
+  },
+  {
+    _id: "oD-QraSGTso",
+    name: "Jolly LLB 2",
+    actors: ["Akshay Kumar", "Huma Qureshi"],
+    releaseYear: 2017,
+    category: "Comedy",
+    language: "Hindi",
+    duration: { hours: 2, minutes: 0 },
+    views: 7757801,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648967989/video%20library/video-thumbnails/MV5BMTdiMDlkNWQtYWU3Mi00ZmU1LWE3OTQtZDEyMWY3ZWNkM2ZjXkEyXkFqcGdeQXVyNjkyODM4NDg_._V1_FMjpg_UX640__shcb6h.jpg",
+  },
+  {
+    _id: "_fRsCnEP7E4",
+    name: "ABCD",
+    actors: ["Prabhu Deva", "Ganesh Acharya"],
+    releaseYear: 2013,
+    category: "Drama",
+    language: "Hindi",
+    duration: { hours: 1, minutes: 30 },
+    views: 2407801,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648969156/video%20library/video-thumbnails/MV5BMTM2OTY3MDU4MF5BMl5BanBnXkFtZTcwMzg2MzU1Nw_._V1_FMjpg_UX1280__viplrm.jpg",
+  },
+  {
+    _id: "H-ocPpO3iwM",
+    name: "Rowdy Rathore",
+    actors: ["Akshay Kumar", "Sonakshi Sinha"],
+    releaseYear: 2013,
+    category: "Romance",
+    language: "Hindi",
+    duration: { hours: 1, minutes: 56 },
+    views: 1107801,
+    thumbnail:
+      "https://res.cloudinary.com/furnhouse/image/upload/v1648969583/video%20library/video-thumbnails/hqdefault_erujjc.webp",
   },
 ];

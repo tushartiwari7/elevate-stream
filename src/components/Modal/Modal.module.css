@@ -2,6 +2,13 @@
   margin-left: auto;
 }
 
+.close_modal {
+  top: 0;
+  right: 0;
+  color: var(--secondary400);
+  cursor: pointer;
+}
+
 .form_submit_btn {
   display: none;
 }
@@ -12,7 +19,7 @@
 }
 
 .playlist_modal {
-  backdrop-filter: contrast(0.6);
+  backdrop-filter: brightness(0.3);
   z-index: 3;
   inset: 0;
 }

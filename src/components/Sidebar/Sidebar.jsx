@@ -4,20 +4,18 @@ import { v4 as uuid } from "uuid";
 import {
   BsHouseFill,
   BsHash,
-  BsSearch,
   BsFillHandThumbsUpFill,
   BsClockHistory,
   BsSave,
 } from "react-icons/bs";
 import { CgPlayList } from "react-icons/cg";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useData } from "../../context";
 
 export const Sidebar = () => {
   const sidebarList = [
     { id: uuid(), name: "Home", Icon: BsHouseFill },
     { id: uuid(), name: "Explore", Icon: BsHash },
-    { id: uuid(), name: "Search", Icon: BsSearch },
     { id: uuid(), name: "Liked", Icon: BsFillHandThumbsUpFill },
     { id: uuid(), name: "Saved", Icon: BsSave },
     { id: uuid(), name: "History", Icon: BsClockHistory },
@@ -40,13 +38,16 @@ export const Sidebar = () => {
     <aside className={`sidebar ${open ? "active" : ""}`}>
       <ul className="list full-width">
         {sidebarList.map(({ name, id, Icon }) => (
-          <Link
+          <NavLink
             key={id}
             className={`list-item h3 mx-md my-xs p-xs transition ${styles.sidebar_list_item}`}
+            style={({ isActive }) => ({
+              color: isActive ? "var(--primary)" : "var(--text-light)",
+            })}
             to={`/${name === "Home" ? "" : name.toLowerCase()}`}
             onClick={() => setOpen((open) => !open)}
           >
-            <span className="mx-xs">
+            <span className={`mx-xs ${styles.sidebar_icon}`}>
               <Icon size={isOnVideoPage ? "3rem" : "2.5rem"} title={name} />
             </span>
             <span
@@ -54,7 +55,7 @@ export const Sidebar = () => {
             >
               {name}
             </span>
-          </Link>
+          </NavLink>
         ))}
       </ul>
     </aside>
