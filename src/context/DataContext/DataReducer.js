@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import toast from "react-hot-toast";
 
 export const initialState = {
   videos: [],
@@ -130,9 +131,12 @@ export const reducer = (state, { type, payload }) => {
         )
       ) {
         console.error("Playlist with this name already exists");
-        alert("Playlist with this name already exists");
+        toast.error("Playlist with this name already exists");
         return state;
       }
+      toast.success(
+        `Created ${playlistName} Playlist and added ${firstVideo.name} to it`
+      );
       return {
         ...state,
         playlist: [

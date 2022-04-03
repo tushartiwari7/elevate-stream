@@ -2,6 +2,13 @@
   margin-left: auto;
 }
 
+.close_modal {
+  top: 0;
+  right: 0;
+  color: var(--secondary400);
+  cursor: pointer;
+}
+
 .form_submit_btn {
   display: none;
 }
