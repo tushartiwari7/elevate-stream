@@ -30,7 +30,6 @@ export const Video = () => {
         isInLikedVideos
           ? dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: youtubeId })
           : dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
-        console.log("fdsx");
         isInLikedVideos
           ? toast.success(`Removed ${video.name} from Liked Movies!`)
           : toast(`Added ${video.name} to Liked Movies!`, { icon: "👍" });
