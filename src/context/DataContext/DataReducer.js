@@ -14,6 +14,7 @@ export const initialFilters = {
   sort: "",
   category: "",
   language: "",
+  search: "",
 };
 
 export const filterReducer = (state, { type, payload }) => {
@@ -41,6 +42,12 @@ export const filterReducer = (state, { type, payload }) => {
         sort: "",
         category: "",
         language: "",
+      };
+
+    case "VIDEOS_SEARCH":
+      return {
+        ...state,
+        search: payload,
       };
 
     default:

@@ -1,5 +1,4 @@
 import { Response } from "miragejs";
-import dayjs from "dayjs";
 import jwt_decode from "jwt-decode";
 
 export const requiresAuth = function (request) {
@@ -19,4 +18,8 @@ export const requiresAuth = function (request) {
   );
 };
 
-export const formatDate = () => dayjs().format("YYYY-MM-DDTHH:mm:ssZ");
+export const formatDate = () =>
+  Intl.DateTimeFormat("en-IN", {
+    dateStyle: "full",
+    timeStyle: "short",
+  }).format(new Date());

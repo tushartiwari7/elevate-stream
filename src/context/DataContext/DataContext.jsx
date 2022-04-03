@@ -10,8 +10,9 @@ import {
   getFilteredCategory,
   getFilteredLanguage,
   getSortedVideos,
+  getFilteredSearch,
+  compose,
 } from "../../utils";
-import { compose } from "../../utils/compose";
 import {
   filterReducer,
   initialFilters,
@@ -51,7 +52,8 @@ export const DataProvider = ({ children }) => {
     state.videos,
     getSortedVideos,
     getFilteredCategory,
-    getFilteredLanguage
+    getFilteredLanguage,
+    getFilteredSearch
   )(filters);
 
   return (

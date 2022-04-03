@@ -4,7 +4,6 @@ import { v4 as uuid } from "uuid";
 import {
   BsHouseFill,
   BsHash,
-  BsSearch,
   BsFillHandThumbsUpFill,
   BsClockHistory,
   BsSave,
@@ -17,7 +16,6 @@ export const Sidebar = () => {
   const sidebarList = [
     { id: uuid(), name: "Home", Icon: BsHouseFill },
     { id: uuid(), name: "Explore", Icon: BsHash },
-    { id: uuid(), name: "Search", Icon: BsSearch },
     { id: uuid(), name: "Liked", Icon: BsFillHandThumbsUpFill },
     { id: uuid(), name: "Saved", Icon: BsSave },
     { id: uuid(), name: "History", Icon: BsClockHistory },
