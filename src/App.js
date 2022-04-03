@@ -2,7 +2,15 @@ import Mockman from "mockman-js";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navbar, Sidebar } from "./components";
-import { Explore, History, Home, Playlist, Playlists, Video } from "./pages";
+import {
+  Explore,
+  History,
+  Home,
+  NotFound,
+  Playlist,
+  Playlists,
+  Video,
+} from "./pages";
 import loaderSvg from "./assets/loader.svg";
 import { useData } from "./context";
 import { useLocation } from "react-router-dom";
@@ -37,6 +45,7 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/mockman" element={<Mockman />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       {loader && (

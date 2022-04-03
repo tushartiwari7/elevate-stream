@@ -30,3 +30,12 @@
   line-height: 5rem;
   text-decoration: none;
 }
+
+.btn_home {
+  composes: btn_cta;
+  color: var(--primary);
+}
+
+.btn_home:hover {
+  color: var(--bg-tertiary);
+}
