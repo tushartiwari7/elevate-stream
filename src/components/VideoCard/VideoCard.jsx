@@ -105,7 +105,13 @@ export const VideoCard = (video) => {
             className={`flex flex-col pos-abs list card ${styles.contextMenu}`}
             onClick={contextMenuHandler}
           >
-            <li className="flex px-sm py-xs" title="Share">
+            <li
+              className="flex px-sm py-xs"
+              title="Share"
+              onClick={() =>
+                toast("Share Feature coming soon.", { icon: "⏳" })
+              }
+            >
               <BsShare
                 className={styles.contextMenuItemIcon}
                 size="1.5rem"

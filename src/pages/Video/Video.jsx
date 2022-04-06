@@ -163,7 +163,10 @@ export const Video = () => {
             <div className="flex flex-col full-width">
               <input
                 className="input m-xs p-xs rounded-m"
-                placeholder="Add a Comment... (non-functional)"
+                placeholder="Add a Comment..."
+                onChange={() =>
+                  toast(`Comment Feature Coming soon`, { icon: "⌛" })
+                }
               />
               <div className={`flex ${styles.comment_btns}`}>
                 <button className="btn btn-primary m-xs p-xs">Cancel</button>
