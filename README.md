@@ -1,6 +1,8 @@
 ## Video Library App - Elevate Stream
-This is a Video Library Project to watch best movies of all times,genres and languages <br/>
-[elevate-stream.vercel.app](https://elevate-stream.vercel.app)
+![logo 7b1c1842](https://user-images.githubusercontent.com/66322728/162052015-4c6998e8-ced9-4ce8-9650-a7ee3f332b99.svg)
+
+This is a Video Library Project to watch best movies of all times,genres and languages
+
 
 ## Features
 - ### Home Page
