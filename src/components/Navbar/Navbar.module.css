@@ -45,6 +45,7 @@
 .searchbar_input {
   height: 4rem;
   outline: 3px solid var(--bg-tertiary);
+  transition: 0.3s ease-in-out;
 }
 
 @media only screen and (max-width: 640px) {
