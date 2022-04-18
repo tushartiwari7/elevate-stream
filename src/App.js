@@ -6,6 +6,7 @@ import {
   Explore,
   History,
   Home,
+  Login,
   NotFound,
   Playlist,
   Playlists,
@@ -44,6 +45,7 @@ function App() {
           <Route path="/saved" element={<Playlist videoType="Watch Later" />} />
           <Route path="/history" element={<History />} />
           <Route path="/playlists" element={<Playlists />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/mockman" element={<Mockman />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -2,11 +2,11 @@ import { BsFillCaretDownFill, BsSearch, BsList } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.svg";
-import { useData } from "../../context";
-import toast from "react-hot-toast";
+import { useData, useUser } from "../../context";
 import { useLocation } from "react-router-dom";
 export const Navbar = () => {
   const { setOpen, filterDispatch } = useData();
+  const { user } = useUser();
   const location = useLocation();
   const navigator = useNavigate();
 
@@ -44,13 +44,10 @@ export const Navbar = () => {
         <BsSearch className={styles.searchbar_btn_icon} />
       </div>
       <div className="flex flex-center">
-        {true ? (
+        {!user.isLoggedIn ? (
           <Link
-            to="/login"
+            to={`/login?redirect=${location.pathname}`}
             className={`btn-secondary mx-xs fs-m text-center ${styles.navlink}`}
-            onClick={() =>
-              toast(`Login Route is not built yet.`, { icon: "❌" })
-            }
           >
             Login
           </Link>

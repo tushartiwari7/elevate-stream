@@ -7,7 +7,7 @@ export const Playlists = () => {
   const { playlist } = useData();
   return (
     <div>
-      <h1 className="h1 ubuntu text-left p-md ">Your Playlists</h1>
+      <h1 className="h1 Montserrat text-left p-md ">Your Playlists</h1>
       {playlist.map((list) => (
         <Section
           title={list.playlistName}
