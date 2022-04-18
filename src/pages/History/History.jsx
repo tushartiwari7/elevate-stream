@@ -6,7 +6,7 @@ export const History = () => {
   const { history } = useData();
   return (
     <div>
-      <h1 className={`h1 ubuntu p-md ${styles.heading}`}>History</h1>
+      <h1 className={`h1 Montserrat p-md ${styles.heading}`}>History</h1>
       {history.map((day) => (
         <Section title={day.date} size={day.videos.length} key={day._id}>
           <ul className={`list grid ${styles.video_list}`}>

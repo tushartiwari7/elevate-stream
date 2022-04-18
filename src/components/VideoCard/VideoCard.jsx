@@ -77,7 +77,7 @@ export const VideoCard = (video) => {
           height="100%"
         />
         <div
-          className={`card-badge pos-abs fs-m ubuntu fw-bold p-xs ${styles.card_badge}`}
+          className={`card-badge pos-abs fs-m Montserrat fw-bold p-xs ${styles.card_badge}`}
         >
           {getViews(views)}
         </div>

@@ -120,7 +120,7 @@ export const Explore = () => {
           <VideoCard key={video._id} {...video} />
         ))}
       </ul>
-      <h2 className={`h2 ubuntu pos-rel ${styles.top40}`}>
+      <h2 className={`h2 Montserrat pos-rel ${styles.top40}`}>
         {videos.length === 0 ? "No videos found" : ""}
       </h2>
     </>

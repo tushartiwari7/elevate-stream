@@ -29,6 +29,7 @@
   color: var(--bg-tertiary);
   line-height: 5rem;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .btn_home {

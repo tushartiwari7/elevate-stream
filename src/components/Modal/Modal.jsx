@@ -57,7 +57,7 @@ export const Modal = ({ setModal, video }) => {
 
         {playlist.length !== 0 && (
           <>
-            <h2 className={`h3 ubuntu p-md ${styles.heading}`}>
+            <h2 className={`h3 Montserrat p-md ${styles.heading}`}>
               Add to previous playlist
             </h2>
             <ul className={`list ${styles.playlist_list}`}>

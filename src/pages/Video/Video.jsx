@@ -174,7 +174,7 @@ export const Video = () => {
         </div>
       </section>
       <ul className={`mx-md flex flex-col ${styles.other_videos_list}`}>
-        <h2 className="h1 ubuntu text-left my-sm">Related Videos:</h2>
+        <h2 className="h1 Montserrat text-left my-sm">Related Videos:</h2>
         {videos.map((video) => (
           <VideoCard key={video._id} {...video} />
         ))}

@@ -17,7 +17,7 @@ export const Section = ({ children, title, size, playlistId }) => {
 
   return (
     <section className={`p-md ${styles.section}`} aria-label={title}>
-      <h3 className={`h1 ubuntu px- md flex ${styles.playlist_title}`}>
+      <h3 className={`h1 Montserrat px- md flex ${styles.playlist_title}`}>
         {title}
         <span className="mx-xs fs-l fw-regular">
           ({size} {size == 1 ? "video" : "videos"})
