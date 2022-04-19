@@ -10,6 +10,7 @@ import {
   NotFound,
   Playlist,
   Playlists,
+  Signup,
   Video,
 } from "./pages";
 import loaderSvg from "./assets/loader.svg";
@@ -43,9 +44,10 @@ function App() {
             element={<Playlist videoType="Liked Videos" />}
           />
           <Route path="/saved" element={<Playlist videoType="Watch Later" />} />
-          <Route path="/history" element={<History />} />
           <Route path="/playlists" element={<Playlists />} />
+          <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/mockman" element={<Mockman />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

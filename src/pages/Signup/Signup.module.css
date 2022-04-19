@@ -29,10 +29,6 @@
   cursor: pointer;
 }
 
-.names {
-  gap: 2rem;
-}
-
 .show_password {
   right: 1rem;
   bottom: 25%;
