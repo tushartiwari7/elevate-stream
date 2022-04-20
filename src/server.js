@@ -27,6 +27,7 @@ import {
   addItemToLikedVideos,
   removeItemFromLikedVideos,
 } from "./backend/controllers/LikeController";
+
 import {
   getAllPlaylistsHandler,
   addNewPlaylistHandler,
@@ -35,6 +36,10 @@ import {
   addVideoToPlaylistHandler,
   removeVideoFromPlaylistHandler,
 } from "./backend/controllers/PlaylistController";
+import {
+  addItemToSavedVideos,
+  removeItemFromSavedVideos,
+} from "./backend/controllers/SavedController";
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
     serializers: {
@@ -64,6 +69,7 @@ export function makeServer({ environment = "development" } = {}) {
         server.create("user", {
           ...item,
           likes: [],
+          saved: [],
           history: [],
           playlists: [],
         })
@@ -93,6 +99,10 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("/user/likes", getLikedVideosHandler.bind(this));
       this.post("/user/likes", addItemToLikedVideos.bind(this));
       this.delete("/user/likes/:videoId", removeItemFromLikedVideos.bind(this));
+
+      // saved routes (private)
+      this.post("/user/saved", addItemToSavedVideos.bind(this));
+      this.delete("/user/saved/:videoId", removeItemFromSavedVideos.bind(this));
 
       // playlist routes (private)
       this.get("/user/playlists", getAllPlaylistsHandler.bind(this));

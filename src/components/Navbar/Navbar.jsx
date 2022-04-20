@@ -56,7 +56,8 @@ export const Navbar = () => {
             to="/profile"
             className={`btn-outline-secondary mx-xs fs-m text-center ${styles.navlink}`}
           >
-            Guest User! <BsFillCaretDownFill className={styles.arrow_down} />
+            {user.firstName ?? "Guest User!"}{" "}
+            <BsFillCaretDownFill className={styles.arrow_down} />
           </Link>
         )}
       </div>
