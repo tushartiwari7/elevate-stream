@@ -13,6 +13,7 @@ import { useData } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import { Modal } from "../";
 import toast from "react-hot-toast";
+import { useUser } from "../../context";
 export const VideoCard = (video) => {
   const {
     _id,
@@ -26,10 +27,9 @@ export const VideoCard = (video) => {
     actors,
   } = video;
   const [menu, toggleMenu] = useState(false);
-  const { watchLater, likedVideos, dispatch } = useData();
-
-  const isInWatchLater = watchLater.some((vid) => vid._id === _id);
-  const isInLikedVideos = likedVideos.some((vid) => vid._id === _id);
+  const { user, handlers } = useUser();
+  const isInWatchLater = user.saved?.some((vid) => vid._id === _id);
+  const isInLikedVideos = user.likes?.some((vid) => vid._id === _id);
 
   const [openModal, setModal] = useState(false);
 
@@ -37,20 +37,14 @@ export const VideoCard = (video) => {
     switch (e.target.title) {
       case "like-video":
         isInLikedVideos
-          ? dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: video._id })
-          : dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
-        isInLikedVideos
-          ? toast.success(`Removed ${name} from Liked Movies!`)
-          : toast(`Added ${name} to Liked Movies!`, { icon: "👍" });
+          ? handlers.likedVideosHandler(video._id, false)
+          : handlers.likedVideosHandler(video);
         break;
 
       case "watch-later":
         isInWatchLater
-          ? dispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: video._id })
-          : dispatch({ type: "SET_WATCH_LATER", payload: video });
-        isInWatchLater
-          ? toast.success(`Removed ${name} from Watch Later!`)
-          : toast(`Added ${name} to Watch Later!`, { icon: "⌚" });
+          ? handlers.savedVideosHandler(video._id, false)
+          : handlers.savedVideosHandler(video);
         break;
 
       default:

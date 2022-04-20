@@ -5,8 +5,6 @@ export const initialState = {
   videos: [],
   categories: [],
   languages: [],
-  watchLater: [],
-  likedVideos: [],
   history: [],
   playlist: [],
 };
@@ -66,12 +64,6 @@ export const reducer = (state, { type, payload }) => {
         languages: payload.languages,
       };
 
-    case "SET_WATCH_LATER":
-      return {
-        ...state,
-        watchLater: [...state.watchLater, payload],
-      };
-
     case "ADD_TO_HISTORY":
       return {
         ...state,
@@ -103,24 +95,6 @@ export const reducer = (state, { type, payload }) => {
       return {
         ...state,
         history: [],
-      };
-
-    case "SET_LIKED_VIDEOS":
-      return {
-        ...state,
-        likedVideos: [...state.likedVideos, payload],
-      };
-
-    case "REMOVE_FROM_LIKED_VIDEOS":
-      return {
-        ...state,
-        likedVideos: state.likedVideos.filter((video) => video._id !== payload),
-      };
-
-    case "REMOVE_FROM_WATCH_LATER":
-      return {
-        ...state,
-        watchLater: state.watchLater.filter((video) => video._id !== payload),
       };
 
     case "CREATE_NEW_PLAYLIST":
