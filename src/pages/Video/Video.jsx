@@ -10,18 +10,18 @@ import {
   BsFolderPlus,
 } from "react-icons/bs";
 
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Modal, VideoCard } from "../../components";
 import { useData, useUser } from "../../context";
 import styles from "./Video.module.css";
 import toast from "react-hot-toast";
 
 export const Video = () => {
-  const [params] = useSearchParams();
-  const youtubeId = params.get("id");
   const { videos, dispatch } = useData();
   const { user, handlers } = useUser();
+  const { youtubeId } = useParams();
   const [openModal, setModal] = useState(false);
+
   const isInWatchLater = user.saved?.some((vid) => vid._id === youtubeId);
   const isInLikedVideos = user.likes?.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
@@ -51,6 +51,9 @@ export const Video = () => {
   };
   // history = [{date,[{video,time}]}]
   useEffect(() => {
+    console.log(youtubeId);
+    window.scrollTo(0, 0);
+
     if (video) {
       // temporarily subtracting somedays to check if its working for videos watched on previous days.
       dispatch({
@@ -69,7 +72,7 @@ export const Video = () => {
       });
       document.title = `${video.name} - Elevate Stream`;
     }
-  }, [video]);
+  }, [youtubeId]);
 
   return (
     <div className={`grid m-md ${styles.video_page}`}>

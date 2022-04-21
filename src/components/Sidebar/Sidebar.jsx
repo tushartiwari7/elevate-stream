@@ -25,7 +25,7 @@ export const Sidebar = () => {
   const { open, setOpen } = useData();
 
   const location = useLocation();
-  const isOnVideoPage = location.pathname === "/video";
+  const isOnVideoPage = location.pathname.includes("/watch");
 
   useEffect(() => {
     if (!isOnVideoPage) {

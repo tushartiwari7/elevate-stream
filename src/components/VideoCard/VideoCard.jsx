@@ -60,7 +60,7 @@ export const VideoCard = (video) => {
   return (
     <li
       className={`card rounded-m ${styles.card} ${
-        path === "/video" ? styles.on_video_page_card : ""
+        path.includes("/watch") ? styles.on_video_page_card : ""
       }`}
       onClick={() => menu && toggleMenu(!menu)}
     >

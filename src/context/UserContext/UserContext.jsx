@@ -79,7 +79,7 @@ export const UserProvider = ({ children }) => {
   const shareVideoHandler = async (videoID) => {
     console.log(videoID);
     await navigator.clipboard.writeText(
-      `${window.location.origin}/video?id=${videoID}`
+      `${window.location.origin}/watch/${videoID}`
     );
     return toast.success("Video Link Copied");
   };

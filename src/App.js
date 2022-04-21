@@ -29,7 +29,7 @@ function App() {
   return (
     <div
       className={`App grid ${
-        location.pathname === "/video" ? "video-layout" : ""
+        location.pathname.includes("/watch") ? "video-layout" : ""
       }`}
     >
       <Navbar />
@@ -38,7 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/video" element={<Video />} />
+          <Route path="/watch/:youtubeId" element={<Video />} />
           <Route
             path="/liked"
             element={<Playlist videoType="Liked Videos" />}
