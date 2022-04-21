@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   BsHandThumbsUp,
   BsHandThumbsUpFill,
@@ -8,40 +9,39 @@ import {
   BsShare,
   BsFolderPlus,
 } from "react-icons/bs";
+
 import { Link, useSearchParams } from "react-router-dom";
 import { Modal, VideoCard } from "../../components";
-import { useData } from "../../context";
+import { useData, useUser } from "../../context";
 import styles from "./Video.module.css";
 import toast from "react-hot-toast";
 
 export const Video = () => {
   const [params] = useSearchParams();
   const youtubeId = params.get("id");
-  const { videos, likedVideos, watchLater, dispatch } = useData();
-
+  const { videos, dispatch } = useData();
+  const { user, handlers } = useUser();
   const [openModal, setModal] = useState(false);
-  const isInWatchLater = watchLater.some((vid) => vid._id === youtubeId);
-  const isInLikedVideos = likedVideos.some((vid) => vid._id === youtubeId);
+  const isInWatchLater = user.saved?.some((vid) => vid._id === youtubeId);
+  const isInLikedVideos = user.likes?.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
 
   const dispatchHandler = (type) => {
     switch (type) {
+      case "SHARE-VIDEO":
+        handlers.shareVideoHandler(youtubeId);
+        break;
+
       case "LIKE-VIDEO":
         isInLikedVideos
-          ? dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: youtubeId })
-          : dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
-        isInLikedVideos
-          ? toast.success(`Removed ${video.name} from Liked Movies!`)
-          : toast(`Added ${video.name} to Liked Movies!`, { icon: "👍" });
+          ? handlers.likedVideosHandler(video._id, false)
+          : handlers.likedVideosHandler(video);
         break;
 
       case "WATCH-LATER":
         isInWatchLater
-          ? dispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: youtubeId })
-          : dispatch({ type: "SET_WATCH_LATER", payload: video });
-        isInWatchLater
-          ? toast.success(`Removed ${video.name} from Watch Later!`)
-          : toast(`Added ${video.name} to Watch Later!`, { icon: "⌚" });
+          ? handlers.savedVideosHandler(video._id, false)
+          : handlers.savedVideosHandler(video);
         break;
 
       default:
@@ -116,7 +116,10 @@ export const Video = () => {
                 title="Add a Comment"
               />
             </Link>
-            <li className="px-sm pointer">
+            <li
+              className="px-sm pointer"
+              onClick={() => dispatchHandler("SHARE-VIDEO")}
+            >
               <BsShare
                 size="3rem"
                 color="var(--primary)"
@@ -158,7 +161,7 @@ export const Video = () => {
             <div
               className={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
             >
-              MK
+              {`${user.firstName?.[0] ?? "M"}${user.lastName?.[0] ?? "K"}`}
             </div>
             <div className="flex flex-col full-width">
               <input

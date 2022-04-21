@@ -9,10 +9,8 @@ import {
   BsFolderPlus,
 } from "react-icons/bs";
 import { getViews } from "../../utils";
-import { useData } from "../../context";
 import { Link, useLocation } from "react-router-dom";
 import { Modal } from "../";
-import toast from "react-hot-toast";
 import { useUser } from "../../context";
 export const VideoCard = (video) => {
   const {
@@ -35,6 +33,10 @@ export const VideoCard = (video) => {
 
   const contextMenuHandler = (e) => {
     switch (e.target.title) {
+      case "Share with Friends":
+        handlers.shareVideoHandler(video._id);
+        break;
+
       case "like-video":
         isInLikedVideos
           ? handlers.likedVideosHandler(video._id, false)
@@ -62,7 +64,7 @@ export const VideoCard = (video) => {
       }`}
       onClick={() => menu && toggleMenu(!menu)}
     >
-      <Link className="flex pos-rel" to={`/video?id=${_id}`}>
+      <Link className="flex pos-rel" to={`/watch/${_id}`}>
         <img
           className={styles.card_img}
           src={thumbnail}
@@ -99,7 +101,7 @@ export const VideoCard = (video) => {
             className={`flex flex-col pos-abs list card ${styles.contextMenu}`}
             onClick={contextMenuHandler}
           >
-            <li className="flex px-sm py-xs" title="Share">
+            <li className="flex px-sm py-xs" title="Share with Friends">
               <BsShare
                 className={styles.contextMenuItemIcon}
                 size="1.5rem"
@@ -116,9 +118,7 @@ export const VideoCard = (video) => {
                 title="watch-later"
               />
               <span className="fs-m" title="watch-later">
-                {isInWatchLater
-                  ? "Remove From Watch Later"
-                  : "Save To Watch Later"}
+                {isInWatchLater ? "Unsave Video" : "Save Video"}
               </span>
             </li>
             <li className="flex px-sm py-xs" title="like-video">

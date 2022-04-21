@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ isLoggedIn: false });
-  const navigator = useNavigate();
+  const reactNavigator = useNavigate();
   const [params] = useSearchParams();
 
   const loginHandler = async ({ email, password }) => {
@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem("token", encodedToken);
     setUser({ ...foundUser, isLoggedIn: true });
     toast.success("Login Successful");
-    navigator(params.get("redirect") || "/explore", { replace: true });
+    reactNavigator(params.get("redirect") || "/explore", { replace: true });
   };
 
   const signupHandler = async (e, userInputCreds) => {
@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem("token", encodedToken);
       setUser({ ...createdUser, isLoggedIn: true });
       toast.success("Signup Successful");
-      navigator(params.get("redirect") || "/explore", { replace: true });
+      reactNavigator(params.get("redirect") || "/explore", { replace: true });
     } else {
       toast.error("Signup Failed");
     }
@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
   const likedVideosHandler = async (video, add = true) => {
     if (!user.isLoggedIn) {
       toast.error("Please Login to like videos");
-      return navigator(`/login?redirect=${location.pathname}`, {
+      return reactNavigator(`/login?redirect=${location.pathname}`, {
         replace: true,
       });
     }
@@ -62,7 +62,7 @@ export const UserProvider = ({ children }) => {
   const savedVideosHandler = async (video, add = true) => {
     if (!user.isLoggedIn) {
       toast.error("Please Login to Save videos");
-      return navigator(`/login?redirect=${location.pathname}`, {
+      return reactNavigator(`/login?redirect=${location.pathname}`, {
         replace: true,
       });
     }
@@ -76,6 +76,13 @@ export const UserProvider = ({ children }) => {
     return toast.success("Removed from Saved videos");
   };
 
+  const shareVideoHandler = async (videoID) => {
+    console.log(videoID);
+    await navigator.clipboard.writeText(
+      `${window.location.origin}/video?id=${videoID}`
+    );
+    return toast.success("Video Link Copied");
+  };
   return (
     <UserContext.Provider
       value={{
@@ -85,6 +92,7 @@ export const UserProvider = ({ children }) => {
           signupHandler,
           likedVideosHandler,
           savedVideosHandler,
+          shareVideoHandler,
         },
       }}
     >
