@@ -60,7 +60,6 @@ export const Video = () => {
 
   // history = [{date,[{video,time}]}]
   useEffect(() => {
-    console.log(youtubeId);
     window.scrollTo(0, 0);
 
     if (video) {

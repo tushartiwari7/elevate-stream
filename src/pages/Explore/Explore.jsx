@@ -25,7 +25,6 @@ export const Explore = () => {
       `Showing Movies in ${lang || "All"} language${lang ? " only" : "s"}.`,
       { icon: "📚" }
     );
-    console.log("vdf");
     filterDispatch({
       type: "LANGUAGES",
       payload: {

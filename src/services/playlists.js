@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 const token = localStorage.getItem("token");
 
 export const createPlaylist = async (playlistName) => {
-  console.log("playlistName", playlistName);
   try {
     const {
       data: { playlists },
