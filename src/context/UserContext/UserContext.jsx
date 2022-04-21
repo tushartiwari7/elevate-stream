@@ -83,10 +83,12 @@ export const UserProvider = ({ children }) => {
     );
     return toast.success("Video Link Copied");
   };
+
   return (
     <UserContext.Provider
       value={{
         user,
+        setUser,
         handlers: {
           loginHandler,
           signupHandler,

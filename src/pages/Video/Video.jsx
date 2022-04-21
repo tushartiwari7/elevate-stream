@@ -10,7 +10,7 @@ import {
   BsFolderPlus,
 } from "react-icons/bs";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Modal, VideoCard } from "../../components";
 import { useData, useUser } from "../../context";
 import styles from "./Video.module.css";
@@ -21,7 +21,7 @@ export const Video = () => {
   const { user, handlers } = useUser();
   const { youtubeId } = useParams();
   const [openModal, setModal] = useState(false);
-
+  const navigator = useNavigate();
   const isInWatchLater = user.saved?.some((vid) => vid._id === youtubeId);
   const isInLikedVideos = user.likes?.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
@@ -49,6 +49,15 @@ export const Video = () => {
         break;
     }
   };
+
+  const openPlaylistModal = () => {
+    if (!user.isLoggedIn) {
+      toast.error("You need to be logged in to add videos to a playlist");
+      return navigator("/login");
+    }
+    setModal(true);
+  };
+
   // history = [{date,[{video,time}]}]
   useEffect(() => {
     console.log(youtubeId);
@@ -129,7 +138,7 @@ export const Video = () => {
                 title="Share this Video"
               />
             </li>
-            <li className="px-sm pointer" onClick={() => setModal(true)}>
+            <li className="px-sm pointer" onClick={openPlaylistModal}>
               <BsFolderPlus
                 size="3rem"
                 color="var(--primary)"

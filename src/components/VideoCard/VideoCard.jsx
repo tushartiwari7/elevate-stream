@@ -9,9 +9,10 @@ import {
   BsFolderPlus,
 } from "react-icons/bs";
 import { getViews } from "../../utils";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Modal } from "../";
 import { useUser } from "../../context";
+import toast from "react-hot-toast";
 export const VideoCard = (video) => {
   const {
     _id,
@@ -30,6 +31,8 @@ export const VideoCard = (video) => {
   const isInLikedVideos = user.likes?.some((vid) => vid._id === _id);
 
   const [openModal, setModal] = useState(false);
+  const navigator = useNavigate();
+  const location = useLocation();
 
   const contextMenuHandler = (e) => {
     switch (e.target.title) {
@@ -55,8 +58,16 @@ export const VideoCard = (video) => {
     toggleMenu(!menu);
   };
 
-  const location = useLocation();
   const path = location.pathname;
+
+  const openPlaylistModal = () => {
+    if (!user.isLoggedIn) {
+      toast.error("You need to be logged in to add videos to a playlist");
+      return navigator("/login");
+    }
+    setModal(true);
+  };
+
   return (
     <li
       className={`card rounded-m ${styles.card} ${
@@ -136,7 +147,7 @@ export const VideoCard = (video) => {
             <li
               className="flex px-sm py-xs"
               title="Add to Playlist"
-              onClick={() => setModal(true)}
+              onClick={openPlaylistModal}
             >
               <BsFolderPlus
                 className={styles.contextMenuItemIcon}
