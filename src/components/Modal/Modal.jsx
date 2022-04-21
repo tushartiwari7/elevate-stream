@@ -2,7 +2,6 @@ import { useState } from "react";
 import { BsCheckSquareFill, BsSquare, BsX } from "react-icons/bs";
 import { useData, useUser } from "../../context";
 import styles from "./Modal.module.css";
-import toast from "react-hot-toast";
 import {
   addVideoToPlaylist,
   createPlaylist,
@@ -99,7 +98,7 @@ export const Modal = ({ setModal, video }) => {
           </>
         )}
         <i role="icon" className={`pos-abs ${styles.close_modal}`}>
-          <BsX size="3rem" onClick={() => setModal(false)} />
+          <BsX size="4rem" onClick={() => setModal(false)} />
         </i>
       </section>
     </div>

@@ -4,8 +4,9 @@
 
 .close_modal {
   top: 0;
-  right: 0;
+  right: -1rem;
   color: var(--secondary400);
+  background: var(--bg-secondary);
   cursor: pointer;
 }
 
