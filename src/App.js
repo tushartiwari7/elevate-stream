@@ -41,9 +41,20 @@ function App() {
           <Route path="/watch/:youtubeId" element={<Video />} />
           <Route
             path="/liked"
-            element={<Playlist videoType="Liked Videos" />}
+            element={
+              <RequiresAuth>
+                <Playlist videoType="Liked Videos" />
+              </RequiresAuth>
+            }
           />
-          <Route path="/saved" element={<Playlist videoType="Watch Later" />} />
+          <Route
+            path="/saved"
+            element={
+              <RequiresAuth>
+                <Playlist videoType="Saved Videos" />
+              </RequiresAuth>
+            }
+          />
           <Route
             path="/playlists"
             element={
@@ -52,7 +63,14 @@ function App() {
               </RequiresAuth>
             }
           />
-          <Route path="/history" element={<History />} />
+          <Route
+            path="/history"
+            element={
+              <RequiresAuth>
+                <History />
+              </RequiresAuth>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/mockman" element={<Mockman />} />
