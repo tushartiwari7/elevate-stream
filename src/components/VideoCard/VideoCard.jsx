@@ -7,12 +7,14 @@ import {
   BsSave2,
   BsHandThumbsUp,
   BsFolderPlus,
+  BsClock,
 } from "react-icons/bs";
 import { getViews } from "../../utils";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Modal } from "../";
 import { useUser } from "../../context";
 import toast from "react-hot-toast";
+import { removeVideoFromHistory } from "../../services";
 export const VideoCard = (video) => {
   const {
     _id,
@@ -26,9 +28,11 @@ export const VideoCard = (video) => {
     actors,
   } = video;
   const [menu, toggleMenu] = useState(false);
-  const { user, handlers } = useUser();
+  const { user, setUser, handlers } = useUser();
+
   const isInWatchLater = user.saved?.some((vid) => vid._id === _id);
   const isInLikedVideos = user.likes?.some((vid) => vid._id === _id);
+  const isInHistory = user.history?.some((vid) => vid._id === _id);
 
   const [openModal, setModal] = useState(false);
   const navigator = useNavigate();
@@ -66,6 +70,12 @@ export const VideoCard = (video) => {
       return navigator("/login", { state: { from: location } });
     }
     setModal(true);
+  };
+
+  const removeFromHistory = async () => {
+    const { history } = await removeVideoFromHistory(video._id);
+    setUser((user) => ({ ...user, history }));
+    toast.success("Video removed from history");
   };
 
   return (
@@ -158,6 +168,22 @@ export const VideoCard = (video) => {
                 Add To Playlist
               </span>
             </li>
+            {isInHistory && (
+              <li
+                className="flex px-sm py-xs"
+                title="Remove From History"
+                onClick={removeFromHistory}
+              >
+                <BsClock
+                  className={styles.contextMenuItemIcon}
+                  size="1.5rem"
+                  title="Remove from History"
+                />
+                <span className="fs-m" title="Remove From History">
+                  Remove From History
+                </span>
+              </li>
+            )}
           </ul>
         )}
       </div>

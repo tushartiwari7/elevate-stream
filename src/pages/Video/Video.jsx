@@ -15,10 +15,11 @@ import { Modal, VideoCard } from "../../components";
 import { useData, useUser } from "../../context";
 import styles from "./Video.module.css";
 import toast from "react-hot-toast";
+import { addVideoToHistory } from "../../services";
 
 export const Video = () => {
   const { videos, dispatch } = useData();
-  const { user, handlers } = useUser();
+  const { user, setUser, handlers } = useUser();
   const { youtubeId } = useParams();
   const [openModal, setModal] = useState(false);
   const navigator = useNavigate();
@@ -58,26 +59,12 @@ export const Video = () => {
     setModal(true);
   };
 
-  // history = [{date,[{video,time}]}]
   useEffect(() => {
-    window.scrollTo(0, 0);
-
-    if (video) {
-      // temporarily subtracting somedays to check if its working for videos watched on previous days.
-      dispatch({
-        type: "ADD_TO_HISTORY",
-        payload: {
-          timeStamp: {
-            date: new Intl.DateTimeFormat(`en-IN`, {
-              dateStyle: "long",
-            }).format(new Date()),
-            time: new Intl.DateTimeFormat("en-IN", {
-              dayPeriod: "narrow",
-            }).format(new Date()),
-          },
-          video,
-        },
-      });
+    if (video && user.isLoggedIn) {
+      (async () => {
+        const { history } = await addVideoToHistory(video);
+        setUser((user) => ({ ...user, history }));
+      })();
       document.title = `${video.name} - Elevate Stream`;
     }
   }, [youtubeId]);

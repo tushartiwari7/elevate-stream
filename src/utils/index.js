@@ -42,3 +42,8 @@ export const compose = (state, ...functions) => {
     }, state);
   };
 };
+
+export const audioMessage = (message) => {
+  const speak = new SpeechSynthesisUtterance(message);
+  speechSynthesis.speak(speak);
+};

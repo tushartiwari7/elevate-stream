@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context";
+import { audioMessage } from "../../utils";
 import styles from "./RequiresAuth.module.css";
 export const RequiresAuth = ({ children }) => {
   const location = useLocation();
@@ -8,6 +9,12 @@ export const RequiresAuth = ({ children }) => {
     user: { isLoggedIn },
   } = useUser();
 
+  useEffect(() => {
+    if (!isLoggedIn)
+      audioMessage(
+        `You need to be logged in to view ${location.pathname.slice(1)} Videos`
+      );
+  }, [location.pathname]);
   return isLoggedIn ? (
     children
   ) : (

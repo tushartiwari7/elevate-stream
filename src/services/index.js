@@ -8,3 +8,8 @@ export {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
 } from "./playlists";
+export {
+  addVideoToHistory,
+  removeVideoFromHistory,
+  clearHistory,
+} from "./history";
