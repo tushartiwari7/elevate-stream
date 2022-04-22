@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import bannerStyles from "../Home/Home.module.css";
 import loginStyles from "../Login/Login.module.css";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useUser } from "../../context";
 export const Signup = () => {
+  const location = useLocation();
   const [passwordType, setPasswordType] = useState("password");
   const [userCreds, setUserCreds] = useState({
     firstName: "",
@@ -29,7 +30,9 @@ export const Signup = () => {
         />
       </div>
       <form
-        onSubmit={(e) => handlers.signupHandler(e, userCreds)}
+        onSubmit={(e) =>
+          handlers.signupHandler(e, userCreds, location.state.from)
+        }
         className={`flex flex-center flex-col pos-abs p-md rounded-s ${bannerStyles.banner_content} ${loginStyles.login_content}`}
       >
         <h3 className={` h1 Montserrat ${loginStyles.title}`}>
@@ -119,7 +122,11 @@ export const Signup = () => {
           >
             Sign Up
           </button>
-          <Link to="/login" className={`fs-m ${loginStyles.link}`}>
+          <Link
+            to="/login"
+            state={{ from: location.state?.from }}
+            className={`fs-m ${loginStyles.link}`}
+          >
             Already have an account? Login
           </Link>
         </div>

@@ -46,7 +46,8 @@ export const Navbar = () => {
       <div className="flex flex-center">
         {!user.isLoggedIn ? (
           <Link
-            to={`/login?redirect=${location.pathname}`}
+            to="/login"
+            state={{ from: location }}
             className={`btn-secondary mx-xs fs-m text-center ${styles.navlink}`}
           >
             Login

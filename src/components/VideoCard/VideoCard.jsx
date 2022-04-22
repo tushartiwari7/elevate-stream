@@ -63,7 +63,7 @@ export const VideoCard = (video) => {
   const openPlaylistModal = () => {
     if (!user.isLoggedIn) {
       toast.error("You need to be logged in to add videos to a playlist");
-      return navigator("/login");
+      return navigator("/login", { state: { from: location } });
     }
     setModal(true);
   };

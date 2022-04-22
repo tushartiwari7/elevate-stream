@@ -1,18 +1,19 @@
 import React from "react";
 import { BsTrash } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
-import { useData } from "../../context";
+import { useUser } from "../../context";
 import styles from "./Section.module.css";
 import toast from "react-hot-toast";
+import { removePlaylist } from "../../services";
 
 export const Section = ({ children, title, size, playlistId }) => {
   const isInPlaylistsPage = useLocation().pathname === "/playlists";
 
-  const { dispatch } = useData();
-
-  const deletePlaylistHandler = () => {
+  const { setUser } = useUser();
+  const deletePlaylistHandler = async () => {
+    const { playlists } = await removePlaylist(playlistId);
+    setUser((user) => ({ ...user, playlists }));
     toast(`Deleted ${title} Playlist!`, { icon: <BsTrash /> });
-    dispatch({ type: "DELETE_PLAYLIST", payload: playlistId });
   };
 
   return (

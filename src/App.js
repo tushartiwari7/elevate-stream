@@ -1,7 +1,7 @@
 import Mockman from "mockman-js";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Navbar, Sidebar } from "./components";
+import { Navbar, RequiresAuth, Sidebar } from "./components";
 import {
   Explore,
   History,
@@ -44,7 +44,14 @@ function App() {
             element={<Playlist videoType="Liked Videos" />}
           />
           <Route path="/saved" element={<Playlist videoType="Watch Later" />} />
-          <Route path="/playlists" element={<Playlists />} />
+          <Route
+            path="/playlists"
+            element={
+              <RequiresAuth>
+                <Playlists />
+              </RequiresAuth>
+            }
+          />
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
