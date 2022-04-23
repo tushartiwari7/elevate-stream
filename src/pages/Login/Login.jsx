@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import bannerStyles from "../Home/Home.module.css";
 import loginStyles from "./Login.module.css";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useUser } from "../../context";
-
 export const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [userCreds, setUserCreds] = useState({ email: "", password: "" });
-
+  const location = useLocation();
+  console.log(location);
   const { handlers } = useUser();
   const togglePasswordType = () =>
     setPasswordType(passwordType === "password" ? "text" : "password");
@@ -74,23 +74,32 @@ export const Login = () => {
         <div className="full-width">
           <button
             className={`${loginStyles.btn_cta} btn btn-primary full-width rounded-s p-sm fs-m`}
-            onClick={() => handlers.loginHandler(userCreds)}
+            onClick={() =>
+              handlers.loginHandler(userCreds, location.state?.from)
+            }
           >
             Log in
           </button>
           <button
             className={`btn btn-outline-primary full-width py-xs px-sm my-sm rounded-s fs-m ${loginStyles.btn_secondary}`}
             onClick={() =>
-              handlers.loginHandler({
-                email: process.env.React_APP_TEST_EMAIL,
-                password: process.env.React_APP_TEST_PASSWORD,
-              })
+              handlers.loginHandler(
+                {
+                  email: process.env.React_APP_TEST_EMAIL,
+                  password: process.env.React_APP_TEST_PASSWORD,
+                },
+                location.state.from
+              )
             }
           >
             Login as Guest
           </button>
         </div>
-        <Link to="/signup" className={`fs-m ${loginStyles.link}`}>
+        <Link
+          to="/signup"
+          state={{ from: location.state?.from }}
+          className={`fs-m ${loginStyles.link}`}
+        >
           Don't have an account? Signup
         </Link>
       </div>

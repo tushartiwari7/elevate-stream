@@ -13,3 +13,13 @@ export const getUser = async (email, password) => {
     return error;
   }
 };
+
+export const addNewUser = async (userCreds) => {
+  try {
+    const { data, status } = await axios.post("/api/auth/signup", userCreds);
+    return { data, status };
+  } catch (error) {
+    toast.error("Signup Failed");
+    return error;
+  }
+};

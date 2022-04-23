@@ -7,13 +7,14 @@ import {
   BsSave2,
   BsHandThumbsUp,
   BsFolderPlus,
+  BsClock,
 } from "react-icons/bs";
 import { getViews } from "../../utils";
-import { useData } from "../../context";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Modal } from "../";
-import toast from "react-hot-toast";
 import { useUser } from "../../context";
+import toast from "react-hot-toast";
+import { removeVideoFromHistory } from "../../services";
 export const VideoCard = (video) => {
   const {
     _id,
@@ -27,14 +28,22 @@ export const VideoCard = (video) => {
     actors,
   } = video;
   const [menu, toggleMenu] = useState(false);
-  const { user, handlers } = useUser();
+  const { user, setUser, handlers } = useUser();
+
   const isInWatchLater = user.saved?.some((vid) => vid._id === _id);
   const isInLikedVideos = user.likes?.some((vid) => vid._id === _id);
+  const isInHistory = user.history?.some((vid) => vid._id === _id);
 
   const [openModal, setModal] = useState(false);
+  const navigator = useNavigate();
+  const location = useLocation();
 
   const contextMenuHandler = (e) => {
     switch (e.target.title) {
+      case "Share with Friends":
+        handlers.shareVideoHandler(video._id);
+        break;
+
       case "like-video":
         isInLikedVideos
           ? handlers.likedVideosHandler(video._id, false)
@@ -53,16 +62,30 @@ export const VideoCard = (video) => {
     toggleMenu(!menu);
   };
 
-  const location = useLocation();
   const path = location.pathname;
+
+  const openPlaylistModal = () => {
+    if (!user.isLoggedIn) {
+      toast.error("You need to be logged in to add videos to a playlist");
+      return navigator("/login", { state: { from: location } });
+    }
+    setModal(true);
+  };
+
+  const removeFromHistory = async () => {
+    const { history } = await removeVideoFromHistory(video._id);
+    setUser((user) => ({ ...user, history }));
+    toast.success("Video removed from history");
+  };
+
   return (
     <li
       className={`card rounded-m ${styles.card} ${
-        path === "/video" ? styles.on_video_page_card : ""
+        path.includes("/watch") ? styles.on_video_page_card : ""
       }`}
       onClick={() => menu && toggleMenu(!menu)}
     >
-      <Link className="flex pos-rel" to={`/video?id=${_id}`}>
+      <Link className="flex pos-rel" to={`/watch/${_id}`}>
         <img
           className={styles.card_img}
           src={thumbnail}
@@ -99,7 +122,7 @@ export const VideoCard = (video) => {
             className={`flex flex-col pos-abs list card ${styles.contextMenu}`}
             onClick={contextMenuHandler}
           >
-            <li className="flex px-sm py-xs" title="Share">
+            <li className="flex px-sm py-xs" title="Share with Friends">
               <BsShare
                 className={styles.contextMenuItemIcon}
                 size="1.5rem"
@@ -116,9 +139,7 @@ export const VideoCard = (video) => {
                 title="watch-later"
               />
               <span className="fs-m" title="watch-later">
-                {isInWatchLater
-                  ? "Remove From Watch Later"
-                  : "Save To Watch Later"}
+                {isInWatchLater ? "Unsave Video" : "Save Video"}
               </span>
             </li>
             <li className="flex px-sm py-xs" title="like-video">
@@ -136,7 +157,7 @@ export const VideoCard = (video) => {
             <li
               className="flex px-sm py-xs"
               title="Add to Playlist"
-              onClick={() => setModal(true)}
+              onClick={openPlaylistModal}
             >
               <BsFolderPlus
                 className={styles.contextMenuItemIcon}
@@ -147,6 +168,22 @@ export const VideoCard = (video) => {
                 Add To Playlist
               </span>
             </li>
+            {isInHistory && (
+              <li
+                className="flex px-sm py-xs"
+                title="Remove From History"
+                onClick={removeFromHistory}
+              >
+                <BsClock
+                  className={styles.contextMenuItemIcon}
+                  size="1.5rem"
+                  title="Remove from History"
+                />
+                <span className="fs-m" title="Remove From History">
+                  Remove From History
+                </span>
+              </li>
+            )}
           </ul>
         )}
       </div>

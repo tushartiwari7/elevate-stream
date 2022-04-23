@@ -2,44 +2,33 @@ import { Server, Model, RestSerializer } from "miragejs";
 import {
   loginHandler,
   signupHandler,
-} from "./backend/controllers/AuthController";
-import {
   getHistoryVideosHandler,
   addVideoToHistoryHandler,
   removeVideoFromHistoryHandler,
   clearHistoryHandler,
-} from "./backend/controllers/HistoryController";
-import {
   getAllVideosHandler,
   getVideoHandler,
-} from "./backend/controllers/VideoController";
-import { videos } from "./backend/db/videos";
-import { categories } from "./backend/db/categories";
-import { languages } from "./backend/db/languages";
-import { users } from "./backend/db/users";
-import {
   getAllCategoriesHandler,
   getCategoryHandler,
-} from "./backend/controllers/CategoryController";
-import { getAllLanguagesHandler } from "./backend/controllers/LanguageController";
-import {
+  getAllLanguagesHandler,
   getLikedVideosHandler,
   addItemToLikedVideos,
   removeItemFromLikedVideos,
-} from "./backend/controllers/LikeController";
-
-import {
   getAllPlaylistsHandler,
   addNewPlaylistHandler,
   removePlaylistHandler,
   getVideosFromPlaylistHandler,
   addVideoToPlaylistHandler,
   removeVideoFromPlaylistHandler,
-} from "./backend/controllers/PlaylistController";
-import {
   addItemToSavedVideos,
   removeItemFromSavedVideos,
-} from "./backend/controllers/SavedController";
+} from "./backend/controllers";
+
+import { videos } from "./backend/db/videos";
+import { categories } from "./backend/db/categories";
+import { languages } from "./backend/db/languages";
+import { users } from "./backend/db/users";
+
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
     serializers: {

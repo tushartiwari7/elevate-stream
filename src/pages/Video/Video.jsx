@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   BsHandThumbsUp,
   BsHandThumbsUpFill,
@@ -8,40 +9,40 @@ import {
   BsShare,
   BsFolderPlus,
 } from "react-icons/bs";
-import { Link, useSearchParams } from "react-router-dom";
+
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Modal, VideoCard } from "../../components";
-import { useData } from "../../context";
+import { useData, useUser } from "../../context";
 import styles from "./Video.module.css";
 import toast from "react-hot-toast";
+import { addVideoToHistory } from "../../services";
 
 export const Video = () => {
-  const [params] = useSearchParams();
-  const youtubeId = params.get("id");
-  const { videos, likedVideos, watchLater, dispatch } = useData();
-
+  const { videos, dispatch } = useData();
+  const { user, setUser, handlers } = useUser();
+  const { youtubeId } = useParams();
   const [openModal, setModal] = useState(false);
-  const isInWatchLater = watchLater.some((vid) => vid._id === youtubeId);
-  const isInLikedVideos = likedVideos.some((vid) => vid._id === youtubeId);
+  const navigator = useNavigate();
+  const isInWatchLater = user.saved?.some((vid) => vid._id === youtubeId);
+  const isInLikedVideos = user.likes?.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
 
   const dispatchHandler = (type) => {
     switch (type) {
+      case "SHARE-VIDEO":
+        handlers.shareVideoHandler(youtubeId);
+        break;
+
       case "LIKE-VIDEO":
         isInLikedVideos
-          ? dispatch({ type: "REMOVE_FROM_LIKED_VIDEOS", payload: youtubeId })
-          : dispatch({ type: "SET_LIKED_VIDEOS", payload: video });
-        isInLikedVideos
-          ? toast.success(`Removed ${video.name} from Liked Movies!`)
-          : toast(`Added ${video.name} to Liked Movies!`, { icon: "👍" });
+          ? handlers.likedVideosHandler(video._id, false)
+          : handlers.likedVideosHandler(video);
         break;
 
       case "WATCH-LATER":
         isInWatchLater
-          ? dispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: youtubeId })
-          : dispatch({ type: "SET_WATCH_LATER", payload: video });
-        isInWatchLater
-          ? toast.success(`Removed ${video.name} from Watch Later!`)
-          : toast(`Added ${video.name} to Watch Later!`, { icon: "⌚" });
+          ? handlers.savedVideosHandler(video._id, false)
+          : handlers.savedVideosHandler(video);
         break;
 
       default:
@@ -49,27 +50,24 @@ export const Video = () => {
         break;
     }
   };
-  // history = [{date,[{video,time}]}]
+
+  const openPlaylistModal = () => {
+    if (!user.isLoggedIn) {
+      toast.error("You need to be logged in to add videos to a playlist");
+      return navigator("/login");
+    }
+    setModal(true);
+  };
+
   useEffect(() => {
-    if (video) {
-      // temporarily subtracting somedays to check if its working for videos watched on previous days.
-      dispatch({
-        type: "ADD_TO_HISTORY",
-        payload: {
-          timeStamp: {
-            date: new Intl.DateTimeFormat(`en-IN`, {
-              dateStyle: "long",
-            }).format(new Date()),
-            time: new Intl.DateTimeFormat("en-IN", {
-              dayPeriod: "narrow",
-            }).format(new Date()),
-          },
-          video,
-        },
-      });
+    if (video && user.isLoggedIn) {
+      (async () => {
+        const { history } = await addVideoToHistory(video);
+        setUser((user) => ({ ...user, history }));
+      })();
       document.title = `${video.name} - Elevate Stream`;
     }
-  }, [video]);
+  }, [youtubeId]);
 
   return (
     <div className={`grid m-md ${styles.video_page}`}>
@@ -116,14 +114,17 @@ export const Video = () => {
                 title="Add a Comment"
               />
             </Link>
-            <li className="px-sm pointer">
+            <li
+              className="px-sm pointer"
+              onClick={() => dispatchHandler("SHARE-VIDEO")}
+            >
               <BsShare
                 size="3rem"
                 color="var(--primary)"
                 title="Share this Video"
               />
             </li>
-            <li className="px-sm pointer" onClick={() => setModal(true)}>
+            <li className="px-sm pointer" onClick={openPlaylistModal}>
               <BsFolderPlus
                 size="3rem"
                 color="var(--primary)"
@@ -158,7 +159,7 @@ export const Video = () => {
             <div
               className={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
             >
-              MK
+              {`${user.firstName?.[0] ?? "M"}${user.lastName?.[0] ?? "K"}`}
             </div>
             <div className="flex flex-col full-width">
               <input
