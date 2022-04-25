@@ -13,3 +13,4 @@ export {
   removeVideoFromHistory,
   clearHistory,
 } from "./history";
+export { postVideo } from "./video";

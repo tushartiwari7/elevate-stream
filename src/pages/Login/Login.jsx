@@ -8,11 +8,10 @@ export const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [userCreds, setUserCreds] = useState({ email: "", password: "" });
   const location = useLocation();
-  console.log(location);
   const { handlers } = useUser();
   const togglePasswordType = () =>
     setPasswordType(passwordType === "password" ? "text" : "password");
-
+  console.log(location);
   return (
     <div className={`pos-rel flex flex-center ${bannerStyles.home_page}`}>
       <div className={bannerStyles.banner_container}>

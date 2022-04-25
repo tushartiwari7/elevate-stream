@@ -7,7 +7,13 @@ export {
   clearHistoryHandler,
 } from "./HistoryController";
 
-export { getAllVideosHandler, getVideoHandler } from "./VideoController";
+export {
+  getAllVideosHandler,
+  getVideoHandler,
+  addCommentsHandler,
+  postVideoHandler,
+} from "./VideoController";
+
 export { getAllLanguagesHandler } from "./LanguageController";
 export {
   getAllCategoriesHandler,

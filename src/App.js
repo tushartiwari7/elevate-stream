@@ -10,6 +10,7 @@ import {
   NotFound,
   Playlist,
   Playlists,
+  PostVideo,
   Signup,
   Video,
 } from "./pages";
@@ -68,6 +69,14 @@ function App() {
             element={
               <RequiresAuth>
                 <History />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="/post"
+            element={
+              <RequiresAuth>
+                <PostVideo />
               </RequiresAuth>
             }
           />

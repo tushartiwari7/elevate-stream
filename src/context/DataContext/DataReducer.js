@@ -64,6 +64,12 @@ export const reducer = (state, { type, payload }) => {
         languages: payload.languages,
       };
 
+    case "ADD_VIDEO":
+      return {
+        ...state,
+        videos: [...state.videos, payload],
+      };
+
     case "ADD_TO_HISTORY":
       return {
         ...state,
