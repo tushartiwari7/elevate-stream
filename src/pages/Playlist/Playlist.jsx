@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Section, VideoCard } from "../../components";
-import { useData, useUser } from "../../context";
+import { useUser } from "../../context";
 import styles from "../Explore/Explore.module.css";
 export const Playlist = ({ videoType }) => {
-  // const { likedVideos, watchLater } = useData();
   const { user } = useUser();
   const videos =
     videoType === "Saved Videos"

@@ -1,19 +1,21 @@
 import React, { useReducer, useState } from "react";
 import bannerStyles from "../Home/Home.module.css";
 import loginStyles from "../Login/Login.module.css";
+import spinner from "../../assets/spinner.gif";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./PostVideo.module.css";
 import { BsPlus, BsCloudUpload } from "react-icons/bs";
 import { useData } from "../../context";
 import { initialVideoCreds, reducer } from "./reducer";
-useNavigate;
-import { postVideo } from "../../services";
+import { getImageLink, postVideo } from "../../services";
 export const PostVideo = () => {
   const { categories, languages, dispatch: dataDispatcher } = useData();
   const [state, dispatch] = useReducer(reducer, initialVideoCreds);
   const [actorInput, setActorInput] = useState("");
+  const [uploading, setUploading] = useState(false);
+
   const navigator = useNavigate();
-  console.log("POST VIDEO ROUTE", location);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const youtubeId = state._id
@@ -22,7 +24,6 @@ export const PostVideo = () => {
 
     const resp = await postVideo({ ...state, _id: youtubeId });
     if (resp.status === "success") {
-      console.log("Video posted successfully", resp);
       dataDispatcher({
         type: "ADD_VIDEO",
         payload: resp.video,
@@ -32,20 +33,19 @@ export const PostVideo = () => {
     }
   };
 
+  const imageHandler = async (e) => {
+    setUploading(true);
+    const imageLink = await getImageLink(e);
+    console.log(imageLink);
+    dispatch({ type: "SET_THUMBNAIL", payload: imageLink });
+    setUploading(false);
+  };
+
   return (
     <div className={`pos-rel flex flex-center ${bannerStyles.home_page}`}>
-      <div className={bannerStyles.banner_container}>
-        <img
-          src="https://thumbs.gfycat.com/CharmingTenderAtlasmoth-size_restricted.gif"
-          alt="App Banner"
-          width="100%"
-          height="100%"
-          className={bannerStyles.banner}
-        />
-      </div>
       <form
         onSubmit={submitHandler}
-        className={`flex flex-center flex-col pos-abs p-md rounded-s ${bannerStyles.banner_content} ${loginStyles.login_content}`}
+        className={`flex flex-center flex-col p-md rounded-s ${bannerStyles.banner_content} ${loginStyles.login_content}`}
       >
         <h3 className={` h1 Montserrat ${loginStyles.title}`}>
           Upload Your Favorite Video
@@ -252,17 +252,25 @@ export const PostVideo = () => {
               <input
                 type="file"
                 accept="image/*"
-                // required
+                required
                 id="image_input"
                 className={styles.image_input}
-                // onChange={getImageLink}
+                onChange={imageHandler}
               />
               <label
                 htmlFor="image_input"
                 className={`list pointer my-xs py-xs pos-abs ${styles.upload_image}`}
                 title="Upload Video Thumbnail"
               >
-                <BsCloudUpload size="3rem" color="var(--text-light)" />
+                {uploading ? (
+                  <img
+                    className={styles.loader}
+                    src={spinner}
+                    alt="uploading image"
+                  />
+                ) : (
+                  <BsCloudUpload size="3rem" color="var(--text-light)" />
+                )}
               </label>
             </div>
           </div>

@@ -6,7 +6,7 @@ export const initialVideoCreds = {
   releaseYear: "",
   duration: { hours: 0, minutes: 0 },
   startAt: "",
-  thumbnail: "https://picsum.photos/200/300",
+  thumbnail: "",
   actors: [],
 };
 

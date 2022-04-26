@@ -1,4 +1,3 @@
-export { getImageLink } from "./getImageLink";
 
 export const getSortedVideos = (videos, filters) => {
   switch (filters.sort) {

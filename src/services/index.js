@@ -13,4 +13,4 @@ export {
   removeVideoFromHistory,
   clearHistory,
 } from "./history";
-export { postVideo } from "./video";
+export { postVideo, getImageLink } from "./video";

@@ -68,6 +68,7 @@ export function makeServer({ environment = "development" } = {}) {
 
     routes() {
       this.namespace = "api";
+
       // auth routes (public)
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));
@@ -127,6 +128,10 @@ export function makeServer({ environment = "development" } = {}) {
         removeVideoFromHistoryHandler.bind(this)
       );
       this.delete("/user/history/all", clearHistoryHandler.bind(this));
+
+      this.passthrough((request) => {
+        return request.url.includes("cloudinary");
+      });
     },
   });
 }

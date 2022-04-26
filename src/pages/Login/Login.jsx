@@ -11,7 +11,6 @@ export const Login = () => {
   const { handlers } = useUser();
   const togglePasswordType = () =>
     setPasswordType(passwordType === "password" ? "text" : "password");
-  console.log(location);
   return (
     <div className={`pos-rel flex flex-center ${bannerStyles.home_page}`}>
       <div className={bannerStyles.banner_container}>

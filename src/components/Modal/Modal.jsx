@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BsCheckSquareFill, BsSquare, BsX } from "react-icons/bs";
-import { useData, useUser } from "../../context";
+import { useUser } from "../../context";
 import styles from "./Modal.module.css";
 import {
   addVideoToPlaylist,
@@ -9,7 +9,6 @@ import {
 } from "../../services";
 export const Modal = ({ setModal, video }) => {
   const [input, setInput] = useState("");
-  const { dispatch } = useData();
   const { user, setUser } = useUser();
 
   const submitHandler = async (e) => {

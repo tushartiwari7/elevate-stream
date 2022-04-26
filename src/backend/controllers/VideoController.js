@@ -44,7 +44,6 @@ export const postVideoHandler = function (schema, request) {
       );
     }
     const { video } = JSON.parse(request.requestBody);
-    console.log("VIDEO", video);
     const alreadyExists = schema.videos.findBy({ _id: video._id });
     if (alreadyExists) {
       return new Response(
@@ -59,6 +58,7 @@ export const postVideoHandler = function (schema, request) {
       ...video,
       releaseYear: video.releaseYear - 0,
       startAt: video.startAt - 0,
+      views: Math.floor(Math.random() * 1000000),
     });
 
     return new Response(
@@ -84,10 +84,8 @@ export const postVideoHandler = function (schema, request) {
 
 export const getVideoHandler = function (schema, request) {
   const { videoId } = request.params;
-  console.log(videoId);
   try {
     const video = schema.videos.findBy({ _id: videoId }).attrs;
-    console.log("VIDEO", video);
     return new Response(200, {}, { video });
   } catch (error) {
     return new Response(
@@ -103,7 +101,6 @@ export const getVideoHandler = function (schema, request) {
 export const addCommentsHandler = function (schema, request) {
   // const user = requiresAuth.call(this, request);
   const { videoId } = request.params;
-  console.log(videoId);
 
   if (user) {
     const video = schema.videos.findBy({ _id: videoId }).attrs;
