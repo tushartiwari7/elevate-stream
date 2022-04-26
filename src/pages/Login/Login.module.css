@@ -17,6 +17,7 @@
 }
 
 .login_content {
+  background: var(--bg-secondary);
   inset: 3rem;
   width: auto;
   height: auto;

@@ -20,15 +20,6 @@ export const Signup = () => {
 
   return (
     <div className={`pos-rel flex flex-center ${bannerStyles.home_page}`}>
-      <div className={bannerStyles.banner_container}>
-        <img
-          src="https://thumbs.gfycat.com/CharmingTenderAtlasmoth-size_restricted.gif"
-          alt="App Banner"
-          width="100%"
-          height="100%"
-          className={bannerStyles.banner}
-        />
-      </div>
       <form
         onSubmit={(e) =>
           handlers.signupHandler(e, userCreds, location.state.from)

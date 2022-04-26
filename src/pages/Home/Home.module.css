@@ -2,19 +2,11 @@
   height: 85vh;
 }
 
-.banner_container,
 .banner_content {
   height: inherit;
   width: 100%;
 }
-
-.banner {
-  object-fit: cover;
-  filter: brightness(0.6);
-}
-
 .banner_content {
-  background: var(--bg-secondary);
   color: var(--text-light);
   max-width: 60%;
   margin-left: auto;
