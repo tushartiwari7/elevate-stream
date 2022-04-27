@@ -8,22 +8,11 @@ export const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [userCreds, setUserCreds] = useState({ email: "", password: "" });
   const location = useLocation();
-  console.log(location);
   const { handlers } = useUser();
   const togglePasswordType = () =>
     setPasswordType(passwordType === "password" ? "text" : "password");
-
   return (
     <div className={`pos-rel flex flex-center ${bannerStyles.home_page}`}>
-      <div className={bannerStyles.banner_container}>
-        <img
-          src="https://i.pinimg.com/originals/96/76/f2/9676f2499f9031d9bd250270dd2e3be0.gif"
-          alt="App Banner"
-          width="100%"
-          height="100%"
-          className={bannerStyles.banner}
-        />
-      </div>
       <div
         className={`flex flex-center flex-col pos-abs p-md rounded-s ${bannerStyles.banner_content} ${loginStyles.login_content}`}
       >

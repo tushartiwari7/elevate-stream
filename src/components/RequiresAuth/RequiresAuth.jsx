@@ -12,7 +12,9 @@ export const RequiresAuth = ({ children }) => {
   useEffect(() => {
     if (!isLoggedIn)
       audioMessage(
-        `You need to be logged in to view ${location.pathname.slice(1)} Videos`
+        location.pathname === "/post"
+          ? "You need to be logged in to post a video"
+          : `Login To See Videos In ${location.pathname.slice(1)}`
       );
   }, [location.pathname]);
   return isLoggedIn ? (
@@ -21,7 +23,9 @@ export const RequiresAuth = ({ children }) => {
     <section className={`flex flex-center ${styles.section}`}>
       <div className="flex flex-center flex-col">
         <h3 className="h2 ubuntu text-center">
-          Login To See Videos In {location.pathname.slice(1)}
+          {location.pathname === "/post"
+            ? "You need to be logged in to post a video"
+            : `Login To See Videos In ${location.pathname.slice(1)}`}
         </h3>
         <Link
           to={`/login`}

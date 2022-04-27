@@ -14,7 +14,7 @@ export const Playlists = () => {
   };
 
   return (
-    <div>
+    <>
       <h1 className="h1 Montserrat text-left p-md ">Your Playlists</h1>
       {user.playlists.length ? (
         user.playlists?.map((list) => (
@@ -51,6 +51,6 @@ export const Playlists = () => {
           </button>
         </section>
       )}
-    </div>
+    </>
   );
 };

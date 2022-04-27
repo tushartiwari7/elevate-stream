@@ -17,10 +17,10 @@
 }
 
 .login_content {
+  background: var(--bg-secondary);
   inset: 3rem;
   width: auto;
   height: auto;
-  backdrop-filter: brightness(0.4) blur(5px);
   justify-content: space-around;
 }
 

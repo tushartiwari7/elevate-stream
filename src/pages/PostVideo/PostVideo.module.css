@@ -1,0 +1,37 @@
+.actors_label {
+  composes: input_label from "../../pages/Login/Login.module.css";
+}
+.loader {
+  object-fit: contain;
+  height: 100%;
+}
+.time_duration {
+  gap: 1rem;
+}
+.form_row {
+  gap: 2rem;
+  margin-top: 10px;
+}
+.chips_wrapper {
+  gap: 1rem;
+}
+.chip {
+  composes: sort_button from "../../pages/Explore/Explore.module.css";
+  width: fit-content;
+}
+.chip > svg {
+  margin: 0;
+}
+.image_input {
+  display: none;
+}
+.upload_image {
+  composes: chip;
+  right: 0;
+  bottom: 1rem;
+  height: 4rem;
+}
+.add_actor {
+  composes: chip;
+  padding: 0;
+}

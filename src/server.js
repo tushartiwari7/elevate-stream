@@ -22,6 +22,7 @@ import {
   removeVideoFromPlaylistHandler,
   addItemToSavedVideos,
   removeItemFromSavedVideos,
+  postVideoHandler,
 } from "./backend/controllers";
 
 import { videos } from "./backend/db/videos";
@@ -50,7 +51,7 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       server.logging = false;
       videos.forEach((item) => {
-        server.create("video", { ...item });
+        server.create("video", { ...item, comments: [] });
       });
       categories.forEach((item) => server.create("category", { ...item }));
       languages.forEach((item) => server.create("language", { ...item }));
@@ -67,6 +68,7 @@ export function makeServer({ environment = "development" } = {}) {
 
     routes() {
       this.namespace = "api";
+
       // auth routes (public)
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));
@@ -75,7 +77,11 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("/videos", getAllVideosHandler.bind(this));
       this.get("video/:videoId", getVideoHandler.bind(this));
 
+      // video routes (private)
+      // this.post("comments/:videoId", addCommentsHandler.bind(this));
+
       // TODO: POST VIDEO TO DB
+      this.post("/video", postVideoHandler.bind(this));
 
       // categories routes (public)
       this.get("/categories", getAllCategoriesHandler.bind(this));
@@ -122,6 +128,10 @@ export function makeServer({ environment = "development" } = {}) {
         removeVideoFromHistoryHandler.bind(this)
       );
       this.delete("/user/history/all", clearHistoryHandler.bind(this));
+
+      this.passthrough((request) => {
+        return request.url.includes("cloudinary");
+      });
     },
   });
 }

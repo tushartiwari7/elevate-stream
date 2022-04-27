@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 import { addVideoToHistory } from "../../services";
 
 export const Video = () => {
-  const { videos, dispatch } = useData();
+  const { videos } = useData();
   const { user, setUser, handlers } = useUser();
   const { youtubeId } = useParams();
   const [openModal, setModal] = useState(false);
