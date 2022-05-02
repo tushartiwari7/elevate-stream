@@ -5,6 +5,11 @@
 
 .avatar {
   color: var(--bg-secondary);
+  min-width: 5rem;
+}
+
+.comment {
+  color: var(--text-light);
 }
 
 .comment_section {
@@ -20,6 +25,13 @@
   color: var(--bg-secondary);
 }
 
+.comment_list > li {
+  background: var(--bg-secondary);
+}
+
+.comment_list p {
+  text-align: left;
+}
 .main_video {
   padding-bottom: 5rem;
 }

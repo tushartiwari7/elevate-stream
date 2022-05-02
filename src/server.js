@@ -23,6 +23,7 @@ import {
   addItemToSavedVideos,
   removeItemFromSavedVideos,
   postVideoHandler,
+  addCommentsHandler,
 } from "./backend/controllers";
 
 import { videos } from "./backend/db/videos";
@@ -78,7 +79,7 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("video/:videoId", getVideoHandler.bind(this));
 
       // video routes (private)
-      // this.post("comments/:videoId", addCommentsHandler.bind(this));
+      this.post("comments/:videoId", addCommentsHandler.bind(this));
 
       // TODO: POST VIDEO TO DB
       this.post("/video", postVideoHandler.bind(this));

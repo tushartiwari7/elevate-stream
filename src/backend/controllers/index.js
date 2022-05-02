@@ -1,41 +1,8 @@
-export { loginHandler, signupHandler } from "./AuthController";
-
-export {
-  getHistoryVideosHandler,
-  addVideoToHistoryHandler,
-  removeVideoFromHistoryHandler,
-  clearHistoryHandler,
-} from "./HistoryController";
-
-export {
-  getAllVideosHandler,
-  getVideoHandler,
-  addCommentsHandler,
-  postVideoHandler,
-} from "./VideoController";
-
-export { getAllLanguagesHandler } from "./LanguageController";
-export {
-  getAllCategoriesHandler,
-  getCategoryHandler,
-} from "./CategoryController";
-
-export {
-  getLikedVideosHandler,
-  addItemToLikedVideos,
-  removeItemFromLikedVideos,
-} from "./LikeController";
-
-export {
-  getAllPlaylistsHandler,
-  addNewPlaylistHandler,
-  removePlaylistHandler,
-  getVideosFromPlaylistHandler,
-  addVideoToPlaylistHandler,
-  removeVideoFromPlaylistHandler,
-} from "./PlaylistController";
-
-export {
-  addItemToSavedVideos,
-  removeItemFromSavedVideos,
-} from "./SavedController";
+export * from "./AuthController";
+export * from "./HistoryController";
+export * from "./VideoController";
+export * from "./LanguageController";
+export * from "./CategoryController";
+export * from "./LikeController";
+export * from "./PlaylistController";
+export * from "./SavedController";

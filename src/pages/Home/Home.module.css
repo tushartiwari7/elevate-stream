@@ -2,6 +2,12 @@
   height: 85vh;
 }
 
+.banner {
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.banner_container,
 .banner_content {
   height: inherit;
   width: 100%;

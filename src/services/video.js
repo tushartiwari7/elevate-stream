@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 export const postVideo = async (videoToSend) => {
   const token = localStorage.getItem("token").slice(1, -1);
   try {
@@ -19,6 +20,27 @@ export const postVideo = async (videoToSend) => {
   }
 };
 
+export const addCommment = async (videoID, comment) => {
+  const token = localStorage.getItem("token").slice(1, -1);
+  try {
+    const { data } = await axios({
+      url: `/api/comments/${videoID}`,
+      method: "POST",
+      data: {
+        comment,
+      },
+      headers: {
+        authorization: token,
+      },
+    });
+    return { ...data };
+  } catch (err) {
+    console.error(err);
+    toast("Comment Not added - Request Failed", { icon: "❌" });
+    return err;
+  }
+};
+
 export const getImageLink = async (e) => {
   try {
     const file = e.target.files[0];
@@ -35,11 +57,10 @@ export const getImageLink = async (e) => {
         }
       );
       const json = await resp.json();
-      console.log(json);
       return json.secure_url;
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return err;
   }
 };

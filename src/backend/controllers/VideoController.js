@@ -1,4 +1,5 @@
 import { Response } from "miragejs";
+import { v4 as uuid } from "uuid";
 import { requiresAuth } from "../utils/authUtils";
 /**
  * All the routes related to Videos are present here.
@@ -99,23 +100,37 @@ export const getVideoHandler = function (schema, request) {
 };
 
 export const addCommentsHandler = function (schema, request) {
-  // const user = requiresAuth.call(this, request);
+  const user = requiresAuth.call(this, request);
   const { videoId } = request.params;
+  try {
+    if (!user) {
+      return new Response(
+        404,
+        {},
+        {
+          errors: ["This User is not Registered. Not Found error"],
+        }
+      );
+    }
 
-  if (user) {
-    const video = schema.videos.findBy({ _id: videoId }).attrs;
-    const { comment } = JSON.parse(request.requestBody);
+    if (user) {
+      const { comment } = JSON.parse(request.requestBody);
+      const video = schema.videos.findBy({ _id: videoId })?.attrs;
+      const updatedComments = [{ ...comment, _id: uuid() }, ...video.comments];
+      this.db.videos.update({ _id: videoId }, { comments: updatedComments });
+      return new Response(
+        201,
+        {},
+        { video: { ...video, comments: updatedComments } }
+      );
+    }
+  } catch (error) {
     return new Response(
-      201,
+      500,
       {},
-      { video: { ...video, comments: [...video.comments, comment] } }
+      {
+        error,
+      }
     );
   }
-  return new Response(
-    404,
-    {},
-    {
-      errors: ["The email you entered is not Registered. Not Found error"],
-    }
-  );
 };
