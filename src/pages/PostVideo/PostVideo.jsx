@@ -36,7 +36,6 @@ export const PostVideo = () => {
   const imageHandler = async (e) => {
     setUploading(true);
     const imageLink = await getImageLink(e);
-    console.log(imageLink);
     dispatch({ type: "SET_THUMBNAIL", payload: imageLink });
     setUploading(false);
   };

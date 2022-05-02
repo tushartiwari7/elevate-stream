@@ -2,8 +2,5 @@
   height: 100%;
 }
 .link {
-  background: var(--secondary);
-  color: var(--bg-primary);
-  letter-spacing: 0.1ch;
-  text-decoration-color: var(--primary);
+  composes: btn_cta from "../../pages/Home/Home.module.css";
 }

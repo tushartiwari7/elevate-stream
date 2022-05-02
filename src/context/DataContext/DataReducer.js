@@ -66,6 +66,14 @@ export const reducer = (state, { type, payload }) => {
         videos: [...state.videos, payload],
       };
 
+    case "UPDATE_VIDEO":
+      return {
+        ...state,
+        videos: state.videos.map((video) =>
+          video._id === payload._id ? payload : video
+        ),
+      };
+
     default:
       return state;
   }

@@ -28,9 +28,9 @@ export const RequiresAuth = ({ children }) => {
             : `Login To See Videos In ${location.pathname.slice(1)}`}
         </h3>
         <Link
-          to={`/login`}
+          to="/login"
           state={{ from: location }}
-          className={`full-width my-md py-sm h2 text-center ${styles.link}`}
+          className={`btn btn-primary py-xs full-width m-md fs-xl rounded-s transition ${styles.link}`}
         >
           Log in
         </Link>

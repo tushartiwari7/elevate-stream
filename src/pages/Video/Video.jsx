@@ -15,10 +15,10 @@ import { Modal, VideoCard } from "../../components";
 import { useData, useUser } from "../../context";
 import styles from "./Video.module.css";
 import toast from "react-hot-toast";
-import { addVideoToHistory } from "../../services";
+import { addCommment, addVideoToHistory } from "../../services";
 
 export const Video = () => {
-  const { videos } = useData();
+  const { videos, dispatch } = useData();
   const { user, setUser, handlers } = useUser();
   const { youtubeId } = useParams();
   const [openModal, setModal] = useState(false);
@@ -26,7 +26,6 @@ export const Video = () => {
   const isInWatchLater = user.saved?.some((vid) => vid._id === youtubeId);
   const isInLikedVideos = user.likes?.some((vid) => vid._id === youtubeId);
   const video = videos?.find((vid) => vid._id === youtubeId);
-
   const dispatchHandler = (type) => {
     switch (type) {
       case "SHARE-VIDEO":
@@ -49,6 +48,35 @@ export const Video = () => {
         toast(`Unindentified request`, { icon: "❌" });
         break;
     }
+  };
+
+  const commentHandler = async (e) => {
+    e.preventDefault();
+    if (!user.isLoggedIn) {
+      toast("You need to login to comment", { icon: "❌" });
+
+      return;
+    }
+    const [input] = e.target.elements;
+    const comment = {
+      text: input.value,
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
+      timestamp: new Intl.DateTimeFormat("en-IN", { dayPeriod: "long" }).format(
+        new Date()
+      ),
+    };
+    const { video } = await addCommment(youtubeId, comment);
+
+    video
+      ? dispatch({
+          type: "UPDATE_VIDEO",
+          payload: video,
+        })
+      : toast("Comment Not added - Request Failed", { icon: "❌" });
+    e.target.reset();
   };
 
   const openPlaylistModal = () => {
@@ -151,34 +179,61 @@ export const Video = () => {
             </li>
           </ul>
         </div>
-        <div className="mx-md">
-          <div
-            className={`flex p-sm rounded-m ${styles.comment_section}`}
-            id="comments"
-          >
+        <div className="mx-md" id="comments">
+          <div className={`flex p-sm rounded-m ${styles.comment_section}`}>
             <div
               className={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
             >
               {`${user.firstName?.[0] ?? "M"}${user.lastName?.[0] ?? "K"}`}
             </div>
-            <div className="flex flex-col full-width">
+            <form
+              className="flex flex-col full-width"
+              onSubmit={commentHandler}
+            >
               <input
                 className="input m-xs p-xs rounded-m"
-                placeholder="Add a Comment... (non-functional)"
+                placeholder="Add a Comment..."
               />
               <div className={`flex ${styles.comment_btns}`}>
-                <button className="btn btn-primary m-xs p-xs">Cancel</button>
-                <button className="btn btn-primary m-xs p-xs">Post</button>
+                <button type="reset" className="btn btn-primary m-xs p-xs">
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary m-xs p-xs">
+                  Post
+                </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
+        <ul className={`mx-md list ${styles.comment_list}`}>
+          {video?.comments?.map((comment) => (
+            <li
+              key={comment._id}
+              className="my-md p-md rounded-m full-width flex"
+            >
+              <div
+                className={`avatar avatar-sm m-xs bg-primary h3 flex flex-center rounded-circle ${styles.avatar}`}
+              >
+                {`${comment?.user.firstName[0]}${comment?.user.lastName[0]}`}
+              </div>
+              <div>
+                <p className="fs-m">
+                  {`${comment?.user.firstName} ${comment?.user.lastName}`}
+                  <span className="fs-s mx-xs">{comment?.timestamp}</span>
+                </p>
+                <p className={`fs-m ${styles.comment}`}>{comment?.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
       <ul className={`mx-md flex flex-col ${styles.other_videos_list}`}>
         <h2 className="h1 Montserrat text-left my-sm">Related Videos:</h2>
-        {videos.map((video) => (
-          <VideoCard key={video._id} {...video} />
-        ))}
+        {videos
+          .filter((vid) => vid.category === video.category)
+          .map((video) => (
+            <VideoCard key={video._id} {...video} />
+          ))}
       </ul>
       {openModal && <Modal {...{ setModal, video }} />}
     </div>

@@ -1,16 +1,7 @@
-export { addNewUser, getUser } from "./auth";
-export { addLikedVideo, removeLikedVideo } from "./like";
-export { addSavedVideo, removeSavedVideo } from "./saved";
-export { getAllVideos, getCategories, getAllLanguages } from "./data";
-export {
-  createPlaylist,
-  removePlaylist,
-  addVideoToPlaylist,
-  removeVideoFromPlaylist,
-} from "./playlists";
-export {
-  addVideoToHistory,
-  removeVideoFromHistory,
-  clearHistory,
-} from "./history";
-export { postVideo, getImageLink } from "./video";
+export * from "./auth";
+export * from "./like";
+export * from "./saved";
+export * from "./data";
+export * from "./playlists";
+export * from "./history";
+export * from "./video";
