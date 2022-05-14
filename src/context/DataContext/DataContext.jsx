@@ -48,7 +48,7 @@ export const DataProvider = ({ children }) => {
     setLoader(false);
   }, []);
 
-  const filteredProducts = compose(
+  const filteredVideos = compose(
     state.videos,
     getSortedVideos,
     getFilteredCategory,
@@ -60,7 +60,7 @@ export const DataProvider = ({ children }) => {
     <Data.Provider
       value={{
         ...state,
-        videos: filteredProducts,
+        videos: filteredVideos,
         open,
         setOpen,
         loader,

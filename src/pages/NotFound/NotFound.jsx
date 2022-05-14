@@ -19,18 +19,18 @@ export const NotFound = () => {
         className={`flex flex-center flex-col pos-abs full-width ${styles.banner_content}`}
       >
         <h3 className={` h1 ${styles.title}`}>We couldn't find any matches!</h3>
-        <p className="h2 ubuntu">
+        <p className="h2 Montserrat">
           Please recheck the link or try searching something else.
         </p>
         <div className="my-sm">
           <Link
-            className={`btn btn-outline-primary py-xs p-md full-width m-md h2 rounded-s transition ubuntu ${styles.btn_home}`}
+            className={`btn btn-outline-primary py-xs p-md full-width m-md h2 rounded-s transition Montserrat ${styles.btn_home}`}
             to="/"
           >
             Home
           </Link>
           <Link
-            className={`btn btn-primary py-xs px-md full-width m-md h2 rounded-s transition ubuntu ${styles.btn_cta}`}
+            className={`btn btn-primary py-xs px-md full-width m-md h2 rounded-s transition Montserrat ${styles.btn_cta}`}
             to="/explore"
           >
             Explore

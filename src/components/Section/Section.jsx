@@ -1,33 +1,43 @@
 import React from "react";
 import { BsTrash } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
-import { useData } from "../../context";
+import { useUser } from "../../context";
 import styles from "./Section.module.css";
 import toast from "react-hot-toast";
+import { clearHistory, removePlaylist } from "../../services";
 
 export const Section = ({ children, title, size, playlistId }) => {
   const isInPlaylistsPage = useLocation().pathname === "/playlists";
+  const isInHistoryPage = useLocation().pathname === "/history";
 
-  const { dispatch } = useData();
-
-  const deletePlaylistHandler = () => {
+  const { setUser } = useUser();
+  const deletePlaylistHandler = async () => {
+    const { playlists } = await removePlaylist(playlistId);
+    setUser((user) => ({ ...user, playlists }));
     toast(`Deleted ${title} Playlist!`, { icon: <BsTrash /> });
-    dispatch({ type: "DELETE_PLAYLIST", payload: playlistId });
+  };
+
+  const clearHistoryHandler = async () => {
+    const { history } = await clearHistory();
+    setUser((user) => ({ ...user, history }));
+    toast.success("History Cleared!");
   };
 
   return (
     <section className={`p-md ${styles.section}`} aria-label={title}>
-      <h3 className={`h1 ubuntu px- md flex ${styles.playlist_title}`}>
+      <h3 className={`h1 Montserrat px- md flex ${styles.playlist_title}`}>
         {title}
         <span className="mx-xs fs-l fw-regular">
           ({size} {size == 1 ? "video" : "videos"})
         </span>
-        {isInPlaylistsPage && (
+        {(isInPlaylistsPage || isInHistoryPage) && (
           <button
             className={` flex flex-center ${styles.delete_playlist_btn}`}
-            onClick={deletePlaylistHandler}
+            onClick={
+              isInPlaylistsPage ? deletePlaylistHandler : clearHistoryHandler
+            }
           >
-            Delete Playlist
+            {isInPlaylistsPage ? "Delete Playlist" : "Clear History"}
             <span>
               <BsTrash size="2rem" />
             </span>

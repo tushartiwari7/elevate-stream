@@ -21,9 +21,9 @@ export const Home = () => {
         <h3 className={` h1 ${styles.title}`}>
           Unlimited movies, TV shows and more.
         </h3>
-        <p className="h2 ubuntu">Watch anytime,anywhere for Free.</p>
+        <p className="h2 Montserrat">Watch anytime,anywhere for Free.</p>
         <Link
-          className={`btn btn-primary py-xs full-width m-md h2 rounded-s transition ubuntu ${styles.btn_cta}`}
+          className={`btn btn-primary py-xs full-width m-md h2 rounded-s transition Montserrat ${styles.btn_cta}`}
           to="/explore"
         >
           Get Started

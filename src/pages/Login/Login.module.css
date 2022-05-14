@@ -1,0 +1,47 @@
+.input_label {
+  text-align: left;
+}
+.btn_cta {
+  composes: btn_cta from "../Home/Home.module.css";
+  line-height: unset;
+}
+.btn_secondary {
+  conposes: btn_home from "../Home/Home.module.css";
+}
+
+.input {
+  border: none;
+  color: var(--text-light);
+  background: var(--bg-tertiary);
+  margin-bottom: 1rem;
+}
+
+.login_content {
+  background: var(--bg-secondary);
+  inset: 3rem;
+  width: auto;
+  height: auto;
+  justify-content: space-around;
+}
+
+.link {
+  color: var(--secondary);
+  cursor: pointer;
+}
+
+.names {
+  gap: 2rem;
+}
+
+.show_password {
+  right: 1rem;
+  bottom: 25%;
+}
+
+.title {
+  composes: title from "../Home/Home.module.css";
+  font-size: 3rem;
+  font-family: "Handlee", serif;
+}
+
+/* Backgrgound Banner CSS */

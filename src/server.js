@@ -2,39 +2,35 @@ import { Server, Model, RestSerializer } from "miragejs";
 import {
   loginHandler,
   signupHandler,
-} from "./backend/controllers/AuthController";
-import {
   getHistoryVideosHandler,
   addVideoToHistoryHandler,
   removeVideoFromHistoryHandler,
   clearHistoryHandler,
-} from "./backend/controllers/HistoryController";
-import {
   getAllVideosHandler,
   getVideoHandler,
-} from "./backend/controllers/VideoController";
-import { videos } from "./backend/db/videos";
-import { categories } from "./backend/db/categories";
-import { languages } from "./backend/db/languages";
-import { users } from "./backend/db/users";
-import {
   getAllCategoriesHandler,
   getCategoryHandler,
-} from "./backend/controllers/CategoryController";
-import { getAllLanguagesHandler } from "./backend/controllers/LanguageController";
-import {
+  getAllLanguagesHandler,
   getLikedVideosHandler,
   addItemToLikedVideos,
   removeItemFromLikedVideos,
-} from "./backend/controllers/LikeController";
-import {
   getAllPlaylistsHandler,
   addNewPlaylistHandler,
   removePlaylistHandler,
   getVideosFromPlaylistHandler,
   addVideoToPlaylistHandler,
   removeVideoFromPlaylistHandler,
-} from "./backend/controllers/PlaylistController";
+  addItemToSavedVideos,
+  removeItemFromSavedVideos,
+  postVideoHandler,
+  addCommentsHandler,
+} from "./backend/controllers";
+
+import { videos } from "./backend/db/videos";
+import { categories } from "./backend/db/categories";
+import { languages } from "./backend/db/languages";
+import { users } from "./backend/db/users";
+
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
     serializers: {
@@ -56,7 +52,7 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       server.logging = false;
       videos.forEach((item) => {
-        server.create("video", { ...item });
+        server.create("video", { ...item, comments: [] });
       });
       categories.forEach((item) => server.create("category", { ...item }));
       languages.forEach((item) => server.create("language", { ...item }));
@@ -64,6 +60,7 @@ export function makeServer({ environment = "development" } = {}) {
         server.create("user", {
           ...item,
           likes: [],
+          saved: [],
           history: [],
           playlists: [],
         })
@@ -72,6 +69,7 @@ export function makeServer({ environment = "development" } = {}) {
 
     routes() {
       this.namespace = "api";
+
       // auth routes (public)
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));
@@ -80,7 +78,11 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("/videos", getAllVideosHandler.bind(this));
       this.get("video/:videoId", getVideoHandler.bind(this));
 
+      // video routes (private)
+      this.post("comments/:videoId", addCommentsHandler.bind(this));
+
       // TODO: POST VIDEO TO DB
+      this.post("/video", postVideoHandler.bind(this));
 
       // categories routes (public)
       this.get("/categories", getAllCategoriesHandler.bind(this));
@@ -93,6 +95,10 @@ export function makeServer({ environment = "development" } = {}) {
       this.get("/user/likes", getLikedVideosHandler.bind(this));
       this.post("/user/likes", addItemToLikedVideos.bind(this));
       this.delete("/user/likes/:videoId", removeItemFromLikedVideos.bind(this));
+
+      // saved routes (private)
+      this.post("/user/saved", addItemToSavedVideos.bind(this));
+      this.delete("/user/saved/:videoId", removeItemFromSavedVideos.bind(this));
 
       // playlist routes (private)
       this.get("/user/playlists", getAllPlaylistsHandler.bind(this));
@@ -123,6 +129,10 @@ export function makeServer({ environment = "development" } = {}) {
         removeVideoFromHistoryHandler.bind(this)
       );
       this.delete("/user/history/all", clearHistoryHandler.bind(this));
+
+      this.passthrough((request) => {
+        return request.url.includes("cloudinary");
+      });
     },
   });
 }

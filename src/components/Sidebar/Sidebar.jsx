@@ -7,11 +7,11 @@ import {
   BsFillHandThumbsUpFill,
   BsClockHistory,
   BsSave,
+  BsPatchPlus,
 } from "react-icons/bs";
 import { CgPlayList } from "react-icons/cg";
 import { NavLink, useLocation } from "react-router-dom";
 import { useData } from "../../context";
-
 export const Sidebar = () => {
   const sidebarList = [
     { id: uuid(), name: "Home", Icon: BsHouseFill },
@@ -20,12 +20,13 @@ export const Sidebar = () => {
     { id: uuid(), name: "Saved", Icon: BsSave },
     { id: uuid(), name: "History", Icon: BsClockHistory },
     { id: uuid(), name: "Playlists", Icon: CgPlayList },
+    { id: uuid(), name: "Post", Icon: BsPatchPlus },
   ];
 
   const { open, setOpen } = useData();
 
   const location = useLocation();
-  const isOnVideoPage = location.pathname === "/video";
+  const isOnVideoPage = location.pathname.includes("/watch");
 
   useEffect(() => {
     if (!isOnVideoPage) {
@@ -45,6 +46,7 @@ export const Sidebar = () => {
               color: isActive ? "var(--primary)" : "var(--text-light)",
             })}
             to={`/${name === "Home" ? "" : name.toLowerCase()}`}
+            state={{ from: location }}
             onClick={() => setOpen((open) => !open)}
           >
             <span className={`mx-xs ${styles.sidebar_icon}`}>

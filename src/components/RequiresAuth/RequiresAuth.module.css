@@ -1,0 +1,6 @@
+.section {
+  height: 100%;
+}
+.link {
+  composes: btn_cta from "../../pages/Home/Home.module.css";
+}

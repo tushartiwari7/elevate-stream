@@ -1,3 +1,4 @@
+
 export const getSortedVideos = (videos, filters) => {
   switch (filters.sort) {
     case "MOST_RECENT":
@@ -41,4 +42,9 @@ export const compose = (state, ...functions) => {
       return fn(acc, filters);
     }, state);
   };
+};
+
+export const audioMessage = (message) => {
+  const speak = new SpeechSynthesisUtterance(message);
+  speechSynthesis.speak(speak);
 };

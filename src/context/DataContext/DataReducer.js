@@ -5,10 +5,8 @@ export const initialState = {
   videos: [],
   categories: [],
   languages: [],
-  watchLater: [],
-  likedVideos: [],
-  history: [],
-  playlist: [],
+  // history: [],
+  // playlist: [],
 };
 
 export const initialFilters = {
@@ -39,11 +37,7 @@ export const filterReducer = (state, { type, payload }) => {
       };
 
     case "CLEAR_FILTERS":
-      return {
-        sort: "",
-        category: "",
-        language: "",
-      };
+      return initialFilters;
 
     case "VIDEOS_SEARCH":
       return {
@@ -66,113 +60,17 @@ export const reducer = (state, { type, payload }) => {
         languages: payload.languages,
       };
 
-    case "SET_WATCH_LATER":
+    case "ADD_VIDEO":
       return {
         ...state,
-        watchLater: [...state.watchLater, payload],
+        videos: [...state.videos, payload],
       };
 
-    case "ADD_TO_HISTORY":
+    case "UPDATE_VIDEO":
       return {
         ...state,
-        history: state.history.some(
-          (day) => day.date === payload.timeStamp.date
-        )
-          ? state.history.map((day) =>
-              day.date === payload.timeStamp.date
-                ? {
-                    ...day,
-                    videos: [
-                      { ...payload.video, time: payload.timeStamp.time },
-                      ...day.videos,
-                    ],
-                  }
-                : day
-            )
-          : [
-              ...state.history,
-              {
-                date: payload.timeStamp.date,
-                _id: uuid(),
-                videos: [{ ...payload.video, time: payload.timeStamp.time }],
-              },
-            ],
-      };
-
-    case "CLEAR_HISTORY":
-      return {
-        ...state,
-        history: [],
-      };
-
-    case "SET_LIKED_VIDEOS":
-      return {
-        ...state,
-        likedVideos: [...state.likedVideos, payload],
-      };
-
-    case "REMOVE_FROM_LIKED_VIDEOS":
-      return {
-        ...state,
-        likedVideos: state.likedVideos.filter((video) => video._id !== payload),
-      };
-
-    case "REMOVE_FROM_WATCH_LATER":
-      return {
-        ...state,
-        watchLater: state.watchLater.filter((video) => video._id !== payload),
-      };
-
-    case "CREATE_NEW_PLAYLIST":
-      const { playlistName, firstVideo } = payload;
-      if (
-        state.playlist.some(
-          (playlist) => playlist.playlistName === playlistName
-        )
-      ) {
-        console.error("Playlist with this name already exists");
-        toast.error("Playlist with this name already exists");
-        return state;
-      }
-      toast.success(
-        `Created ${playlistName} Playlist and added ${firstVideo.name} to it`
-      );
-      return {
-        ...state,
-        playlist: [
-          ...state.playlist,
-          { _id: uuid(), playlistName, videos: [firstVideo] },
-        ],
-      };
-
-    case "DELETE_PLAYLIST":
-      return {
-        ...state,
-        playlist: state.playlist.filter((playlist) => playlist._id !== payload),
-      };
-
-    case "ADD_VIDEO_TO_PLAYLIST":
-      return {
-        ...state,
-        playlist: state.playlist.map((playlist) =>
-          playlist._id === payload.playlistId
-            ? { ...playlist, videos: playlist.videos.concat(payload.video) }
-            : playlist
-        ),
-      };
-
-    case "REMOVE_VIDEO_FROM_PLAYLIST":
-      return {
-        ...state,
-        playlist: state.playlist.map((playlist) =>
-          playlist._id === payload.playlistId
-            ? {
-                ...playlist,
-                videos: playlist.videos.filter(
-                  (video) => video._id !== payload.videoId
-                ),
-              }
-            : playlist
+        videos: state.videos.map((video) =>
+          video._id === payload._id ? payload : video
         ),
       };
 
