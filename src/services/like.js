@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export const addLikedVideo = async (video) => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
 
   try {
     const { data, status } = await axios({
@@ -22,7 +22,7 @@ export const addLikedVideo = async (video) => {
 };
 
 export const removeLikedVideo = async (videoId) => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
   try {
     const { data, status } = await axios({
       url: `/api/user/likes/${videoId}`,

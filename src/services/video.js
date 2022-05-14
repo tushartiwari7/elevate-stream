@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 export const postVideo = async (videoToSend) => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios({
       url: `/api/video`,
@@ -21,7 +21,7 @@ export const postVideo = async (videoToSend) => {
 };
 
 export const addCommment = async (videoID, comment) => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios({
       url: `/api/comments/${videoID}`,

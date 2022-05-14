@@ -2,8 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export const addVideoToHistory = async (video) => {
-  const token = localStorage.getItem("token").slice(1, -1);
-
+  const token = localStorage.getItem("token");
   try {
     const { data, status } = await axios({
       url: `/api/user/history`,
@@ -22,7 +21,7 @@ export const addVideoToHistory = async (video) => {
 };
 
 export const removeVideoFromHistory = async (videoId) => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
   try {
     const { data, status } = await axios({
       url: `/api/user/history/${videoId}`,
@@ -40,7 +39,7 @@ export const removeVideoFromHistory = async (videoId) => {
 };
 
 export const clearHistory = async () => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
   try {
     const { data, status } = await axios({
       url: `/api/user/history/all`,

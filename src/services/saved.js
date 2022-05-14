@@ -21,7 +21,7 @@ export const addSavedVideo = async (video) => {
 };
 
 export const removeSavedVideo = async (videoId) => {
-  const token = localStorage.getItem("token").slice(1, -1);
+  const token = localStorage.getItem("token");
   try {
     const { data, status } = await axios({
       url: `/api/user/saved/${videoId}`,

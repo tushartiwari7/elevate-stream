@@ -16,14 +16,15 @@ export const UserProvider = ({ children }) => {
   const reactNavigator = useNavigate();
   const [params] = useSearchParams();
 
-  const loginHandler = async ({ email, password }, location) => {
+  const loginHandler = async ({ email, password }, location = {}) => {
     const {
       data: { foundUser, encodedToken },
     } = await getUser(email, password);
+    console.log({ encodedToken });
     localStorage.setItem("token", encodedToken);
     setUser({ ...foundUser, isLoggedIn: true });
     toast.success("Login Successful");
-    reactNavigator(location.pathname + location.search || "/explore", {
+    reactNavigator((location.pathname ?? "") + location.search || "/explore", {
       replace: true,
     });
   };

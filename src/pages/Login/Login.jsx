@@ -8,6 +8,7 @@ export const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [userCreds, setUserCreds] = useState({ email: "", password: "" });
   const location = useLocation();
+  console.log({ location });
   const { handlers } = useUser();
   const togglePasswordType = () =>
     setPasswordType(passwordType === "password" ? "text" : "password");
@@ -77,7 +78,7 @@ export const Login = () => {
                   email: process.env.React_APP_TEST_EMAIL,
                   password: process.env.React_APP_TEST_PASSWORD,
                 },
-                location.state.from
+                location.state?.from
               )
             }
           >

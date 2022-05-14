@@ -1,8 +1,9 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-const token = localStorage.getItem("token");
 
 export const createPlaylist = async (playlistName) => {
+  const token = localStorage.getItem("token");
+  console.log({ playlistName, token });
   try {
     const {
       data: { playlists },
@@ -24,6 +25,7 @@ export const createPlaylist = async (playlistName) => {
 };
 
 export const removePlaylist = async (playlistId) => {
+  const token = localStorage.getItem("token");
   try {
     const {
       data: { playlists },
@@ -44,6 +46,7 @@ export const removePlaylist = async (playlistId) => {
 };
 
 export const addVideoToPlaylist = async (playlistId, video) => {
+  const token = localStorage.getItem("token");
   try {
     const {
       data: { playlist },
@@ -65,6 +68,7 @@ export const addVideoToPlaylist = async (playlistId, video) => {
 };
 
 export const removeVideoFromPlaylist = async (playlistId, videoId) => {
+  const token = localStorage.getItem("token");
   try {
     const {
       data: { playlist },
