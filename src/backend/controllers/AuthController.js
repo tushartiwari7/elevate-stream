@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { Response } from "miragejs";
-import { formatDate } from "../utils/authUtils";
+import { formatDate, requiresAuth } from "../utils/authUtils";
 const sign = require("jwt-encode");
 /**
  * All the routes related to Auth are present here.
@@ -89,6 +89,32 @@ export const loginHandler = function (schema, request) {
         ],
       }
     );
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+export const updateUserHandler = function (schema, request) {
+  const { userDetails } = JSON.parse(request.requestBody);
+  const { _id: userId } = requiresAuth.call(this, request);
+  try {
+    if (!userId) {
+      return new Response(
+        404,
+        {},
+        { errors: ["The email you entered is not Registered. Not Found error"] }
+      );
+    }
+    this.db.users.update({ _id: userId }, { ...userDetails });
+    const updatedUser = this.db.users.findBy({ _id: userId });
+    delete updatedUser.password;
+    return new Response(200, {}, { updatedUser });
   } catch (error) {
     return new Response(
       500,

@@ -23,3 +23,20 @@ export const addNewUser = async (userCreds) => {
     return error;
   }
 };
+
+export const updateUser = async (userDetails) => {
+  try {
+    console.log({ userDetails });
+    const { data, status } = await axios.post(
+      "/api/auth/update",
+      {
+        userDetails,
+      },
+      { headers: { authorization: localStorage.getItem("token") } }
+    );
+    return { updatedUser: data.updatedUser, status };
+  } catch (error) {
+    toast.error("Something went wrong: Update User Failed");
+    return error;
+  }
+};

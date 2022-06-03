@@ -15,9 +15,11 @@ import {
   Video,
 } from "./pages";
 import loaderSvg from "./assets/loader.svg";
-import { useData } from "./context";
+import { useData, useUser } from "./context";
 import { useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+import { updateUser } from "./services";
 
 const toastOptions = {
   // Define default options
@@ -26,7 +28,23 @@ const toastOptions = {
 
 function App() {
   const { loader } = useData();
+  const { user, setUser } = useUser();
   const location = useLocation();
+
+  useEffect(() => {
+    // persist user data on refresh
+    const token = localStorage.getItem("token");
+    if (!user.isLoggedIn && token) {
+      const prevSessionUser = JSON.parse(localStorage.getItem("user"));
+      delete prevSessionUser.isLoggedIn;
+      delete prevSessionUser._id;
+      (async (user) => {
+        const { updatedUser } = await updateUser(user);
+        setUser({ ...updatedUser, isLoggedIn: true });
+      })(prevSessionUser);
+    }
+  }, []);
+
   return (
     <div
       className={`App grid ${

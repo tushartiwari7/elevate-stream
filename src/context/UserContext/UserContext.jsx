@@ -90,7 +90,10 @@ export const UserProvider = ({ children }) => {
     return toast.success("Video Link Copied");
   };
 
-  useEffect(() => localStorage.setItem("user", JSON.stringify(user)), [user]);
+  useEffect(
+    () => user.isLoggedIn && localStorage.setItem("user", JSON.stringify(user)),
+    [user]
+  );
   return (
     <UserContext.Provider
       value={{
