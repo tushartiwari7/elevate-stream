@@ -9,27 +9,6 @@
   vertical-align: middle;
   margin-left: 5px;
 }
-.sort_button > ul {
-  display: none;
-  top: 110%;
-  left: 0;
-  z-index: 2;
-  background: var(--bg-primary);
-  height: fit-content;
-  transition: 3s;
-}
-
-.sort_button > ul > li {
-  cursor: pointer;
-}
-
-.sort_button > ul > li:hover {
-  background: var(--bg-secondary);
-}
-
-.sort_button:hover > ul {
-  display: block;
-}
 
 .top40 {
   top: 40%;
@@ -66,7 +45,7 @@
   .filter_wrapper {
     flex-wrap: wrap;
     justify-content: flex-end;
-    margin-bottom:2rem;
+    margin-bottom: 2rem;
   }
 }
 @media only screen and (max-width: 480px) {

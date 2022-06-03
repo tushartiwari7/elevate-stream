@@ -1,5 +1,6 @@
-import { createContext, useState, useContext } from "react";
-import React from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   getUser,
   addNewUser,
@@ -8,8 +9,7 @@ import {
   addSavedVideo,
   removeSavedVideo,
 } from "../../services";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import toast from "react-hot-toast";
+
 const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ isLoggedIn: false });
@@ -90,6 +90,7 @@ export const UserProvider = ({ children }) => {
     return toast.success("Video Link Copied");
   };
 
+  useEffect(() => localStorage.setItem("user", JSON.stringify(user)), [user]);
   return (
     <UserContext.Provider
       value={{
