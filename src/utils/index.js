@@ -1,4 +1,5 @@
-
+// TODO: ADD UTIL FUNCTION AXIOS CALLS fOR  AXIOS CALLS
+import axios from "axios";
 export const getSortedVideos = (videos, filters) => {
   switch (filters.sort) {
     case "MOST_RECENT":
@@ -47,4 +48,29 @@ export const compose = (state, ...functions) => {
 export const audioMessage = (message) => {
   const speak = new SpeechSynthesisUtterance(message);
   speechSynthesis.speak(speak);
+};
+
+/**
+ * @description: This function is used to make a REQUEST to the backend server
+ * @param {string}  url: string
+ * @param {"get" | "post" | "put" | "delete" } method: string
+ * @param {} data?: object
+ * @returns: Promise
+ */
+
+export const axiosCall = async (url, method, data) => {
+  try {
+    const response = await axios({
+      method,
+      url,
+      data,
+      headers: {
+        authorization: localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
 };

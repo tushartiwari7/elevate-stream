@@ -1,12 +1,14 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosCall } from "../utils";
 
 export const getUser = async (email, password) => {
   try {
-    const { data, status } = await axios.post("/api/auth/login", {
+    const { data, status } = await axiosCall("/api/auth/login", "post", {
       email,
       password,
     });
+    console.log({ data });
     return { data, status };
   } catch (error) {
     toast.error("Invalid Credentials");
@@ -26,14 +28,9 @@ export const addNewUser = async (userCreds) => {
 
 export const updateUser = async (userDetails) => {
   try {
-    console.log({ userDetails });
-    const { data, status } = await axios.post(
-      "/api/auth/update",
-      {
-        userDetails,
-      },
-      { headers: { authorization: localStorage.getItem("token") } }
-    );
+    const { data, status } = await axiosCall("/api/auth/update", "post", {
+      userDetails,
+    });
     return { updatedUser: data.updatedUser, status };
   } catch (error) {
     toast.error("Something went wrong: Update User Failed");
