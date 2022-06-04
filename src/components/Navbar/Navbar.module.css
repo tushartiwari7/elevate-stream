@@ -26,8 +26,6 @@
   transition: 0.25s ease-in-out;
   color: var(--text-light);
 }
-.navlink > ul {
-}
 
 .navlink > ul {
   display: none;

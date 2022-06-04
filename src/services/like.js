@@ -1,17 +1,10 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosCall } from "../utils";
 
 export const addLikedVideo = async (video) => {
-  const token = localStorage.getItem("token");
-
   try {
-    const { data, status } = await axios({
-      url: `/api/user/likes`,
-      method: "POST",
-      data: { video },
-      headers: {
-        authorization: token,
-      },
+    const { data, status } = await axiosCall(`/api/user/likes`, "POST", {
+      video,
     });
     return { likes: data.likes, status };
   } catch (err) {
@@ -22,15 +15,11 @@ export const addLikedVideo = async (video) => {
 };
 
 export const removeLikedVideo = async (videoId) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data, status } = await axios({
-      url: `/api/user/likes/${videoId}`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-      },
-    });
+    const { data, status } = await axiosCall(
+      `/api/user/likes/${videoId}`,
+      "DELETE"
+    );
     return { likes: data.likes, status };
   } catch (err) {
     toast.error("Failed to add to liked videos");

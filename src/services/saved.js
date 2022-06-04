@@ -1,16 +1,10 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosCall } from "../utils";
 
 export const addSavedVideo = async (video) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data, status } = await axios({
-      url: `/api/user/saved`,
-      method: "POST",
-      data: { video },
-      headers: {
-        authorization: token,
-      },
+    const { data, status } = await axiosCall(`/api/user/saved`, "POST", {
+      video,
     });
     return { saved: data.saved, status };
   } catch (err) {
@@ -21,15 +15,11 @@ export const addSavedVideo = async (video) => {
 };
 
 export const removeSavedVideo = async (videoId) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data, status } = await axios({
-      url: `/api/user/saved/${videoId}`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-      },
-    });
+    const { data, status } = await axiosCall(
+      `/api/user/saved/${videoId}`,
+      "DELETE"
+    );
     return { saved: data.saved, status };
   } catch (err) {
     toast.error("Failed to Remove from Saved videos");

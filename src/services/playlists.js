@@ -1,20 +1,13 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosCall } from "../utils";
 
 export const createPlaylist = async (playlistName) => {
-  const token = localStorage.getItem("token");
-  console.log({ playlistName, token });
   try {
     const {
       data: { playlists },
       status,
-    } = await axios({
-      url: `/api/user/playlists`,
-      method: "POST",
-      data: { playlist: { title: playlistName } },
-      headers: {
-        authorization: token,
-      },
+    } = await axiosCall(`/api/user/playlists`, "POST", {
+      playlist: { title: playlistName },
     });
     return { playlists, status };
   } catch (err) {
@@ -25,19 +18,12 @@ export const createPlaylist = async (playlistName) => {
 };
 
 export const removePlaylist = async (playlistId) => {
-  const token = localStorage.getItem("token");
   try {
-    const {
-      data: { playlists },
-      status,
-    } = await axios({
-      url: `/api/user/playlists/${playlistId}`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-      },
-    });
-    return { playlists, status };
+    const { data, status } = await axiosCall(
+      `/api/user/playlists/${playlistId}`,
+      "DELETE"
+    );
+    return { playlists: data.playlists, status };
   } catch (err) {
     toast.error("Failed to remove playlist");
     console.log(err);
@@ -46,20 +32,14 @@ export const removePlaylist = async (playlistId) => {
 };
 
 export const addVideoToPlaylist = async (playlistId, video) => {
-  const token = localStorage.getItem("token");
   try {
-    const {
-      data: { playlist },
-      status,
-    } = await axios({
-      url: `/api/user/playlists/${playlistId}`,
-      method: "POST",
-      data: { video },
-      headers: {
-        authorization: token,
-      },
-    });
-    return { playlist, status };
+    const { data, status } = await axiosCall(
+      `/api/user/playlists/${playlistId}`,
+      "POST",
+      { video }
+    );
+
+    return { playlist: data.playlist, status };
   } catch (err) {
     toast.error("Failed to add video to playlist");
     console.log(err);
@@ -68,19 +48,12 @@ export const addVideoToPlaylist = async (playlistId, video) => {
 };
 
 export const removeVideoFromPlaylist = async (playlistId, videoId) => {
-  const token = localStorage.getItem("token");
   try {
-    const {
-      data: { playlist },
-      status,
-    } = await axios({
-      url: `/api/user/playlists/${playlistId}/${videoId}`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-      },
-    });
-    return { playlist, status };
+    const { data, status } = await axiosCall(
+      `/api/user/playlists/${playlistId}/${videoId}`,
+      "DELETE"
+    );
+    return { playlist: data.playlist, status };
   } catch (err) {
     toast.error("Failed to remove video from playlist");
     console.log(err);

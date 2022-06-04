@@ -37,7 +37,7 @@ export const Navbar = () => {
           onClick={toggleSidebar}
         />
         <Link className={`list white flex flex-center ${styles.logo}`} to="/">
-          <img src={logo} width={"100%"} height={"100%"} />
+          <img src={logo} width={"100%"} height="60px" />
         </Link>
       </div>
       <div className={`searchbar flex flex-center ${styles.searchbar}`}>

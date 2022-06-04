@@ -37,8 +37,12 @@
 }
 
 .video_actions {
+  display: flex;
   justify-content: flex-end;
   border-bottom: 2px solid var(--bg-secondary);
+}
+.video_actions li {
+  padding: 0 1.6rem;
 }
 .other_videos_list {
   overflow-y: auto;
