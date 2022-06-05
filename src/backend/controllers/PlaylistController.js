@@ -64,7 +64,6 @@ export const addNewPlaylistHandler = function (schema, request) {
  * */
 
 export const removePlaylistHandler = function (schema, request) {
-  console.log("removePlaylistHandler", request);
   const user = requiresAuth.call(this, request);
   if (user) {
     const playlistId = request.params.playlistId;

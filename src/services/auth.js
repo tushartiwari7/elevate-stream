@@ -8,7 +8,6 @@ export const getUser = async (email, password) => {
       email,
       password,
     });
-    console.log({ data });
     return { data, status };
   } catch (error) {
     toast.error("Invalid Credentials");

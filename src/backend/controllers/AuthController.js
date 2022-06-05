@@ -77,7 +77,6 @@ export const loginHandler = function (schema, request) {
         process.env.REACT_APP_JWT_SECRET
       );
       foundUser.password = undefined;
-      console.log(encodedToken);
       return new Response(200, {}, { foundUser, encodedToken });
     }
     new Response(
