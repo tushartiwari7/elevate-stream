@@ -1,5 +1,6 @@
-import { createContext, useState, useContext } from "react";
-import React from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   getUser,
   addNewUser,
@@ -8,23 +9,21 @@ import {
   addSavedVideo,
   removeSavedVideo,
 } from "../../services";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import toast from "react-hot-toast";
+
 const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ isLoggedIn: false });
-  const reactNavigator = useNavigate();
+  const navigate = useNavigate();
   const [params] = useSearchParams();
 
   const loginHandler = async ({ email, password }, location = {}) => {
     const {
       data: { foundUser, encodedToken },
     } = await getUser(email, password);
-    console.log({ encodedToken });
     localStorage.setItem("token", encodedToken);
     setUser({ ...foundUser, isLoggedIn: true });
     toast.success("Login Successful");
-    reactNavigator((location.pathname ?? "") + location.search || "/explore", {
+    navigate((location.pathname ?? "") + location.search || "/explore", {
       replace: true,
     });
   };
@@ -39,7 +38,7 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem("token", encodedToken);
       setUser({ ...createdUser, isLoggedIn: true });
       toast.success("Signup Successful");
-      reactNavigator(location.pathname + location.search || "/explore", {
+      navigate(location.pathname + location.search || "/explore", {
         replace: true,
       });
     } else {
@@ -50,7 +49,7 @@ export const UserProvider = ({ children }) => {
   const likedVideosHandler = async (video, add = true) => {
     if (!user.isLoggedIn) {
       toast.error("Please Login to like videos");
-      return reactNavigator(`/login`, {
+      return navigate(`/login`, {
         replace: true,
         state: { from: location },
       });
@@ -68,7 +67,7 @@ export const UserProvider = ({ children }) => {
   const savedVideosHandler = async (video, add = true) => {
     if (!user.isLoggedIn) {
       toast.error("Please Login to Save videos");
-      return reactNavigator(`/login`, {
+      return navigate(`/login`, {
         replace: true,
         state: { from: location },
       });
@@ -90,6 +89,10 @@ export const UserProvider = ({ children }) => {
     return toast.success("Video Link Copied");
   };
 
+  useEffect(
+    () => user.isLoggedIn && localStorage.setItem("user", JSON.stringify(user)),
+    [user]
+  );
   return (
     <UserContext.Provider
       value={{

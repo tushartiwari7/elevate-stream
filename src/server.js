@@ -24,6 +24,7 @@ import {
   removeItemFromSavedVideos,
   postVideoHandler,
   addCommentsHandler,
+  updateUserHandler,
 } from "./backend/controllers";
 
 import { videos } from "./backend/db/videos";
@@ -73,6 +74,9 @@ export function makeServer({ environment = "development" } = {}) {
       // auth routes (public)
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));
+
+      // * auth routes (private)
+      this.post("/auth/update", updateUserHandler.bind(this));
 
       // video routes (public)
       this.get("/videos", getAllVideosHandler.bind(this));

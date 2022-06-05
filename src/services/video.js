@@ -1,19 +1,11 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosCall } from "../utils";
 export const postVideo = async (videoToSend) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data } = await axios({
-      url: `/api/video`,
-      method: "POST",
-      data: {
-        video: videoToSend,
-      },
-      headers: {
-        authorization: token,
-      },
+    const { data } = await axiosCall(`/api/video`, "POST", {
+      video: videoToSend,
     });
-    return { ...data };
+    return data;
   } catch (err) {
     console.log(err);
     return err;
@@ -21,19 +13,11 @@ export const postVideo = async (videoToSend) => {
 };
 
 export const addCommment = async (videoID, comment) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data } = await axios({
-      url: `/api/comments/${videoID}`,
-      method: "POST",
-      data: {
-        comment,
-      },
-      headers: {
-        authorization: token,
-      },
+    const { data } = await axiosCall(`/api/comments/${videoID}`, "POST", {
+      comment,
     });
-    return { ...data };
+    return data;
   } catch (err) {
     console.error(err);
     toast("Comment Not added - Request Failed", { icon: "❌" });
@@ -46,7 +30,10 @@ export const getImageLink = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "testingbytushar");
+    formData.append(
+      "upload_preset",
+      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+    );
     console.log(file);
     if (file) {
       const resp = await fetch(

@@ -6,7 +6,7 @@ import { useData, useUser } from "../../context";
 import { useLocation } from "react-router-dom";
 export const Navbar = () => {
   const { setOpen, filterDispatch } = useData();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const location = useLocation();
   const navigator = useNavigate();
 
@@ -20,6 +20,12 @@ export const Navbar = () => {
 
   const toggleSidebar = () => setOpen((open) => !open);
 
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    setUser({ isLoggedIn: false });
+    navigator("/");
+  };
+
   return (
     <header
       className={`full-width p-sm flex header fs-l pos-rel ${styles.header}`}
@@ -31,7 +37,7 @@ export const Navbar = () => {
           onClick={toggleSidebar}
         />
         <Link className={`list white flex flex-center ${styles.logo}`} to="/">
-          <img src={logo} width={"100%"} height={"100%"} />
+          <img src={logo} width={"100%"} height="60px" />
         </Link>
       </div>
       <div className={`searchbar flex flex-center ${styles.searchbar}`}>
@@ -53,13 +59,15 @@ export const Navbar = () => {
             Login
           </Link>
         ) : (
-          <Link
-            to="/profile"
-            className={`btn-outline-secondary mx-xs fs-m text-center ${styles.navlink}`}
+          <div
+            className={`btn-outline-secondary mx-xs fs-m text-center pos-rel ${styles.navlink}`}
           >
-            {user.firstName ?? "Guest User!"}{" "}
+            {user.firstName ?? "Guest User!"}
             <BsFillCaretDownFill className={styles.arrow_down} />
-          </Link>
+            <ul className="list pos-abs full-width" onClick={logoutHandler}>
+              <li className="p-sm">Logout</li>
+            </ul>
+          </div>
         )}
       </div>
     </header>

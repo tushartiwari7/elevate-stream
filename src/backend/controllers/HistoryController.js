@@ -59,7 +59,7 @@ export const addVideoToHistoryHandler = function (schema, request) {
         409,
         {},
         {
-          errors: ["The video is already in your history"],
+          message: "The video is already in your history",
         }
       );
     }

@@ -27,6 +27,29 @@
   color: var(--text-light);
 }
 
+.navlink > ul {
+  display: none;
+  top: 110%;
+  left: 0;
+  z-index: 2;
+  background: var(--bg-primary);
+  height: fit-content;
+  transition: 3s;
+}
+
+.navlink > ul > li {
+  cursor: pointer;
+}
+
+.navlink > ul > li:hover {
+  background: var(--bg-secondary);
+}
+
+.navlink:hover > ul,
+.navlink:focus > ul {
+  display: block;
+}
+
 .navlink:hover {
   background: var(--secondary);
 }

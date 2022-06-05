@@ -1,36 +1,27 @@
-import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosCall } from "../utils";
 
 export const addVideoToHistory = async (video) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data, status } = await axios({
-      url: `/api/user/history`,
-      method: "POST",
-      data: { video },
-      headers: {
-        authorization: token,
-      },
+    const resp = await axiosCall("/api/user/history", "post", {
+      video,
     });
-    return { history: data.history, status };
+    const { data, status, response } = resp;
+    if (data) return { history: data.history, status };
+    if (response) throw new Error(response.data.message);
   } catch (err) {
-    toast.error("Failed to add Video to History");
-    console.log(err);
+    console.error(err.message);
     return err;
   }
 };
 
 export const removeVideoFromHistory = async (videoId) => {
-  const token = localStorage.getItem("token");
   try {
-    const { data, status } = await axios({
-      url: `/api/user/history/${videoId}`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-      },
-    });
-    return { history: data.history, status };
+    const { data, status } = await axiosCall(
+      `/api/user/history/${videoId}`,
+      "delete"
+    );
+    if (status === 200) return { history: data.history, status };
   } catch (err) {
     toast.error("Failed to remove Video from History");
     console.log(err);
@@ -39,15 +30,8 @@ export const removeVideoFromHistory = async (videoId) => {
 };
 
 export const clearHistory = async () => {
-  const token = localStorage.getItem("token");
   try {
-    const { data, status } = await axios({
-      url: `/api/user/history/all`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-      },
-    });
+    const { data, status } = await axiosCall("api/user/history/all", "delete");
     return { history: data.history, status };
   } catch (err) {
     toast.error("Failed to Clear History");
