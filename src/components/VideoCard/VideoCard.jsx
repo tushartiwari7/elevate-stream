@@ -165,7 +165,7 @@ export const VideoCard = (video) => {
                 title="like-video"
               />
               <span className="fs-m" title="Add to Playlist">
-                Add To Playlist
+                Save To Playlist
               </span>
             </li>
             {isInHistory && (
