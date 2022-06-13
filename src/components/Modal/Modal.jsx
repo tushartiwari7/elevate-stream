@@ -7,14 +7,17 @@ import {
   createPlaylist,
   removeVideoFromPlaylist,
 } from "../../services";
+import toast from "react-hot-toast";
 export const Modal = ({ setModal, video }) => {
   const [input, setInput] = useState("");
   const { user, setUser } = useUser();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // create new playlist and add current video to it
+    if (user.playlists.some((playlist) => playlist.title === input))
+      return toast.error("Playlist with this name already exists");
 
+    // create new playlist and add current video to it
     const { playlists } = await createPlaylist(input);
     const { playlist } = await addVideoToPlaylist(
       playlists.find((playlist) => playlist.title === input)._id,
